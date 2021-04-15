@@ -1,0 +1,2 @@
+# blog
+create myFirst blog
