@@ -1,6 +1,6 @@
 module.exports = {
+  base: "/blog/",
   themeConfig: {
-    title: 1,
     logo: '/assets/img/hero.png',
     nav: [
       { text: 'Home', link: '/' },
