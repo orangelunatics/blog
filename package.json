@@ -18,5 +18,11 @@
   "bugs": {
     "url": "https://github.com/T1otto/blog/issues"
   },
-  "homepage": "https://github.com/T1otto/blog#readme"
+  "homepage": "https://github.com/T1otto/blog#readme",
+  "devDependencies": {
+    "@vuepress/plugin-back-to-top": "1.0",
+    "@vuepress/plugin-pwa": "^1.8.2",
+    "stylus": "^0.54.8",
+    "vuepress-plugin-go-top": "^1.0.4"
+  }
 }
