@@ -32,7 +32,7 @@ module.exports = {
         }]
       },
       { text: '网络', link: '/interview/' },
-      { text: '算法', link: '/interview/' },
+      { text: '算法', link: '/algorithm/' },
       { text: 'External', link: 'https://google.com' },
     ],
     sidebar: 'auto'
