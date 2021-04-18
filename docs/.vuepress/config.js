@@ -1,6 +1,6 @@
 module.exports = {
   base: "/blog/",
-  title: "Chase the Truth 🙏🏻",
+  title: "Chase the Chance 🙏🏻",
   description: "navi的个人blog",
   head: [
     ['meta', { name: 'author', content: 'navi' }],
@@ -33,6 +33,7 @@ module.exports = {
       },
       { text: '网络', link: '/interview/' },
       { text: '算法', link: '/algorithm/' },
+      { text: '其他', link: '/others/' },
       { text: 'External', link: 'https://google.com' },
     ],
     sidebar: 'auto'

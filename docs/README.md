@@ -1,6 +1,6 @@
 ---
 home: true
-heroImage: /assets/img/Xie.jpg
+heroImage: /assets/img/nk.jpg
 heroText: N A V Ï
 tagline: The Front-End Road Taken²
 actionText: this is four-oh-four🤡 
