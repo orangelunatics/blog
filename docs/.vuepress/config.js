@@ -1,6 +1,6 @@
 module.exports = {
   base: "/blog/",
-  title: "Chase the Chance 🙏🏻",
+  title: "Go big ɔ: Go home 🍁",
   description: "navi的个人blog",
   head: [
     ['meta', { name: 'author', content: 'navi' }],
