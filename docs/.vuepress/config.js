@@ -20,14 +20,14 @@ module.exports = {
         items: [{
           text: '基础',
           items: [
-            { text: 'HTML + CSS', link: '/interview/' },
+            { text: 'HTML + CSS', link: '/H5/' },
             { text: 'JS + TS', link: '/JavaScript/' }
           ]
         }, {
           text: '框架',
           items: [
-            { text: 'Vue', link: '/interview/' },
-            { text: 'React', link: '/interview/' }
+            { text: 'Vue', link: '/Vue/' },
+            { text: 'React', link: '/React/' }
           ]
         }]
       },

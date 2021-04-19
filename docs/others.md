@@ -41,6 +41,6 @@ node package的版本号解析：0.54.8
 步骤：npm adduser(注意切换到npm源)、npm publish  
 出错原因可能是包重名或邮箱未验证
   
-### 10.npm切换源  
+### 10.npm源  
 查看源： npm config get registry  
 切换源： npm config set registry url

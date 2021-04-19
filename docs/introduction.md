@@ -2,7 +2,10 @@
 # sidebar: auto
 ---
 
-##  Navi
+## Navi 1997
+2019-2022  South China University of Technology  
+ 
+2015-2019 Jilin University  
 ## 1-学习路线
 HTML5🌻  CSS3🌻  ES6🌻  DOM🌻  BOM🌻  Git部分🌻  Node部分🌻  Webpack🌻  Vue🌻
 
