@@ -12,7 +12,7 @@
 3、背包问题  
 ①01背包，01指的是对此物品拿或不拿，且每个物体只能选一次  
 题目：  
-[牛客：01背包原型](https://www.nowcoder.com/practice/2820ea076d144b30806e72de5e5d4bbf?tpId=188&tqId=38312&rp=1&ru=%2Factivity%2Foj&qru=%2Fta%2Fjob-code-high-week%2Fquestion-ranking&tab=answerKey)  二维dp  进阶做法：滚动数组降为一维(暂时不会😅)  
+[牛客：01背包原型](https://www.nowcoder.com/practice/2820ea076d144b30806e72de5e5d4bbf?tpId=188&tqId=38312&rp=1&ru=%2Factivity%2Foj&qru=%2Fta%2Fjob-code-high-week%2Fquestion-ranking&tab=answerKey)  二维dp  进阶做法：滚动数组降为一维  
 
 ```javascript
 //已知一个背包最多能容纳物体的体积为V
@@ -34,7 +34,11 @@ function knapsack( V ,  n ,  vw ) {
   return dp[V][n]
 }
 ```
-力扣：分割等和子集、最后一块石头的重量II、目标和、一和零
+力扣：分割等和子集、最后一块石头的重量II、目标和、一和零  
+  
+②完全背包，每个元素可以多次选取。力扣 零钱兑换I II + 组合总和Ⅳ  
+[背包技巧](https://leetcode-cn.com/problems/combination-sum-iv/solution/xi-wang-yong-yi-chong-gui-lu-gao-ding-bei-bao-wen-/)  
+注意内外for循环的参照物以及内层循环的正序倒序问题  
 
 ## 前端高频篇
 ### 1、hex与RGB转化

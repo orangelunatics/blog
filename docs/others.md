@@ -39,8 +39,24 @@ node package的版本号解析：0.54.8
 ②第三方模块：jq、react、vue、express、axios等  
 ③自定义模块：代码见本地 新练习code-node-custom，步骤npm init -y生成package.json, 还需要一个js文件用来写逻辑, 注意js文件名字要和package.json中的main字段的名字一致, 用来向外暴露js逻辑(这里需要模块化的知识如commonJS), 比如要引用lodash,则需要引入这个包；下一步是发布包  
 步骤：npm adduser(注意切换到npm源)、npm publish  
-出错原因可能是包重名或邮箱未验证
+出错原因可能是包重名或邮箱未验证  
   
 ### 10.npm源  
 查看源： npm config get registry  
 切换源： npm config set registry url
+
+## 模块化规范
+### 优点
+1、避免命名冲突  
+2、更好地分离，按需加载  
+3、复用性高  
+4、维护性好  
+  
+### 分类
+1、CommonJS  
+在服务器端，模块的加载是运行时同步加载的；在浏览器端，模块需要提前编译打包处理(因为浏览器不认识CommonJS语法如require)  
+暴露模块：module.exports = value / exports.xxx = value。暴露的本质是exports对象。第一种暴露是把value赋给了exports对象，第二种是添加属性。  
+引入模块：①内置模块(如url、http)或第三方模块直接require(模块名字)②自定义模块要require(模块文件相对路径)  
+2、AMD  
+3、CMD  
+4、ES6
