@@ -39,6 +39,11 @@ function knapsack( V ,  n ,  vw ) {
 ②完全背包，每个元素可以多次选取。力扣 零钱兑换I II + 组合总和Ⅳ  
 [背包技巧](https://leetcode-cn.com/problems/combination-sum-iv/solution/xi-wang-yong-yi-chong-gui-lu-gao-ding-bei-bao-wen-/)  
 注意内外for循环的参照物以及内层循环的正序倒序问题  
-
+  
+4、二分法相关  **注意边界处理**  
+①[704. 二分查找](https://leetcode-cn.com/problems/binary-search/)  
+②[1011. 在D天内送达包裹的能力](https://leetcode-cn.com/problems/capacity-to-ship-packages-within-d-days/)  
+③[875. 爱吃香蕉的珂珂](https://leetcode-cn.com/problems/koko-eating-bananas/)  
+④[410. 分割数组的最大值](https://leetcode-cn.com/problems/split-array-largest-sum/)
 ## 前端高频篇
 ### 1、hex与RGB转化

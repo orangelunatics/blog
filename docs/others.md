@@ -57,6 +57,14 @@ node package的版本号解析：0.54.8
 在服务器端，模块的加载是运行时同步加载的；在浏览器端，模块需要提前编译打包处理(因为浏览器不认识CommonJS语法如require)  
 暴露模块：module.exports = value / exports.xxx = value。暴露的本质是exports对象。第一种暴露是把value赋给了exports对象，第二种是添加属性。  
 引入模块：①内置模块(如url、http)或第三方模块直接require(模块名字)②自定义模块要require(模块文件相对路径)  
-2、AMD  
-3、CMD  
-4、ES6
+browserify  
+2、AMD(requireJS)  
+专用于浏览器端，异步加载模块。  
+暴露模块：define方法  
+引入模块：require方法  
+3、CMD(seaJS)  
+专用于浏览器端，异步加载模块。(按需加载)  
+4、ES6(应用最广泛)  
+使用Babel将ES6转化为浏览器可识别的ES5，但还包含require语法，所以还需要browserify(babel还可以将jsx转化为js)  
+暴露模块：export ①分别暴露 ②统一暴露 ③默认暴露  
+引入模块：import ①通用方式import * as xx from 'path' ②解构赋值 ③简便形式import xx from '路径'只能用于默认暴露的情况。    
