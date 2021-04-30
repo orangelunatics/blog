@@ -11,6 +11,6 @@ features:
 - title: Computer Networks
   details: 计算机网络 + HTTP权威指南 + Web性能权威指南 + 自顶向下方法 + 浏览器工作原理与实践
 - title: Algorithm
-  details: 前端算法 + LeetCode主页：https://leetcode-cn.com/u/n4vicat/
+  details: 前端算法 + LeetCode主页：https://leetcode-cn.com/u/navilau/
 footer: MIT Licensed | Copyright © 2021-present Navi Lau
 ---

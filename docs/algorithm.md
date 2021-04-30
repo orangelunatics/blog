@@ -1,4 +1,4 @@
-## 算法algorithm
+## Algorithm
 ## 力扣篇
 1、 [220.存在重复元素 III](https://leetcode-cn.com/problems/contains-duplicate-iii/)0417每日一题x
 桶排序做法 O(n)时间复杂度
@@ -44,6 +44,14 @@ function knapsack( V ,  n ,  vw ) {
 ①[704. 二分查找](https://leetcode-cn.com/problems/binary-search/)  
 ②[1011. 在D天内送达包裹的能力](https://leetcode-cn.com/problems/capacity-to-ship-packages-within-d-days/)  
 ③[875. 爱吃香蕉的珂珂](https://leetcode-cn.com/problems/koko-eating-bananas/)  
-④[410. 分割数组的最大值](https://leetcode-cn.com/problems/split-array-largest-sum/)
+④[410. 分割数组的最大值](https://leetcode-cn.com/problems/split-array-largest-sum/)  
+  
+5、双指针相关  
+①链表相关题(快慢指针判断相交)  
+②[611. 有效三角形的个数](https://leetcode-cn.com/problems/valid-triangle-number/)  
+注意从后往前扫，保证只需要移动一个指针  
+③[15. 三数之和](https://leetcode-cn.com/problems/3sum/)  
+④[633. 平方数之和](https://leetcode-cn.com/problems/sum-of-square-numbers/)  
+
 ## 前端高频篇
 ### 1、hex与RGB转化
