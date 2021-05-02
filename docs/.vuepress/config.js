@@ -13,7 +13,7 @@ module.exports = {
     logo: '/assets/img/hero.png',
     nav: [
       { text: 'Home', link: '/' },
-      { text: '简介', link: '/introduction/' },
+      { text: 'intro', link: '/introduction/' },
       { text: '面经', link: '/interview/' },
       {
         text: '前端',
@@ -31,7 +31,7 @@ module.exports = {
           ]
         }]
       },
-      { text: '网络', link: '/interview/' },
+      { text: '网络', link: '/network/' },
       { text: '算法', link: '/algorithm/' },
       { text: '其他', link: '/others/' },
       { text: 'External', link: 'https://google.com' },
