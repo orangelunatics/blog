@@ -4,7 +4,7 @@
 此外还要注意查询ip时先查询本地hosts文件，以及最后的**格栅化**。  
   
 1、dom解析时，遇见script标签会阻塞dom的解析及渲染(执行或者下载并执行js，这取决于内联还是外联)。解决办法：defer和async(从下载和执行两个角度对比)。所以js标签放在底部。  
-![对比图](/assets/img/defer&async.png)  
+![对比图](/blog/assets/img/defer&async.png)  
   
 2、network里的蓝色线就是domContentLoaded事件触发的时间，红色线是load事件触发的时间，前者需要分情况，但总归都是dom解析完成时触发，即页面出现内容，可以拿到节点。load需要所有资源都加载完成后触发，包括图片。  
   
