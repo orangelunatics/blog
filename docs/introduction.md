@@ -7,7 +7,8 @@
  
 2015-2019 Jilin University  
 ## 1-学习路线
-HTML5🌻  CSS3🌻  ES6🌻  DOM🌻  BOM🌻  Git部分🌻  Node部分🌻  Webpack🌻  Vue🌻
+HTML5🌻  CSS3🌻  ES6🌻  DOM🌻  BOM🌻  Git部分🌻  Node部分🌻  Webpack🌻  Vue🌻  
+[计算机经典书籍PDF](https://github.com/forthespada/CS-Books)
 
 ## 2-近期计划
 Node深入学习🌼  React🌼  TypeScript🌼  Git熟悉使用🌼

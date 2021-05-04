@@ -63,13 +63,27 @@ reduce是这样的,如果第二个参数也就是初始值如果不给的话,那
 ## JS动画
 早期用定时器实现，更好的办法是使用requesttAnimationFrame(cb)，是H5的API。  
 主要思想：让执行cb的频率和屏幕刷新率保持一致，而不是通过定时器的时间进行控制，这样不会丢帧。  
-此外，可以利用此API的特性进行**节流**。
+此外，可以利用此API的特性进行**节流**。  
   
 ## tips  
-1.空字符串的索引
+1、空字符串的索引
 ```javascript
 const str = '123'
 console.log(str.indexOf(''));//0
 ```  
-2.[substr、substring、slice的区别](https://www.cnblogs.com/echolun/p/7646025.html)  
+  
+2、[substr、substring、slice的区别](https://www.cnblogs.com/echolun/p/7646025.html)  
+  
+3、Math.max()如果不接受参数则返回-Infinity，同理Math.min()返回Infinity，如果接受的参数不能转化为数字或者接受NaN，则返回NaN。另外关于map：  
+```javascript
+const m = new Map();
+console.log(...m.entries());//空的迭代器对象用拓展运算符不打印,注意是不打印而不是打印空字符串
 
+Number('0')
+0
+Number('')
+0
+Number()
+0
+```
+[参考资料](https://leetcode-cn.com/problems/brick-wall/)

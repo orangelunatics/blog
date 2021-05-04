@@ -31,6 +31,7 @@ module.exports = {
           ]
         }]
       },
+      { text: 'Node.js', link: '/node/' },
       { text: '网络', link: '/network/' },
       { text: '算法', link: '/algorithm/' },
       { text: '数据库', link: '/database/' },
