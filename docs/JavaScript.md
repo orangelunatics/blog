@@ -65,6 +65,9 @@ reduce是这样的,如果第二个参数也就是初始值如果不给的话,那
 主要思想：让执行cb的频率和屏幕刷新率保持一致，而不是通过定时器的时间进行控制，这样不会丢帧。  
 此外，可以利用此API的特性进行**节流**。  
   
+## JS六种异步方案
+[参考](https://juejin.cn/post/6844903760280420366)
+  
 ## tips  
 1、空字符串的索引
 ```javascript
@@ -86,4 +89,7 @@ Number('')
 Number()
 0
 ```
-[参考资料](https://leetcode-cn.com/problems/brick-wall/)
+[参考资料](https://leetcode-cn.com/problems/brick-wall/)  
+  
+4、位运算  
+**异或：**二进制相同位结果为0，不同位结果为1。eg:a^b = c, a^b^b = a, 即 c^b=a 同理 c^a =b

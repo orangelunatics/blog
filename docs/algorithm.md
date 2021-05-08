@@ -1,5 +1,5 @@
 ## Algorithm
-## 力扣篇
+## ⚡力扣篇
 ### 桶排序
 [220.存在重复元素 III](https://leetcode-cn.com/problems/contains-duplicate-iii/)0417每日一题  
 桶排序做法 O(n)时间复杂度
@@ -17,6 +17,7 @@
 [牛客：01背包原型](https://www.nowcoder.com/practice/2820ea076d144b30806e72de5e5d4bbf?tpId=188&tqId=38312&rp=1&ru=%2Factivity%2Foj&qru=%2Fta%2Fjob-code-high-week%2Fquestion-ranking&tab=answerKey)  二维dp  进阶做法：滚动数组降为一维  
 
 ```javascript
+// 一般第二个维度表示体积，我这里反着做一下。
 //已知一个背包最多能容纳物体的体积为V
 //现有n个物品第i个物品的体积为v_i,第i个物品的重量为w_i
 //求当前背包最多能装多大重量的物品
@@ -56,7 +57,29 @@ function knapsack( V ,  n ,  vw ) {
 ③[15. 三数之和](https://leetcode-cn.com/problems/3sum/)  
 ④[633. 平方数之和](https://leetcode-cn.com/problems/sum-of-square-numbers/)  
   
+### 回溯
+回溯是dfs递归的一种，一般会进行剪枝来优化时间复杂度。  
+组合排列系列、子集系列、[完成所有工作的最短时间](https://leetcode-cn.com/problems/find-minimum-time-to-finish-all-jobs/)  
+
+## ⚡前端高频篇
+### hex与RGB转化
   
 
-## 前端高频篇
-### 1、hex与RGB转化
+## ⚡智力题
+### 时钟夹角问题
+2021腾讯暑期实习遇到，ziv哥很善良，考的是最简单的一款。  
+2020CVTE实习提前批笔试考的是时分秒针夹角的算法。  
+  
+### 烧绳子问题
+[参考](https://mp.weixin.qq.com/s/ZfW406PUKU2Hf3b7BbdWJA)
+  
+### 三角形概率
+[高中线性规划](https://mp.weixin.qq.com/s/ZfW406PUKU2Hf3b7BbdWJA)
+  
+### 灯泡开关
+[参考](https://mp.weixin.qq.com/s/GPQ3EqmBLU_kCeKn1Ggyvg)  
+首先要知道，100个灯泡的初始状态都是不一定的。其次，在看完参考答案的三步法后，可以想到，这道题的最优解只需要两步：①、将灯泡变成只有一个是亮的。②由于成环状围绕，所以剩下99个，可以每三个一组变成亮的。  
+  
+### 1000杯水
+2020年字节日常实习面试遇到。  
+[2**10===1024](https://www.cnblogs.com/catpainter/p/12600448.html)
