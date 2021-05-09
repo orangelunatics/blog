@@ -6,7 +6,7 @@ module.exports = {
     ['meta', { name: 'author', content: 'navi' }],
     ['meta', { name: 'keywords', content: 'navi' }],
     ['link', { rel: 'icon', href: '/favicon.ico' }],
-    ['script',{type: 'text/javascript', src: '/assets/js/tongji.js',async: 'async'}]
+    ['script', {src: '/js/base.js', async: 'async'}]
   ],
   plugins: ['go-top'],
   themeConfig: {
