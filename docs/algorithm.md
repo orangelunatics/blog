@@ -49,6 +49,7 @@ function knapsack( V ,  n ,  vw ) {
 ②[1011. 在D天内送达包裹的能力](https://leetcode-cn.com/problems/capacity-to-ship-packages-within-d-days/)  
 ③[875. 爱吃香蕉的珂珂](https://leetcode-cn.com/problems/koko-eating-bananas/)  
 ④[410. 分割数组的最大值](https://leetcode-cn.com/problems/split-array-largest-sum/)  
+⑤[1482. 制作m束花所需的最少天数](https://leetcode-cn.com/problems/minimum-number-of-days-to-make-m-bouquets/)
   
 ### 双指针  
 ①链表相关题(快慢指针判断相交)  

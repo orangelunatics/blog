@@ -1,15 +1,31 @@
 module.exports = {
+  // theme: 'vuepress-theme-maker',
+  theme: 'yuu',
   base: "/blog/",
   title: "Go big ɔ: Go home 🍁",
   description: "navi的个人blog",
   head: [
     ['meta', { name: 'author', content: 'navi' }],
     ['meta', { name: 'keywords', content: 'navi' }],
-    ['link', { rel: 'icon', href: '/favicon.ico' }],
-    ['script', {src: '/js/base.js', async: 'async'}]
+    ['link', { rel: 'icon', href: '/favicon.ico' }]
   ],
-  plugins: ['go-top'],
+  plugins: [
+    'go-top',
+    [
+      '@xiaopanda/vuepress-plugin-code-copy', 
+      {
+        buttonStaticIcon: true,
+        buttonIconTitle: 'copy一下',
+        buttonAlign: 'bottom',
+        buttonColor: '#33FF48'
+      }
+    ],
+    'vuepress-plugin-baidu-autopush'
+  ],
   themeConfig: {
+    yuu: {
+			defaultDarkTheme: true,
+		},
     lastUpdated: 'Last Updated',
     logo: '/assets/img/hero.png',
     nav: [

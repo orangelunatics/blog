@@ -28,13 +28,15 @@
 6、表达式和语句的区别：表达式会返回值  
 表达式：a、a + b、demo(1)、arr.map(cb)、function fn() {}  
 语句：if、switch、for、while  
-7、模块(化)与组件(化)的概念  
+  
+### 面向组件编程
+1、模块(化)与组件(化)的概念  
 组件化比模块化的范畴更大。  
 模块化：一般情况，一个模块就指一个js文件。目的是让代码简洁有逻辑，可以复用js。  
 组件化：用来实现局部功能效果的代码和资源的集合(html/css/js/image等等)。目的和模块化类似。  
-8、React开发者工具  
+2、React开发者工具  
 F12可以查看组件  
-9、React中定义组件  
+3、React中定义组件的两种方式  
 ①函数式组件(适用于简单组件的定义)  
 ```javascript
 //1.创建函数式组件
@@ -73,4 +75,34 @@ ReactDOM.render(<MyComponent/>,document.getElementById('test'))
       2.发现组件是使用类定义的，随后new出来该类的实例(react内部实现，我们看不到)，并通过该实例调用到原型上的render方法。
       3.将render返回的虚拟DOM转为真实DOM，随后呈现在页面中。
 */
+```  
+  
+### 类组件实例的三大核心属性
+**1、state(状态)**  
+①注意回调函数的this指向问题。  
+场景：render方法中的return的标签里写的绑定事件及回调，this指向为undefined。  
+原因：实例的方法赋值给了回调，变成了直接调用，所以this不再指向实例对象。  
+②状态不能直接修改，必须通过setState(该方法接受对象类型)进行更新，且更新是一种合并，不是替换。  
+③可以简写：  
+首先可以不写constructor构造函数(构造器)，state状态一开始写死的，而且ES6的class允许将死数据比如this.age = 18写在构造函数外边，这时不用写this。  
+其次对于自定义方法，改写成赋值语句+箭头函数的形式，这样一来，有两个变化，第一点是该方法变成实例对象自身的方法，而不是挂载到原型对象上，第二点是箭头函数的this取决于外层作用域也就是类，而类中的this是实例对象，这样就不用再用bind修改this指向了。  
+```html
+<script type="text/babel">
+  //1.创建组件 
+  class Weather extends React.Component{ 
+    //初始化状态 
+    state = {isHot:false,wind:'微风'} 
+    render() { 
+      const {isHot,wind} = this.state 
+      return <h1 onClick={this.changeWeather}>今天天气很{isHot ? '炎热' : '凉爽'}，{wind}</h1>
+    } 
+    //自定义方法————要用赋值语句的形式+箭头函数 
+    changeWeather = ()=>{ 
+      const isHot = this.state.isHot 
+      this.setState({isHot:!isHot}) 
+    } 
+  } 
+  //2.渲染组件到页面 
+  ReactDOM.render(<Weather/>,document.getElementById('test'))
+</script>
 ```
