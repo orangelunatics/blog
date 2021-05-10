@@ -87,7 +87,8 @@ export default {
 <style>
   #canvas {
     position: absolute;
-    left: 40%;
-    top: 40%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
   }
 </style>
