@@ -60,8 +60,14 @@ function knapsack( V ,  n ,  vw ) {
   
 ### 回溯
 回溯是dfs递归的一种，一般会进行剪枝来优化时间复杂度。  
-组合排列系列、子集系列、[完成所有工作的最短时间](https://leetcode-cn.com/problems/find-minimum-time-to-finish-all-jobs/)  
-
+①组合排列系列  
+②子集系列  
+③[1723. 完成所有工作的最短时间](https://leetcode-cn.com/problems/find-minimum-time-to-finish-all-jobs/)  
+④[312. 戳气球](https://leetcode-cn.com/problems/burst-balloons/)(dp时间复杂度低，回溯比较好想)  
+  
+### 前缀和
+[参考](https://leetcode-cn.com/problems/subarray-sum-equals-k/solution/de-liao-yi-wen-jiang-qian-zhui-he-an-pai-yhyf/)  
+  
 ## ⚡前端高频篇
 ### hex与RGB转化
   
