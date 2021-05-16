@@ -73,3 +73,8 @@ browserify
 ## 操作系统
 ### 死锁
 [1、对于教材里死锁定义的补充](https://www.zhihu.com/question/263380756)  
+  
+## 设计模式
+### 职责链模式
+[12. 整数转罗马数字](https://leetcode-cn.com/problems/integer-to-roman/)  
+从这道题的官解和普通解之间的对比，可以更好地理解职责链模式，该模式可以解决面条式代码。  

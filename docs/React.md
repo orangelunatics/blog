@@ -85,7 +85,8 @@ ReactDOM.render(<MyComponent/>,document.getElementById('test'))
 ②状态不能直接修改，必须通过setState(该方法接受对象类型)进行更新，且更新是一种合并，不是替换。  
 ③可以简写：  
 首先可以不写constructor构造函数(构造器)，state状态一开始写死的，而且ES6的class允许将死数据比如this.age = 18写在构造函数外边，这时不用写this。  
-其次对于自定义方法，改写成赋值语句+箭头函数的形式，这样一来，有两个变化，第一点是该方法变成实例对象自身的方法，而不是挂载到原型对象上，第二点是箭头函数的this取决于外层作用域也就是类，而类中的this是实例对象，这样就不用再用bind修改this指向了。  
+其次对于自定义方法，改写成赋值语句+箭头函数的形式，这样一来，有两个变化，第一点是该方法变成实例对象自身的方法，而不是挂载到原型对象上，第二点是箭头函数的this取决于外层作用域也就是类，而类中的this是实例对象，这样就不用再用bind修改this指向了。
+④实际开发中，基本不写构造器。    
 ```html
 <script type="text/babel">
   //1.创建组件 
@@ -105,4 +106,102 @@ ReactDOM.render(<MyComponent/>,document.getElementById('test'))
   //2.渲染组件到页面 
   ReactDOM.render(<Weather/>,document.getElementById('test'))
 </script>
+```  
+  
+**2、props(标签属性)**  
+①类组件：  
+```javascript
+//1、传Number类型的数据,用大括号包裹
+ReactDOM.render(<Person name="jerry" age={19}  sex="男"/>,document.getElementById('test1'))
+// 2、对props的数据类型进行限制(在类外部写该逻辑，相当于静态属性)
+Person.propTypes = {
+  name:PropTypes.string.isRequired, //限制name必传，且为字符串
+  sex:PropTypes.string,//限制sex为字符串
+  age:PropTypes.number,//限制age为数值
+  speak:PropTypes.func,//限制speak为函数
+  // 注意函数是func
+}
+// 3、对props的部门props设置默认值(在类外部写该逻辑，相当于静态属性)
+Person.defaultProps = {
+  // 默认的意思是,如果不传该属性,就采用默认的值
+  sex:'男',//sex默认值为男
+  age:18 //age默认值为18
+}
+```  
+注：函数式组件不可以(除了hooks)使用state和refs，但是可以使用props。  
+  
+②类组件简写：  
+注意：使用了static，就要将静态属性写在类的内部。
+```javascript
+class Person extends React.Component{
+  constructor(props){
+    //构造器是否接收props，是否传递给super，取决于：是否希望在构造器中通过this访问props
+    // console.log(props);
+    super(props)
+    // console.log('30',this);//实例
+    console.log('constructor',this.props);
+    console.log('constructor',props);
+    // 如果构造器里不用this.props 则可以不写构造器
+  }
+
+  //对标签属性进行类型、必要性的限制
+  static propTypes = {
+    name:PropTypes.string.isRequired, //限制name必传，且为字符串
+    sex:PropTypes.string,//限制sex为字符串
+    age:PropTypes.number,//限制age为数值
+  }
+
+  //指定默认标签属性值
+  static defaultProps = {
+    sex:'男',//sex默认值为男
+    age:18 //age默认值为18
+  }
+  
+  render(){
+    // console.log(this);
+    const {name,age,sex} = this.props
+    //props是只读的
+    //this.props.name = 'jack' //此行代码会报错，因为props是只读的
+    return (
+      <ul>
+        <li>姓名：{name}</li>
+        <li>性别：{sex}</li>
+        <li>年龄：{age+1}</li>
+      </ul>
+    )
+  }
+}
+//渲染组件到页面
+ReactDOM.render(<Person name="jerry"/>,document.getElementById('test1'))
+```
+  
+③函数式组件使用props：  
+```javascript
+//创建组件
+function Person (props){
+  const {name,age,sex} = props
+  return (
+      <ul>
+        <li>姓名：{name}</li>
+        <li>性别：{sex}</li>
+        <li>年龄：{age}</li>
+      </ul>
+    )
+}
+// 思考一下：为什么静态属性放在函数外面？
+// 其实是因为，如果写在函数体内，想挂载到函数对象上，必须先调用函数。而写在函数体外，则不需要这样。  
+Person.propTypes = {
+  name:PropTypes.string.isRequired, //限制name必传，且为字符串
+  sex:PropTypes.string,//限制sex为字符串
+  age:PropTypes.number,//限制age为数值
+}
+
+//指定默认标签属性值
+Person.defaultProps = {
+  sex:'男',//sex默认值为男
+  age:18 //age默认值为18
+}
+console.log(Person);
+//渲染组件到页面
+ReactDOM.render(<Person name="jerry"/>,document.getElementById('test1'))
 ```

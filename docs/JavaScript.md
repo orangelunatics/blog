@@ -68,16 +68,68 @@ reduce是这样的,如果第二个参数也就是初始值如果不给的话,那
 ## JS六种异步方案
 [参考](https://juejin.cn/post/6844903760280420366)
   
+## 函数
+1、普通函数执行时发生了什么？  
+①形成一个全新的私有上下文EC，有一个私有变量对象AO(?)  
+②初始作用域链、初始this、初始arguments、形参赋值、变量提升。  
+③代码执行。  
+④出栈释放和不释放(闭包)。  
+  
+2、箭头函数执行：  
+①形成一个全新的私有上下文EC，有一个私有变量对象AO(?)  
+②初始作用域链、形参赋值、变量提升。  
+③代码执行。  
+④出栈释放和不释放(闭包)。  
+区别：写法、this、arguments、没有prototype(不允许被new)  
+  
+3、类数组(如arguments)变成数组：  
+①、扩展运算符  
+②、Array.from(arguments)  
+③、Array.prototype.slice.call(arguments)  
+其实这样也行: [].slice.call(arguments)  
+原因从slice源码可以看出，利用了arguments可以索引。  
+```javascript
+Arr.prototype.slice = function(start, end) {
+  if (!Array.isArray(this) || start) throw new Error('×')
+  const arr = [];
+  if (end < 0 && Math.abs(end) < this.length) end = this.length - Math.abs(end)；
+  if (end > this.length || end === undefined) end = this.length;
+  for (let i = start; i < end; i++) {
+    arr.push(this[i]);
+  }
+  return arr;
+}
+```
+其实类数组就是鸭子类型，既然数组可以，那么让类数组也可以，也就是借用。比如[].forEach.call(argumets,...)  
+  
+4、各种循环(for、while、forEach、for of、for in)  
+**待补充**  
+①性能对比  
+②底层原理  
+  
+5、块级作用域练习题  
+块级上下文产生的原因：在除了函数和对象的大括号中，出现let、const、function则会产生块级上下文。  
+```javascript
+{
+  function foo() {}
+  foo = 1;
+}
+console.log(foo);//输出foo函数体
+// 函数具有特殊性，全局中会进行foo的声明所以不报错，
+// 而在块级作用域内，进行了foo的声明和定义。从而改变了全局的foo。如果在前面log，则会undefined。  
+```  
+  
 ## tips  
-1、空字符串的索引
+**1、空字符串的索引**
 ```javascript
 const str = '123'
 console.log(str.indexOf(''));//0
 ```  
   
-2、[substr、substring、slice的区别](https://www.cnblogs.com/echolun/p/7646025.html)  
+**2、[substr、substring、slice的区别](https://www.cnblogs.com/echolun/p/7646025.html)**  
   
-3、Math.max()如果不接受参数则返回-Infinity，同理Math.min()返回Infinity，如果接受的参数不能转化为数字或者接受NaN，则返回NaN。另外关于map：  
+**3、Math.max()和min()的细节**  
+Math.max()如果不接受参数则返回-Infinity，同理Math.min()返回Infinity，如果接受的参数不能转化为数字或者接受NaN，则返回NaN。另外关于map：  
 ```javascript
 const m = new Map();
 console.log(...m.entries());//空的迭代器对象用拓展运算符不打印,注意是不打印而不是打印空字符串
@@ -91,5 +143,43 @@ Number()
 ```
 [参考资料](https://leetcode-cn.com/problems/brick-wall/)  
   
-4、位运算  
-**异或：**二进制相同位结果为0，不同位结果为1。eg:a^b = c, a^b^b = a, 即 c^b=a 同理 c^a =b
+**4、位运算**  
+**异或：**二进制相同位结果为0，不同位结果为1，即不进位相加。eg:a^b = c, a^b^b = a, 即 c^b=a 同理 c^a =b;五月份力扣每日一题多次出现异或运算。  
+  
+**5、私有方法与静态方法**  
+[参考1](https://juejin.cn/post/6844904164913315853) [参考2](https://www.cnblogs.com/huangshikun/p/6509822.html)  
+ES5的Person.name这种静态属性相当于ES6迭代static关键字  
+  
+**6、ECMAScript**  
++ 1995年，网景工程师Brendan Eich(布兰登·艾奇)花了10天时间设计了JavaScript语言，1996年微软发布了JScript，同时拉开了Navigator和Internet Explorer浏览器大战的序幕（到2002年IE完胜，占据全世界96%的市场份额）  
++ 为了让各大浏览器统一编程规范，1997年6月ECMA（欧洲计算机制造联合会）以JavaScript语言为基础制定了ECMAScript标准规范ECMA-262，从此浏览器厂商都是按照这个规范来开发自己的浏览器产品；  
++ 1999年12月ES3发布，到2011年6月ES5发布（2007年的ES4夭折：改动太大），ES3占据了10年历程，也是JS语言的基础。2015年6月ES6发布（但是由于之后规定每年发布一个新的版本，所以后改名ES2015），2016年6月对2015版本增强的2016版本发布，此后相继有ES2017、ES2018…  
+----------  
+* ES2015(ES6)：let/const、解构赋值、数组/对象等方法扩展、Symbol、Set/Map、Proxy、Reflect、Promise、Iterator(for of)、Generator、Class、ES6Module...  
+* ES2016(ES7)：Array.prototype.includes、指数运算符(a**b)...  
+* ES2017(ES8)：async/await、Promise.prototype.finally、Object.values/entries/getOwnPropertyDescriptors、字符串填充 padStart和padEnd、SharedArrayBuffer共享内存、Atomic原子操作...  
+* ES2018(ES9)：对象的拓展运算符、正则表达式上的一些升级、异步遍历器...  
+* ES2019(ES10)：String.prototype.trimStart/trimEnd、Object.fromEntries、Array.prototype.flat/flatMap、catch的参数改为可选、Symbol.description、JSON Superset超集、stringify加强格式转化、Array.prototype.sort更加稳定、Function.prototype.toString重新修订...  
+* ES2020(ES11)：String.prototype.matchAll、import() 、BigInt、Promise.allSettled、globalThis、可选链、空值合并运算符、export * as ns from “mod”、for-in机制完善...  
+* ES2021(ES12)：String.prototype.replaceAll、Promise.any、WeakRefs、??=、||=、&&=、Numeric separators(数字分隔符)..  
+  
+**7、数据类型分类**  
+原始值类型「primitive values」：基本数据类型、值类型  
+&nbsp;&nbsp; • number  
+&nbsp;&nbsp; • string  
+&nbsp;&nbsp; • boolean  
+&nbsp;&nbsp; • null  
+&nbsp;&nbsp; • undefined  
+&nbsp;&nbsp; • symbol  
+&nbsp;&nbsp; • bigint  
+对象类型「object」：引用数据类型  
+&nbsp;&nbsp; • 标准普通对象  Object  
+&nbsp;&nbsp; • 标准特殊对象  Array、RegExp、Date、Error...  
+&nbsp;&nbsp; • 函数对象 Function  
+&nbsp;&nbsp; • 非标准特殊对象 Number、String、Boolean...  
+::: tip 提示
+扩展：数据类型转换规则、数据类型检测、二进制的处理(进制转换)、堆栈内存及底层处理机制、装箱(拆箱)等等  
+:::  
+  
+**8、push和unshift细节**  
+返回的是数组的新的长度  
