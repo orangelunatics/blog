@@ -1,7 +1,11 @@
 ## others
 ## git
+1、git pull 命令  
+用于从远程获取代码并合并本地的版本。  
+git pull 其实就是 git fetch 和 git merge FETCH_HEAD 的简写。   
+
 ## npm
-[千锋node](https://lurongtao.gitee.io/felixbooks-gp19-node.js/basics/01-Node.js%E5%9F%BA%E7%A1%80.html)  
+[千锋node文档](https://lurongtao.gitee.io/felixbooks-gp19-node.js/basics/01-Node.js%E5%9F%BA%E7%A1%80.html)  
 1、npm与npx区别：  
 对于node_modules中安装的模块，全局中没有安装，这时不能使用npm，而npx会优先寻找当前项目的node_modules，如果没有，会自动安装  
   

@@ -85,7 +85,7 @@ ReactDOM.render(<MyComponent/>,document.getElementById('test'))
 ②状态不能直接修改，必须通过setState(该方法接受对象类型)进行更新，且更新是一种合并，不是替换。  
 ③可以简写：  
 首先可以不写constructor构造函数(构造器)，state状态一开始写死的，而且ES6的class允许将死数据比如this.age = 18写在构造函数外边，这时不用写this。  
-其次对于自定义方法，改写成赋值语句+箭头函数的形式，这样一来，有两个变化，第一点是该方法变成实例对象自身的方法，而不是挂载到原型对象上，第二点是箭头函数的this取决于外层作用域也就是类，而类中的this是实例对象，这样就不用再用bind修改this指向了。
+其次对于自定义方法，改写成赋值语句+箭头函数的形式，这样一来，有两个变化，第一点是该方法变成实例对象自身的方法，而不是挂载到原型对象上，第二点是箭头函数的this取决于外层作用域也就是类，而类中的this是实例对象，这样就不用再用bind修改this指向了。  
 ④实际开发中，基本不写构造器。    
 ```html
 <script type="text/babel">
@@ -127,8 +127,7 @@ Person.defaultProps = {
   sex:'男',//sex默认值为男
   age:18 //age默认值为18
 }
-```  
-注：函数式组件不可以(除了hooks)使用state和refs，但是可以使用props。  
+```    
   
 ②类组件简写：  
 注意：使用了static，就要将静态属性写在类的内部。
@@ -176,6 +175,7 @@ ReactDOM.render(<Person name="jerry"/>,document.getElementById('test1'))
 ```
   
 ③函数式组件使用props：  
+**注：函数式组件不可以(除了hooks)使用state和refs，但是可以使用props。**   
 ```javascript
 //创建组件
 function Person (props){
@@ -204,4 +204,61 @@ Person.defaultProps = {
 console.log(Person);
 //渲染组件到页面
 ReactDOM.render(<Person name="jerry"/>,document.getElementById('test1'))
+```  
+  
+**3、refs**  
+①字符串形式(不推荐使用，效率低(why))：  
+```js
+<input ref="input1" type="text" placeholder="点击按钮提示数据"/>
+console.log(this.refs)//{input1: input}
+```  
+②回调函数形式：  
+```js
+<input ref={c => this.input1 = c} type="text" placeholder="点击按钮提示数据"/>
+//c代表currentNode，react自动执行这个回调函数，传的参数为当前真实的DOM(当前ref所处的节点)
+//此处的this代表实例对象
+//和形式字符串不同的是，字符串形式是将节点存在refs，
+//而回调形式是新建了input1(自定义的)属性，存放节点，而不是放在refs对象中
+
+//下面是jsx的注释写法
+{/*<input ref={(c)=>{this.input1 = c;console.log('@',c);}} type="text"/><br/><br/>*/}
 ```
+注意：由于上面的代码放在render方法中，首次渲染的时候，执行一次，c是input节点。之后每次重新渲染的时候，该cb会执行两次。  
+:::tip 注意
+关于回调 refs 的说明
+如果 ref 回调函数是以内联函数的方式定义的，在更新过程中它会被执行两次，第一次传入参数 null，然后第二次会传入参数 DOM 元素。这是因为在每次渲染时会创建一个新的函数实例，所以 React 清空旧的 ref 并且设置新的。通过将 ref 的回调函数定义成 class 的绑定函数(也就是说写成原型上的方法，重新渲染即更改DOM时，不再调用cb)的方式可以避免上述问题，但是大多数情况下它是无关紧要的。  
+以后写成内联就可以。
+:::
+③create Ref API形式(最推荐)：  
+```js
+myRef = React.createRef()
+showData = ()=>{
+  alert(this.myRef.current.value);
+  console.log(this);
+}
+render(){
+  return(
+    <div>
+      <input ref={this.myRef} type="text" placeholder="点击按钮提示数据"/>&nbsp;
+      <button onClick={this.showData}>点我提示左侧的数据</button>&nbsp;
+    </div>
+  )
+}
+//将input节点存放在了实例的myRef属性中，this.myRef => {current: input}
+//并且每个createRef只能存放一个节点，后续如果使用同一个createRef会替换之前的
+//缺点：用几个节点，就得创建几次createRef
+```
+④总结refs  
+尽量避免字符串形式；尽量使用createRef形式；回调形式(内联或者原型都可)较麻烦(create多次用其实也较麻烦)。  
+  
+## React生命周期  
+  
+## create-react-app脚手架
+正式项目(生产环境)里就要用脚手架。create-react-app是Facebook推出的基于react+webpack+es6+eslint的脚手架，能够快速创建项目，更好地实现模块化、组件化和工程化(即自动化)。  
+### 脚手架文件介绍
+1、public是静态资源文件夹  
+其中的index.html是容器(主页面)，就是document.getElementById('test')，并且只有这一个html文件，也就是SPA-single page application应用、 %PUBLIC_URL%代表public文件夹路径、 manifest.json文件用于应用加壳、robots.txt用于(防范)爬虫
+2、src是源码文件夹  
+App.js是根组件(约定俗成组件的首字母都是大写的)、App.css是根组件的样式、App.test.js是测试文件(基本不用)、index.js是入口文件、reportWebVitals.js用于记录页面性能、setupTests.js用于组件测试和单元测试  
+3、执行顺序  
+从index.js进入，当执行ReactDOM.render方法时，根据document.getElementById('root')找到public文件夹里的index.html文件，同时根据<App/>找到App.js组件。这三个是最重要的，其他都是附属。  

@@ -103,10 +103,8 @@ Arr.prototype.slice = function(start, end) {
 其实类数组就是鸭子类型，既然数组可以，那么让类数组也可以，也就是借用。比如[].forEach.call(argumets,...)  
   
 4、各种循环(for、while、forEach、for of、for in)  
-**待补充**  
-①性能对比  
-②底层原理  
-  
+性能由快到慢(v8)：for ≈ while > forEach ≈ for of > for in  
+    
 5、块级作用域练习题  
 块级上下文产生的原因：在除了函数和对象的大括号中，出现let、const、function则会产生块级上下文。  
 ```javascript
@@ -118,6 +116,16 @@ console.log(foo);//输出foo函数体
 // 函数具有特殊性，全局中会进行foo的声明所以不报错，
 // 而在块级作用域内，进行了foo的声明和定义。从而改变了全局的foo。如果在前面log，则会undefined。  
 ```  
+## 栈堆问题
+1、为什么引用类型数据的值存放在堆中  
+引用数据类型占据空间大、大小不固定，如果存储在栈中，将影响程序的运行性能。   
+
+## TypeScript
+1、TS是以JS为基础构建的语言，是JS的超集(相当于JS pro)，扩展了JS并添加了类型，可以在任何支持JS的平台中执行。但TS不能被JS解析器直接执行，需要编译为JS(利用tsc)。    
+2、why studying?  
+JS是动态语言(不声明变量类型)，虽然灵活，但不容易找错误的代码位置。  
+3、特点  
+①类型声明：变量、函数参数、返回值
   
 ## tips  
 **1、空字符串的索引**
@@ -140,6 +148,8 @@ Number('')
 0
 Number()
 0
+
+Math.max([100],1) => 100  //内部是调用了Number()的过程
 ```
 [参考资料](https://leetcode-cn.com/problems/brick-wall/)  
   
@@ -183,3 +193,19 @@ ES5的Person.name这种静态属性相当于ES6迭代static关键字
   
 **8、push和unshift细节**  
 返回的是数组的新的长度  
+    
+**9、arr.map(parseInt)**
+问题出在map方法接受的回调的参数的默认问题，cb的第二个参数为索引，索引又变成了parseInt的第二个参数，则产生进制问题，如['1', '2', '3'].map(parseInt) => [1, NaN, NaN]。  
+  
+**10、for循环的特殊用法**
+[14. 最长公共前缀](https://leetcode-cn.com/problems/longest-common-prefix/)  
+```js
+// 题解 部分代码
+let j = 0;
+for (;j < Math.min(res.length, strs[i].length); j++) {
+  if (res[j] !== strs[i][j]) {
+    break;
+  }
+}
+res = res.slice(0, j);
+```
