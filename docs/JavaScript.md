@@ -209,3 +209,12 @@ for (;j < Math.min(res.length, strs[i].length); j++) {
 }
 res = res.slice(0, j);
 ```
+  
+**11、对象的连续解构赋值+重命名**
+```js
+const obj = {a: {b: 1}}
+const {a: {b: data}} = obj
+//相当于将b变量重命名为data
+console.log(data) //1
+// 注意：连续解构赋值 只能拿到最后的变量，如果打印a，则报错
+```

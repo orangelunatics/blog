@@ -26,7 +26,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;a.若小写字母开头，则将该标签转为html中同名元素，若html中无该标签对应的同名元素，则报错。  
 &nbsp;&nbsp;&nbsp;&nbsp;b.若大写字母开头，react就去渲染对应的组件，若组件没有定义，则报错。  
 6、表达式和语句的区别：表达式会返回值  
-表达式：a、a + b、demo(1)、arr.map(cb)、function fn() {}  
+表达式：a、a + b、demo(1)、arr.map(cb)、function fn() {} 、三元
 语句：if、switch、for、while  
   
 ### 面向组件编程
@@ -262,3 +262,73 @@ render(){
 App.js是根组件(约定俗成组件的首字母都是大写的)、App.css是根组件的样式、App.test.js是测试文件(基本不用)、index.js是入口文件、reportWebVitals.js用于记录页面性能、setupTests.js用于组件测试和单元测试  
 3、执行顺序  
 从index.js进入，当执行ReactDOM.render方法时，根据document.getElementById('root')找到public文件夹里的index.html文件，同时根据<App/>找到App.js组件。这三个是最重要的，其他都是附属。  
+  
+## React前端路由
+### 路由的基本使用
+1.明确好界面中的导航区、展示区  
+2.导航区的a标签改为Link标签  
+```js
+<Link to="/xxxxx">Demo</Link>
+```  
+3.展示区写Route标签进行路径的匹配  
+```js
+<Route path='/xxxx' component={Demo}/>  
+```
+4.index.js的App外部包裹BrowserRouter或HashRouter标签  
+
+## React实践
+1、多层三元表达式(jsx不能写if语句)  
+```js
+render() {
+  const {users,isFirst,isLoading,err} = this.state
+  return (
+    <div className="row">
+      {
+        isFirst ? <h2>欢迎使用，输入关键字，随后点击搜索</h2> :
+        isLoading ? <h2>Loading......</h2> :
+        err ? <h2 style={{color:'red'}}>{err}</h2> :
+        users.map((userObj)=>{
+          return (
+            <div key={userObj.id} className="card">
+              <a rel="noreferrer" href={userObj.html_url} target="_blank">
+                <img alt="head_portrait" src={userObj.avatar_url} style={{width:'100px'}}/>
+              </a>
+              <p className="card-text">{userObj.login}</p>
+            </div>
+          )
+        })
+      }
+    </div>
+  )
+}
+```
+2、PubSub发布订阅：适用于任何组件间的通信。  
+[使用方式](https://github.com/mroderick/PubSubJS)  
+3、路由组件和一般组件的区别。  
+1.写法不同：  
+```js
+// 一般组件：
+<Demo/>
+// 路由组件：
+<Route path="/demo" component={Demo}/>
+```
+2.存放位置不同：一般组件：components ; 路由组件：pages  
+3.接收到的props不同：  
+一般组件：写组件标签时传递了什么，就能收到什么  
+路由组件：接收到三个固定的属性  
+**history:**  
+&nbsp;&nbsp;go: ƒ go(n)  
+&nbsp;&nbsp;goBack: ƒ goBack()  
+&nbsp;&nbsp;goForward: ƒ goForward()  
+&nbsp;&nbsp;push: ƒ push(path, state)  
+&nbsp;&nbsp;replace: ƒ replace(path, state)  
+**location:**  
+&nbsp;&nbsp;pathname: "/about"  
+&nbsp;&nbsp;search: ""  
+&nbsp;&nbsp;state: undefined  
+**match:**  
+&nbsp;&nbsp;params: {}  
+&nbsp;&nbsp;path: "/about"  
+&nbsp;&nbsp;url: "/about"  
+  
+## Redux(与Vuex作用类似)

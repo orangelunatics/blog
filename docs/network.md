@@ -44,7 +44,11 @@ DOM限制：Worker线程无法获取主线程所在的网页的DOM。
 ## Web Socket  
 [一种通信协议](http://www.52im.net/forum.php?mod=viewthread&tid=332)，初次认识是因为可以跨域。后续补充。
   
-## 301与302
+## HTTP状态码
+101：协议升级。始终由客户端发起，并且服务器可能接受或拒绝切换到新协议。客户端可使用常用的协议(如HTTP / 1.1)发起请求，请求说明需要切换到HTTP/2或甚至到WebSocket。  
+204：服务端成功处理了请求，而不返回资源，页面也不更新。常用于只需要客户端向服务端进行发送数据。  
+205：与204类似，不同的地方在于：要求客户端重置文档视图。常用于接受了用户的表单输入后，立即重置表单，以便进行下一次输入。  
+206：客户端进行范围请求。比如迅雷下载将大文件分成多个文件同时下载，需要有range请求头描述范围。  
 301：永久重定向。  
 302：临时重定向。  
 他们都会跳转到重定向的url，响应头都有location字段，表示最新的url。  
@@ -52,4 +56,21 @@ DOM限制：Worker线程无法获取主线程所在的网页的DOM。
 ①、301表示网页永久性地转移到另一个url。302是临时性地转移。  
 ②、302可能发生[url劫持](https://github.com/chenyongyang/blog/issues/43)(302保留原来的url，如果定向的url过于复杂，则会显示之前的url，但是网页内容是定向的网页内容，发生劫持)，并且很多时候被搜索引擎认为作弊，会导致降权。    
 ③、301会将域名的权重转移到新url，从而增加新url的权重。302不会转移权重。  
-④、使用场景：301适用于想更换域名，告诉搜索引需要对新的域名进行收录。302适用于网站故障、维护、更新等情况。
+④、使用场景：301适用于想更换域名，告诉搜索引需要对新的域名进行收录。302适用于网站故障、维护、更新等情况。  
+  
+## Ajax请求
+1、xhr：①原生、②封装xhr的jQ、③封装xhr的axios。后两者都是基于promise的链式调用，但都是第三方的模块。  
+2、fetch：原生的并且基于promise，关注分离的设计模式(可以先看服务器是否连接上，然后再处理数据，也就是说并不是直接给数据)。缺点：兼容性差(ie全系列都不行)。  
+```js
+//使用async和await的版本，更加简洁，同步表示异步。注意response.json()返回的是promise实例
+//外部需要配合async使用
+try {
+  const response= await fetch(`/api1/search/users2?q=${keyWord}`)
+  const data = await response.json()
+  console.log(data);
+  PubSub.publish('atguigu',{isLoading:false,users:data.items})
+} catch (error) {
+  console.log('请求出错',error);
+  PubSub.publish('atguigu',{isLoading:false,err:error.message})
+}
+```
