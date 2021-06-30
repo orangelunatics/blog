@@ -76,11 +76,12 @@ reduce是这样的,如果第二个参数也就是初始值如果不给的话,那
 ④出栈释放和不释放(闭包)。  
   
 2、箭头函数执行：  
-①形成一个全新的私有上下文EC，有一个私有变量对象AO(?)  
+①形成一个全新的私有上下文EC，有一个私有变量对象AO  
 ②初始作用域链、形参赋值、变量提升。  
 ③代码执行。  
 ④出栈释放和不释放(闭包)。  
 区别：写法、this、arguments、没有prototype(不允许被new)  
+箭头函数的this指向所在上下文的this，或者说父级的this  
   
 3、类数组(如arguments)变成数组：  
 ①、扩展运算符  
@@ -89,8 +90,8 @@ reduce是这样的,如果第二个参数也就是初始值如果不给的话,那
 其实这样也行: [].slice.call(arguments)  
 原因从slice源码可以看出，利用了arguments可以索引。  
 ```javascript
-Arr.prototype.slice = function(start, end) {
-  if (!Array.isArray(this) || start) throw new Error('×')
+Array.prototype.slice = function(start, end) {
+  if (!Array.isArray(this) || !start) throw new Error('×')
   const arr = [];
   if (end < 0 && Math.abs(end) < this.length) end = this.length - Math.abs(end)；
   if (end > this.length || end === undefined) end = this.length;
@@ -103,10 +104,10 @@ Arr.prototype.slice = function(start, end) {
 其实类数组就是鸭子类型，既然数组可以，那么让类数组也可以，也就是借用。比如[].forEach.call(argumets,...)  
   
 4、各种循环(for、while、forEach、for of、for in)  
-性能由快到慢(v8)：for ≈ while > forEach ≈ for of > for in  
+性能由快到慢(v8)：for ≈ while > forEach ≈ for of > for in(要遍历原型链)  
     
 5、块级作用域练习题  
-块级上下文产生的原因：在除了函数和对象的大括号中，出现let、const、function则会产生块级上下文。  
+~~块级上下文产生的原因：在除了函数和对象的大括号中，出现let、const、function则会产生块级上下文。~~  
 ```javascript
 {
   function foo() {}
@@ -115,7 +116,11 @@ Arr.prototype.slice = function(start, end) {
 console.log(foo);//输出foo函数体
 // 函数具有特殊性，全局中会进行foo的声明所以不报错，
 // 而在块级作用域内，进行了foo的声明和定义。从而改变了全局的foo。如果在前面log，则会undefined。  
-```  
+```    
+  
+6、闭包(较规范的定义)  
+在JavaScript中，根据词法作⽤域的规则，内部函数总是可以访问其外部函数中声明的变量，当通过调⽤一个外部函数返回⼀个内部函数后，即使该外部函数已经执⾏结束了，但是内部函数引⽤外部函数的变量依然保存在内存中，我们就把这些变量的集合称为闭包。⽐如外部函数是foo，那么这些变量的集合就称为foo函数的闭包。  
+   
 ## 栈堆问题
 1、为什么引用类型数据的值存放在堆中  
 引用数据类型占据空间大、大小不固定，如果存储在栈中，将影响程序的运行性能。   
@@ -125,7 +130,20 @@ console.log(foo);//输出foo函数体
 2、why studying?  
 JS是动态语言(不声明变量类型)，虽然灵活，但不容易找错误的代码位置。  
 3、特点  
-①类型声明：变量、函数参数、返回值
+①类型声明：变量、函数参数、返回值  
+  
+## 纯函数
+一类特别的函数: 只要是同样的输入(实参)，必定得到同样的输出(返回)  
+必须遵守以下一些约束：  
+1)不得改写参数数据  
+2)不会产生任何副作用，例如网络请求，输入和输出设备  
+3)不能调用Date.now()或者Math.random()等不纯的方法    
+补充：redux的reducer函数必须是一个纯函数  
+
+## WebAssembly
+运用JIT技术之后，JS的运行速度已经变得很快，而WebAssembly可以使其更快。  
+  
+## Serverless
   
 ## tips  
 **1、空字符串的索引**
@@ -218,3 +236,11 @@ const {a: {b: data}} = obj
 console.log(data) //1
 // 注意：连续解构赋值 只能拿到最后的变量，如果打印a，则报错
 ```
+
+## VOG全局变量对象 GO全局对象 EC(G)全局执行上下文
+EC(G)下有VOG VOG里有GO(?) 生成的 有的放在VOG 有的go
+<!-- GeekPDF09:块级作⽤域就是通过词法环境的栈结构来
+实现的，⽽变量提升是通过变量环境来实现，通过这两者的结合，JavaScript引擎也就同时⽀持了变量提升
+和块级作⽤域了。 -->
+全局上下文的var function 存在于GO 、全局上下文的let const存在于VOG
+函数在存储的时候 堆中存储分为三部分 1、

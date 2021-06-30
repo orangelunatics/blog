@@ -57,22 +57,44 @@ node package的版本号解析：0.54.8
 3、复用性高  
 4、维护性好  
   
-### 分类
-1、CommonJS  
-在服务器端，模块的加载是运行时同步加载的；在浏览器端，模块需要提前编译打包处理(因为浏览器不认识CommonJS语法如require)  
+### 分类(发展史)
+1、单例模式(设计模式)  
+利用立即执行函数和闭包，将对象暴露出来，供其他地方使用。缺点：项目复杂之后，JS的导入关系也极其复杂。  
+2、AMD规范(requireJS)  
+专用于浏览器端，异步加载模块。缺点：依赖前置，非按需加载。  
+暴露模块：define方法  
+引入模块：require方法  
+3、CommonJS  
+在服务器端，模块的加载是运行时同步加载的(服务端读取快)；在浏览器端(不能直接在浏览器端执行，这是缺点)，模块需要提前编译打包处理(因为浏览器不认识CommonJS语法如require)，优点：不用依赖前置，用的时候再导入即可。  
 暴露模块：module.exports = value / exports.xxx = value。暴露的本质是exports对象。第一种暴露是把value赋给了exports对象，第二种是添加属性。  
 引入模块：①内置模块(如url、http)或第三方模块直接require(模块名字)②自定义模块要require(模块文件相对路径)  
 browserify  
-2、AMD(requireJS)  
-专用于浏览器端，异步加载模块。  
-暴露模块：define方法  
-引入模块：require方法  
-3、CMD(seaJS)  
-专用于浏览器端，异步加载模块。(按需加载)  
-4、ES6(应用最广泛)  
+4、CMD规范(seaJS)(淘系)  
+基于CommonJS，使其能用于浏览器端，异步加载模块。(按需加载)  
+5、ES6(应用最广泛,浏览器和服务器通用的模块解决方案)  
+浏览器端开启ES6Module，script标签需要加上type="module",并且需要基于HTTP/HTTPS等标准Web协议访问页面。  
 使用Babel将ES6转化为浏览器可识别的ES5，但还包含require语法，所以还需要browserify(babel还可以将jsx转化为js)  
 暴露模块：export ①分别暴露 ②统一暴露 ③默认暴露  
-引入模块：import ①通用方式import * as xx from 'path' ②解构赋值 ③简便形式import xx from '路径'只能用于默认暴露的情况。    
+引入模块：import ①通用方式import * as xx from 'path' ②解构赋值 ③简便形式import xx from '路径'只能用于默认暴露的情况。  
+缺点：由于import是静态执行，所以不能使用表达式和变量这些只有在运行时才能得到结果的语法结构。  
+```js
+// 报错
+import { 'f' + 'oo' } from 'my_module';
+
+// 报错
+let module = 'my_module';
+import { foo } from module;
+
+// 报错
+if (x === 1) {
+  import { foo } from 'module1';
+} else {
+  import { foo } from 'module2';
+}
+```
+6、ES6 模块与 CommonJS 模块的差异  
+①CommonJS 模块输出的是一个值的拷贝，ES6 模块输出的是值的引用。  
+②CommonJS 模块是运行时加载(动态加载)，ES6 模块是编译时加载(静态加载，且效率高)，所以import命令有变量提升(这种行为的本质是，import命令是编译阶段执行的，在代码运行之前)。  
   
 ## 操作系统
 ### 死锁
@@ -82,3 +104,8 @@ browserify
 ### 职责链模式
 [12. 整数转罗马数字](https://leetcode-cn.com/problems/integer-to-roman/)  
 从这道题的官解和普通解之间的对比，可以更好地理解职责链模式，该模式可以解决面条式代码。  
+  
+## 计算机基础
+1、二进制表示  
+①正负数用补码来表示，正数的补码就是原码；负数的补码是正数的原码的反码再加1。也适用(n & 1) === 0来看奇偶。  
+②二进制转十进制是求幂，十进制转二进制是求余数再反过来拼接到一起。  

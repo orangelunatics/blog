@@ -89,4 +89,8 @@ function knapsack( V ,  n ,  vw ) {
   
 ### 1000杯水
 2020年字节日常实习面试遇到。  
-[2**10===1024](https://www.cnblogs.com/catpainter/p/12600448.html)
+[2**10===1024](https://www.cnblogs.com/catpainter/p/12600448.html)  
+  
+## 定理公式
+1、[同余定理](https://leetcode-cn.com/problems/continuous-subarray-sum/solution/gong-shui-san-xie-tuo-zhan-wei-qiu-fang-1juse/)  
+2、

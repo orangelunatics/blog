@@ -175,7 +175,7 @@ ReactDOM.render(<Person name="jerry"/>,document.getElementById('test1'))
 ```
   
 ③函数式组件使用props：  
-**注：函数式组件不可以(除了hooks)使用state和refs，但是可以使用props。**   
+**注：函数式组件不可以(除了hooks)使用state和refs和生命周期钩子(本质是没有this)，但是可以使用props。**   
 ```javascript
 //创建组件
 function Person (props){
@@ -332,3 +332,7 @@ render() {
 &nbsp;&nbsp;url: "/about"  
   
 ## Redux(与Vuex作用类似)
+Action Creators这一步可以不要、Reducers不仅可以加工状态还可以初始化状态，初始化的时候previous就是undefined、接触纯函数这个概念
+补充：父组件render  子组件一定执行render  反之并不是  解决效率问题：PureComponent
+actioncreator 用来 生成action对象 不用自己写action对象了
+constantjs文件用来定义type变量，防止写错单词，并且可以统一管理type，统一修改 

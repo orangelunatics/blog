@@ -1,2 +1,3 @@
 ## Adole
-[8股网站](http://upheart.cn/)
+让我想想写点什么好。
+pp
