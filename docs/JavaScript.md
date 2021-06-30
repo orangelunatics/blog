@@ -236,11 +236,12 @@ const {a: {b: data}} = obj
 console.log(data) //1
 // 注意：连续解构赋值 只能拿到最后的变量，如果打印a，则报错
 ```
-
-## VOG全局变量对象 GO全局对象 EC(G)全局执行上下文
-EC(G)下有VOG VOG里有GO(?) 生成的 有的放在VOG 有的go
+  
+**12、VOG GO EC(G)**  
+VOG全局变量对象\GO全局对象\EC(G)全局执行上下文  
+EC(G)下有VOG VOG里有GO(?) 生成的 有的放在VOG 有的GO  
 <!-- GeekPDF09:块级作⽤域就是通过词法环境的栈结构来
 实现的，⽽变量提升是通过变量环境来实现，通过这两者的结合，JavaScript引擎也就同时⽀持了变量提升
 和块级作⽤域了。 -->
-全局上下文的var function 存在于GO 、全局上下文的let const存在于VOG
-函数在存储的时候 堆中存储分为三部分 1、
+全局上下文的var function 存在于GO 、全局上下文的let const存在于VOG  
+~~函数在存储的时候 堆中存储分为三部分~~
