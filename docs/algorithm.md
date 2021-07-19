@@ -1,5 +1,8 @@
 ## Algorithm
 ## ⚡力扣篇
+### 链表  
+1、哑节点(dummy Node)：是一个被人为创建的节点，虽然其内容为NULL，但是它在堆中有占有一定的空间。 哑节点的使用可以避免边界问题的处理，达到简化代码与减少代码出错可能性的目的。  
+
 ### 桶排序
 [220.存在重复元素 III](https://leetcode-cn.com/problems/contains-duplicate-iii/)0417每日一题  
 桶排序做法 O(n)时间复杂度
@@ -74,7 +77,7 @@ function knapsack( V ,  n ,  vw ) {
 
 ## ⚡智力题
 ### 时钟夹角问题
-2021腾讯暑期实习遇到，ziv哥很善良，考的是最简单的一款。  
+2021腾讯暑期实习遇到，当时考的比较简单。  
 2020CVTE实习提前批笔试考的是时分秒针夹角的算法。  
   
 ### 烧绳子问题
@@ -93,4 +96,6 @@ function knapsack( V ,  n ,  vw ) {
   
 ## 定理公式
 1、[同余定理](https://leetcode-cn.com/problems/continuous-subarray-sum/solution/gong-shui-san-xie-tuo-zhan-wei-qiu-fang-1juse/)  
-2、
+  
+## 36进制  
+思路和大数之和一致，区别在于需要首先给一个数组存储36进制的10个数字和26个字母用来进行索引。  

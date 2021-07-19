@@ -335,4 +335,15 @@ render() {
 Action Creators这一步可以不要、Reducers不仅可以加工状态还可以初始化状态，初始化的时候previous就是undefined、接触纯函数这个概念
 补充：父组件render  子组件一定执行render  反之并不是  解决效率问题：PureComponent
 actioncreator 用来 生成action对象 不用自己写action对象了
-constantjs文件用来定义type变量，防止写错单词，并且可以统一管理type，统一修改 
+constantjs文件用来定义type变量，防止写错单词，并且可以统一管理type，统一修改  
+  
+## React常见问题
+1、[setState异步/同步](https://www.it610.com/article/1360017164731441152.htm)  
+异步：在React合成事件和生命周期中。同步：原生事件和定时器中。(class)  
+2、useEffect的return不仅在组件销毁时执行，也会在下一次useEffect执行前执行(但在渲染之后，也就是函数组件重新执行一遍之后)。  
+3、React每次渲染的props和state是互相独立的，实际上，每次渲染后React是把最新的state赋给当前的组件，可以用定时器证明此结论。解决办法：利用useRef。  
+4、ref在所有render中都保持着唯一的引用，因此所有的对ref的赋值或者取值拿到的都是一个最终的状态，而不会存在隔离。这也是为什么ref需要是一个对象，从而通过current属性才能拿到dom或者值。而不能一个简单类型的值。  
+5、定时器的setState同步 对函数组件的useEffect不适用。  
+6、useCallback useMemo。类似于计算属性，前者缓存函数，后者可以缓存任意类型数据。每次渲染就不必重新定义。  	
+7、React规定我们必须把hooks写在函数的最外层，不能写在if else等条件语句当中，来确保hooks的执行顺序一致。  
+8、useEffect依赖对象的问题。[解决](https://delaprada.com/2021/03/13/React-useEffect-Hook%E7%9A%84%E5%AF%B9%E8%B1%A1-%E6%95%B0%E7%BB%84%E4%BE%9D%E8%B5%96/)  

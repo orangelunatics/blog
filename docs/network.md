@@ -57,6 +57,8 @@ DOM限制：Worker线程无法获取主线程所在的网页的DOM。
 ②、302可能发生[url劫持](https://github.com/chenyongyang/blog/issues/43)(302保留原来的url，如果定向的url过于复杂，则会显示之前的url，但是网页内容是定向的网页内容，发生劫持)，并且很多时候被搜索引擎认为作弊，会导致降权。    
 ③、301会将域名的权重转移到新url，从而增加新url的权重。302不会转移权重。  
 ④、使用场景：301适用于想更换域名，告诉搜索引需要对新的域名进行收录。302适用于网站故障、维护、更新等情况。  
+502：bad gateway连接超时，服务器压力大  
+401：客户端的访问未经授权  
   
 ## Ajax请求
 1、xhr：①原生、②封装xhr的jQ、③封装xhr的axios。后两者都是基于promise的链式调用，但都是第三方的模块。  
@@ -73,4 +75,12 @@ try {
   console.log('请求出错',error);
   PubSub.publish('atguigu',{isLoading:false,err:error.message})
 }
-```
+```  
+  
+## UDP与TCP
+  
+## headers
+Access-Control-Allow-Credentials: 响应头表示是否可以将对请求的响应暴露给页面。返回true则可以，其他值均不可以。  
+host: 请求头指明了请求将要发送到的服务器主机名和端口号。  
+referer：表明请求来源的地址，包括协议域名端口、路径参数。常用于防范csrf。  
+origin：同上，但只包括协议域名端口。常用于跨域cors。  

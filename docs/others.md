@@ -1,8 +1,11 @@
 ## others
 ## git
-1、git pull 命令  
+1、git pull   
 用于从远程获取代码并合并本地的版本。  
 git pull 其实就是 git fetch 和 git merge FETCH_HEAD 的简写。   
+2、git stash  
+把当前分支的更改暂存到缓冲区。实际开发很常用，比如正在写需求，群里突然说之前有个bug需要改...  
+改好之后，就可以pop出来，再清除缓存的记录即可。    
 
 ## npm
 [千锋node文档](https://lurongtao.gitee.io/felixbooks-gp19-node.js/basics/01-Node.js%E5%9F%BA%E7%A1%80.html)  
@@ -23,6 +26,7 @@ npm install 和 npm i 是一样
   
 5、package-lock.json  
 作用：锁定版本+显示模块的依赖关系  
+不同环境拉取同一个项目的依赖保证了版本的一致性。  
   
 6、npm i --production  
 作用：只安装dependencies即生产环境下的包的node_modules  而不安装devDependencies即开发环境下的包  
