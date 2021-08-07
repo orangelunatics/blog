@@ -109,6 +109,32 @@ if (x === 1) {
 [12. 整数转罗马数字](https://leetcode-cn.com/problems/integer-to-roman/)  
 从这道题的官解和普通解之间的对比，可以更好地理解职责链模式，该模式可以解决面条式代码。  
   
+### 单例模式  
+保证系统中，应用该模式的类一个类只有一个实例，即一个类只有一个对象实例  
+```js
+// 文件1
+class F{};
+
+function judge() {
+  let f = null;
+  return () => {
+    if (!f) {
+      f = new F();
+    }
+    return f
+  }
+}
+export default judge();
+
+// 文件2
+import jg from './judge.js'
+
+const a = jg();
+console.log(a);
+const b = jg();
+console.log(a === b);
+```
+  
 ## 计算机基础
 1、二进制表示  
 ①正负数用补码来表示，正数的补码就是原码；负数的补码是正数的原码的反码再加1。也适用(n & 1) === 0来看奇偶。  
