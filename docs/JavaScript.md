@@ -160,8 +160,17 @@ Symbol.for(1) == Symbol.for(1) // true
 Symbol.for(1) === Symbol.for(1) // true
 // 4、根据全局注册symbol表里的symbol找到原始值
 const a = Symbol.for(1);
-Symbol.keyFor(a) // 类型强制转换返回string类型 '1'， 如果上面是[]则返回'' 
-```
+Symbol.keyFor(a) // 类型强制转换返回string类型 '1'， 如果上面是[]则返回''
+```  
+  
+## JSON
+主要探讨JSON.stringify。[详细](https://juejin.cn/post/6844904016212672519#heading-26)  
+1、对于**undefined**、**任意的函数**以及**symbol**三个特殊的值分别作为**对象属性的值**、**数组元素**、**单独的值**时的不同返回结果。  
+①undefined、任意的函数以及 symbol 作为对象属性值时，JSON.stringify() 跳过(忽略)对它们进行序列化(不输出)  
+②undefined、任意的函数以及 symbol 作为数组元素值时，JSON.stringify() 将会将它们序列化为 null  
+③undefined、任意的函数以及 symbol 被 JSON.stringify() 作为单独的值进行序列化时都会返回 undefined
+④布尔值、数字、字符串的包装对象在序列化过程中会自动转换成对应的原始值。  
+⑤new Date().toJSON()："2021-08-09T14:25:17.008Z"，和toString()稍微不一样。  
   
 ## tips  
 **1、空字符串的索引**
