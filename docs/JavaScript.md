@@ -147,7 +147,21 @@ JS是动态语言(不声明变量类型)，虽然灵活，但不容易找错误�
 ## WebAssembly
 运用JIT技术之后，JS的运行速度已经变得很快，而WebAssembly可以使其更快。  
   
-## Serverless
+## Serverless  
+  
+## Symbol
+```js
+// 1、symbol是简单类型，并且不能new
+// 2、通过symbol(key)创建两个symbol不相等
+Symbol(1) == Symbol(1) // false
+Symbol(1) === Symbol(1) // false
+// 3、解决问题2，并且可创建全局的symbol
+Symbol.for(1) == Symbol.for(1) // true
+Symbol.for(1) === Symbol.for(1) // true
+// 4、根据全局注册symbol表里的symbol找到原始值
+const a = Symbol.for(1);
+Symbol.keyFor(a) // 类型强制转换返回string类型 '1'， 如果上面是[]则返回'' 
+```
   
 ## tips  
 **1、空字符串的索引**

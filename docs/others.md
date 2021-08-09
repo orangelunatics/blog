@@ -154,3 +154,19 @@ const tel = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
 1、距离最近的服务器进行相应 降低页面响应时间  
 2、前端性能优化，实际项目里的静态资源比如图片就存储在cdn上  
 3、cdn不仅可以缓存资源，并且某个服务器瘫痪，可以有其他服务器进行响应  
+  
+## 懒加载/无限滚动
+已知有三种实现方法，但原理都是相同的，即判断待加载图片的盒子是否出现在视口中。
+法一：利用offset、client、scroll等属性  
+```js
+window.scroll = () => {if (document.documentElement.scrollTop + document.documentElement.clientHeight > div.) loadImg(div)}
+```
+法二：Element.getBoundingClientRect() 方法返回元素的大小及其相对于视口的位置。  
+```js
+// 大概思路
+// 返回值是个对象
+const obj = div.getBoundingClientRect();
+// if (obj.top < window.innerHeight)
+window.scroll = () => {if (obj.top < document.documentElement.clientHeight) loadImg(div)}
+```
+法三：new intersectionObserver() 自带了节流效果 利用intersectionRatio > 0来懒加载
