@@ -42,10 +42,19 @@ DOM限制：Worker线程无法获取主线程所在的网页的DOM。
 [补充](https://yrq110.me/post/front-end/introduction-to-web-worker/)  
   
 ## Web Socket  
-[一种通信协议](http://www.52im.net/forum.php?mod=viewthread&tid=332)，初次认识是因为可以跨域。后续补充。
+[一种通信协议](http://www.52im.net/forum.php?mod=viewthread&tid=332)，初次认识是因为可以跨域。后续补充。  
+[掘金](https://juejin.cn/post/6844903544978407431#heading-12)
+websocket协议名字不一样ws+wss，端口号和http/s一致，最大的优点是双向通信，可以服务端推送实时性更强、更好的二进制支持、较少的控制开销  
+还有支持扩展。ws协议定义了扩展，用户可以扩展协议，或者实现自定义的子协议。（比如支持自定义压缩算法等）   
+1、客户端发起升级协议请求connection + update + Sec-WebSocket-Key    
+2、服务端返回同意升级的响应connection + update + Sec-WebSocket-Accept  
+3、“Sec-WebSocket-Accept”头的值，返回给客户端。客户端收到这个之后，就会将通信协议upgrade到websocket协议  
+4、开始以数据帧的格式进行客户端、服务端数据的交换  
+5、用心跳实现连接的长时间保持  
+6、Sec-WebSocket-Key/Accept的作用：提供基础的防护，保障websocket正确连接  
   
 ## HTTP状态码
-101：协议升级。始终由客户端发起，并且服务器可能接受或拒绝切换到新协议。客户端可使用常用的协议(如HTTP / 1.1)发起请求，请求说明需要切换到HTTP/2或甚至到WebSocket。  
+101：协议升级。始终由客户端发起，并且服务器可能接受或拒绝切换到新协议。客户端可使用常用的协议(如HTTP / 1.1)发起请求，请求说明需要切换到HTTP/2或甚至到WebSocket。有请求头和响应头如update: websocket  
 204：服务端成功处理了请求，而不返回资源，页面也不更新。常用于只需要客户端向服务端进行发送数据。  
 205：与204类似，不同的地方在于：要求客户端重置文档视图。常用于接受了用户的表单输入后，立即重置表单，以便进行下一次输入。  
 206：客户端进行范围请求。比如迅雷下载将大文件分成多个文件同时下载，需要有range请求头描述范围。  
@@ -84,3 +93,4 @@ Access-Control-Allow-Credentials: 响应头表示是否可以将对请求的响�
 host: 请求头指明了请求将要发送到的服务器主机名和端口号。  
 referer：表明请求来源的地址，包括协议域名端口、路径参数。常用于防范csrf。  
 origin：同上，但只包括协议域名端口。常用于跨域cors。  
+Connection：决定当前的事务完成后，是否会关闭网络连接。如果该值是“keep-alive”，网络连接就是持久的，不会关闭，使得对同一个服务器的请求可以继续在该连接上完成。还如Connection:Upgrade。  
