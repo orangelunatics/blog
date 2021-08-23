@@ -337,6 +337,38 @@ Action Creators这一步可以不要、Reducers不仅可以加工状态还可以
 actioncreator 用来 生成action对象 不用自己写action对象了
 constantjs文件用来定义type变量，防止写错单词，并且可以统一管理type，统一修改  
   
+## 自定义一个Hooks
+自定义hooks都是基于原始的几个hooks：
+```js
+// 定义：
+import { useEffect } from 'react';
+
+const useTitle = (title) => {
+    useEffect(() => {
+      document.title = title;
+    }, [])
+    return;
+  }
+
+export default useTitle;
+
+// 使用：
+import useTitle from './useTitle';
+
+const fish = () => {
+  useTitle('a few fish');
+  
+  return (
+    <div>
+      home
+    </div>
+  )
+}
+
+// 进阶：如何写一个防抖/节流hooks
+// https://juejin.cn/post/6844904074433789959#heading-6
+```
+  
 ## React常见问题
 1、[setState异步/同步](https://www.it610.com/article/1360017164731441152.htm)  
 异步：在React合成事件和生命周期中。同步：原生事件和定时器中。(class)  
