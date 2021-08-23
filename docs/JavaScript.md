@@ -29,6 +29,8 @@ Array.prototype.find = function(fn, thisArg) {
 
 ### some
 
+如果用一个空数组进行测试，在任何情况下它返回的都是 false。
+
 ```javascript
 Array.prototype.some = function(fn, thisArg) {
   if (typeof fn !== "function" || !Array.isArray(this)) throw new Error("×");
@@ -41,6 +43,7 @@ Array.prototype.some = function(fn, thisArg) {
 
 ### every
 
+若收到一个空数组，此方法在一切情况下都会返回 true。  
 思路同上
 
 ### filter
@@ -74,6 +77,52 @@ reduce 是这样的,如果第二个参数也就是初始值如果不给的话,�
 而且第一遍历是从第二项开始,也就是索引 1 开始 默认索引 0 的回调结果就是 索引 0 的值  
 如果给了 redece 的第二个参数是数组的长度,并且 cb 的第一个参数一开始就是 reduce 的第二个参数
 
+## Promise
+
+### 构造函数方法
+
+```js
+// 1、Promise.resolve
+Promise.resolve = (val) => {
+  return new Promise((resolve, reject) => {
+    if (val instanceof Promise) {
+      val.then(
+        (res) => resolve(res),
+        (err) => reject(err)
+      );
+    } else resolve(val);
+  });
+};
+// 2、Promise.reject
+Promise.reject = (val) => {
+  return new Promise((resolve, reject) => {
+    reject(val);
+  });
+};
+// 3、Promise.all
+Promise.all = (promiseArr) => {
+  if (typeof promiseArr[Symbol.iterator] !== "function")
+    throw new Error("not iterator");
+  return new Promise((resolve, reject) => {
+    const arr = [];
+    for (let i = 0; i < promiseArr.length; i++) {
+      Promise.resolve(promiseArr[i]).then(
+        (res) => {
+          arr[i] = res;
+          if (i + 1 === promiseArr.length) resolve(arr);
+        },
+        (err) => reject(err)
+      );
+    }
+  });
+};
+// 4、Promise.race
+
+// 5、Promise.allSettled
+```
+
+### Promise 构造函数
+
 ## JS 动画
 
 早期用定时器实现，更好的办法是使用 requesttAnimationFrame(cb)，是 H5 的 API。  
@@ -105,19 +154,37 @@ reduce 是这样的,如果第二个参数也就是初始值如果不给的话,�
 ②、Array.from(arguments)  
 ③、Array.prototype.slice.call(arguments)  
 其实这样也行: [].slice.call(arguments)  
-原因从 slice 源码可以看出，利用了 arguments 可以索引。
+原因从 slice 源码可以看出，利用了 arguments 可以索引。  
+**注：唯一的原生类数组（array-like）对象是 Strings**
+
+```js
+Array.from("abc");
+// ["a", "b", "c"]
+```
 
 ```javascript
-Array.prototype.slice = function(start, end) {
-  if (!Array.isArray(this) || !start) throw new Error('×')
-  const arr = [];
-  if (end < 0 && Math.abs(end) < this.length) end = this.length - Math.abs(end)；
-  if (end > this.length || end === undefined) end = this.length;
-  for (let i = start; i < end; i++) {
-    arr.push(this[i]);
+const slice = (arr, begin, end) => {
+  if (begin < 0) {
+    begin = arr.length + begin;
+  } else if (begin === undefined) {
+    begin = 0;
+  } else if (begin >= arr.length) {
+    return [];
   }
-  return arr;
-}
+  if (end < 0) {
+    end = arr.length + end;
+  } else if (end === undefined || end > arr.length) {
+    end = arr.length;
+  }
+  const newArr = [];
+  for (let i = begin; i < end; i++) {
+    newArr[i - begin] = arr[i];
+  }
+  return newArr;
+};
+const assertEqual = (arr1, arr2) => {
+  return arr1.toString() === arr2.toString();
+};
 ```
 
 其实类数组就是鸭子类型，既然数组可以，那么让类数组也可以，也就是借用。比如[].forEach.call(argumets,...)
@@ -208,6 +275,66 @@ const curry = (fn) => {
     }
     return (...args2) => curryIn(...args1, ...args2);
   };
+};
+```
+
+## 遍历属性
+
+1、for in 自身和原型链 可枚举  
+2、Object.keys() 自身 可枚举  
+3、Object.getOwnPropertyNames() 自身可枚举+不可枚举 不包括 symbol
+4、obj.prototype.hasOwnProperty() 自身可枚举+不可枚举 包括 symbol
+
+## forEach 和 map 不能通过 return、continue、break 提前退出
+
+可以通过 some 和 every
+
+```js
+const arr = [1, 2, 3, 4, 5];
+// continue:
+arr.some(function(item) {
+  if (item === 2) {
+    return false;
+  }
+  console.log(item);
+});
+// 或 只用return
+arr.forEach(function(item) {
+  if (item === 2) {
+    return false;
+  }
+  console.log(item);
+});
+
+// break:
+arr.every(function(item) {
+  console.log(item);
+  return item !== 3;
+});
+```
+
+## sort
+
+1、Chrome70 之前，长度 10 以下，是插入排序，10 以上是快排。  
+2、Chrome70 之后，是归并排序结合了插入排序。  
+拓展：[判断单调数组](https://leetcode-cn.com/problems/monotonic-array/),官解法一用了 every，可以借鉴。  
+猿辅导三面：不仅判断单调，还要分辨升降。
+
+```js
+const judge = (arr) => {
+  let rise = true;
+  let dec = true;
+  for (let i = 0; i < arr.length - 1; i++) {
+    if (arr[i] >= arr[i + 1]) {
+      rise = false;
+    }
+    if (arr[i] <= arr[i + 1]) {
+      dec = false;
+    }
+  }
+  if (!rise && !dec) return 0;
+  if (rise && !dec) return 1;
+  return -1;
 };
 ```
 
@@ -324,3 +451,17 @@ EC(G)下有 VOG VOG 里有 GO(?) 生成的 有的放在 VOG 有的 GO
 
 全局上下文的 var function 存在于 GO 、全局上下文的 let const 存在于 VOG  
 ~~函数在存储的时候 堆中存储分为三部分~~
+
+**13、Object.prototype.toString.call(各种类型对象)**
+
+1、可以用来判断数组等对象："[object Array]"  
+2、1 和 new Number(1)都是"[object Number]"
+
+**14、变量提升**
+1、let 的「创建」过程被提升了，但是初始化没有提升。  
+2、var 的「创建」和「初始化」都被提升了。  
+3、function 的「创建」「初始化」和「赋值」都被提升了。  
+[可以看看](https://www.jianshu.com/p/0f49c88cf169)
+
+**15、for in**
+字符串也能 for in 输出索引

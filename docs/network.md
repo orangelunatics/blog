@@ -79,6 +79,13 @@ websocket 协议名字不一样 ws+wss，端口号和 http/s 一致，最大的�
 502：bad gateway 连接超时，服务器压力大  
 401：客户端的访问未经授权
 
+## HTTP method
+
+PUT: 创建或者替换目标资源：用户的账户二维码只和用户关联，而且是一一对应的关系，此时这个 api 就可以用 PUT，因为每次调用它，都将刷新用户账户二维码  
+POST 方法 发送数据给服务器，也是可以更新或者创建资源：举个例子，在我们的支付系统中，一个 api 的功能是创建收款金额二维码，它和金额相关，每个用户可以有多个二维码，如果连续调用则会创建新的二维码，这个时候就用 POST  
+put 和 post 区别: put 幂等、post 不幂等  
+GET 和 POST 速度的区别：get 发送一个 tcp 数据包，post 发送两个 tcp 数据包
+
 ## Ajax 请求
 
 1、xhr：① 原生、② 封装 xhr 的 jQ、③ 封装 xhr 的 axios。后两者都是基于 promise 的链式调用，但都是第三方的模块。  
@@ -102,9 +109,9 @@ try {
 
 ## headers
 
-Access-Control-Allow-Credentials: 响应头表示是否可以将对请求的响应暴露给页面。返回 true 则可以，其他值均不可以。  
+Access-Control-Allow-Credentials(和 cookie 有关): 响应头表示是否可以将对请求的响应暴露给页面。返回 true 则可以，其他值均不可以。  
 host: 请求头指明了请求将要发送到的服务器主机名和端口号。  
-referer：表明请求来源的地址，包括协议域名端口、路径参数。常用于防范 csrf。  
+referer：表明请求来源的地址，包括协议域名端口、路径参数。常用于防范 csrf(比如恶意网站里的一个表单)。  
 origin：同上，但只包括协议域名端口。常用于跨域 cors。  
 Connection：决定当前的事务完成后，是否会关闭网络连接。如果该值是“keep-alive”，网络连接就是持久的，不会关闭，使得对同一个服务器的请求可以继续在该连接上完成。还如 Connection:Upgrade。
 
@@ -124,6 +131,19 @@ SYN Cookie 技术可以让服务器在收到客户端的 SYN 报文时，不分�
 
 ## cookie、session、token、JWT(JSON Web Token 大概原理都类似)
 
+[cookie 与 samesite](https://github.com/mqyqingfeng/Blog/issues/157)  
 简单 token 的组成： uid(用户唯一的身份标识)、time(当前时间的时间戳)、sign（签名，token 的前几位以哈希算法压缩成的一定长度的十六进制字符串）  
 安全性：token > session > cookie  
-cookie 重要的属性：name=value、domain、path、maxAge、expires、secure、httpOnly、samesite
+cookie 重要的属性：name=value、domain、path、maxAge、expires、secure、httpOnly、samesite  
+**SameSite**(声明该 Cookie 是否仅限于第一方或者同一站点上下文。) 可以有下面三种值：  
+Strict 仅允许一方请求携带 Cookie，即浏览器将只发送相同站点请求的 Cookie，即当前网页 URL 与请求目标 URL 完全一致。  
+Lax 允许部分第三方请求携带 Cookie  
+None 无论是否跨站都会发送 Cookie
+
+## 性能优化
+
+[Yahoo](https://juejin.cn/post/6844903657318645767#comment)  
+1、js：async defer、减少 dom 操作：减少重排重绘  
+2、css: 选择器避免嵌套  
+3、img: cdn、webp、base64、sprite
+4、网站的静态资源使用独立的域名：① 避免域名污染。 当浏览器向服务器请求一个静态资源时,会先发送同域名下的 cookie，服务器对于这些 cookie 不会做任何处理。因此它们只是在毫无意义的消耗带宽。所以你应该确保对于静态内容的请求是无 coockie 的请求。② 提高并发的 tcp 连接数量，每个域名下持久连接数是 6 个。③ 动静分离有利于 CDN
