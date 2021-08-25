@@ -491,3 +491,20 @@ const SevenSign = ({ signWater = [], canSignin, clickToday }: TasksProps) => {
 
 export default SevenSign;
 ```
+
+## 重新修改复杂类型
+
+```js
+const signinClick = (signState: boolean, todayIcon: string) => {
+  if (signState) {
+    setSignWater(
+      signWater.map((item, index): SignWater => {
+        if (index + 1 === continuous) {
+          return { ...item, icon: todayIcon };
+        }
+        return item;
+      })
+    );
+  }
+};
+```

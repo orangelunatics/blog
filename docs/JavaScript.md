@@ -465,3 +465,15 @@ EC(G)下有 VOG VOG 里有 GO(?) 生成的 有的放在 VOG 有的 GO
 
 **15、for in**
 字符串也能 for in 输出索引
+
+**16、函数简写的思考**
+
+```js
+const obj = {
+  get() {
+    console.log(typeof get);
+  },
+};
+
+obj.get(); // undefined  (0824 in CAINiAO)
+```
