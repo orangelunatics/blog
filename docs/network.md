@@ -81,7 +81,7 @@ websocket 协议名字不一样 ws+wss，端口号和 http/s 一致，最大的�
 
 ## HTTP method
 
-PUT: 创建或者替换目标资源：用户的账户二维码只和用户关联，而且是一一对应的关系，此时这个 api 就可以用 PUT，因为每次调用它，都将刷新用户账户二维码  
+PUT: 创建或者替换目标资源：用户的账户二维码只和用户关联，而且是一一对应的关系，此时这个 api 就可以用 PUT，因为每次调用它，都将刷新用户账户二维码；再比如防止重复提交订单。  
 POST 方法 发送数据给服务器，也是可以更新或者创建资源：举个例子，在我们的支付系统中，一个 api 的功能是创建收款金额二维码，它和金额相关，每个用户可以有多个二维码，如果连续调用则会创建新的二维码，这个时候就用 POST  
 put 和 post 区别: put 幂等、post 不幂等  
 GET 和 POST 速度的区别：get 发送一个 tcp 数据包，post 发送两个 tcp 数据包
@@ -109,11 +109,23 @@ try {
 
 ## headers
 
-Access-Control-Allow-Credentials(和 cookie 有关): 响应头表示是否可以将对请求的响应暴露给页面。返回 true 则可以，其他值均不可以。  
-host: 请求头指明了请求将要发送到的服务器主机名和端口号。  
-referer：表明请求来源的地址，包括协议域名端口、路径参数。常用于防范 csrf(比如恶意网站里的一个表单)。  
-origin：同上，但只包括协议域名端口。常用于跨域 cors。  
-Connection：决定当前的事务完成后，是否会关闭网络连接。如果该值是“keep-alive”，网络连接就是持久的，不会关闭，使得对同一个服务器的请求可以继续在该连接上完成。还如 Connection:Upgrade。
+1、Access-Control-Allow-Credentials(和 cookie 有关): 响应头表示是否可以将对请求的响应暴露给页面。返回 true 则可以，其他值均不可以。  
+2、host: 请求头指明了请求将要发送到的服务器主机名和端口号。  
+3、referer：表明请求来源的地址，包括协议域名端口、路径参数。常用于防范 csrf(比如恶意网站里的一个表单)。  
+4、origin：同上，但只包括协议域名端口。常用于跨域 cors。  
+5、Connection：决定当前的事务完成后，是否会关闭网络连接。如果该值是“keep-alive”，网络连接就是持久的，不会关闭，使得对同一个服务器的请求可以继续在该连接上完成。还如 Connection:Upgrade。  
+6、Content-type：post 或 put 方法设置数据类型  
+发送 json 格式数据：xhr.setRequestHeader("Content-type","application/json; charset=utf-8");  
+发送表单数据：xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");  
+发送纯文本：xhr.setRequestHeader("Content-type", "text/plain; charset=utf-8");  
+发送 html 文本：xhr.setRequestHeader("Content-type", "text/html; charset=utf-8");  
+其余还有 image/gif ; image/jpeg; image/png
+补充：xhr.readyState:  
+0: xhr 被创建，尚未调用 open() 方法。  
+1：open() 方法已经被调用。可以通过 setRequestHeader() 方法来设置请求的头部， 可以调用 send() 方法来发起请求。  
+2：send() 方法已经被调用，响应头也已经被接收。  
+3：下载中，响应体部分正在被接收。  
+4：数据传输已经彻底完成或失败。
 
 ## XSS
 
@@ -145,5 +157,20 @@ None 无论是否跨站都会发送 Cookie
 [Yahoo](https://juejin.cn/post/6844903657318645767#comment)  
 1、js：async defer、减少 dom 操作：减少重排重绘  
 2、css: 选择器避免嵌套  
-3、img: cdn、webp、base64、sprite
-4、网站的静态资源使用独立的域名：① 避免域名污染。 当浏览器向服务器请求一个静态资源时,会先发送同域名下的 cookie，服务器对于这些 cookie 不会做任何处理。因此它们只是在毫无意义的消耗带宽。所以你应该确保对于静态内容的请求是无 coockie 的请求。② 提高并发的 tcp 连接数量，每个域名下持久连接数是 6 个。③ 动静分离有利于 CDN
+3、img: cdn、webp、base64、sprite，图片懒加载，预加载。  
+4、网站的静态资源使用独立的域名：① 避免域名污染。 当浏览器向服务器请求一个静态资源时,会先发送同域名下的 cookie，服务器对于这些 cookie 不会做任何处理。因此它们只是在毫无意义的消耗带宽。所以你应该确保对于静态内容的请求是无 coockie 的请求。② 提高并发的 tcp 连接数量，每个域名下持久连接数是 6 个。③ 动静分离有利于 CDN  
+5、减少 http 请求，base64，雪碧图等  
+注：Base64 是以编码的形式嵌入到页面，而不是外部载入，所以可以减少 http 请求(前提：图片很小，如果大图片则转码后体积更大得不偿失)  
+6、ssr 服务端渲染，首屏时间快  
+7、节流防抖  
+8、包的大小：  
+第三方库用 cdn 引入，external-plugin；  
+compression-webpack-plugin 开启 gzip 压缩；  
+terser-webpack-plugin 压缩 js；  
+split-Chunks-plugin 分包([code split](https://webpack.docschina.org/guides/code-splitting/)),把代码分离到不同的 bundle 中，然后可以按需加载或并行加载这些文件。代码分离可以用于获取更小的 bundle，以及控制资源加载优先级  
+dll-plugin 把复用性较高的第三方模块打包到动态链接库中，在不升级这些库的情况下，动态库不需要重新打包，每次构建只重新打包业务代码
+
+## 应用层与传输层
+
+HTTP 是属于应用层的协议，最终的数据传输还是要通过传输层（比如常见的 TCP、UDP）传输。HTTP/1.1 和 HTTP/2 的传输是通过 TCP，HTTP/3 是通过 QUIC（基于 UDP）传输。  
+不管是 TCP 还是 QUIC，实际上都是通过 byte[] 字节流的方式在网络上传输的。在应用层 HTTP 通过编码（encode）把文件、图片、JSON 等转换成 byte[]，经过传输层（TCP、UDP）传给目标地址。然后目标地址接收到 byte[] 数据后，再解码（decode）成对应的对象。

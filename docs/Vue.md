@@ -21,3 +21,23 @@ Observer 类会通过递归的方式把一个对象的所有属性都转化成�
 3.通过修改数组长度清空(改变)数组
 解决:  
 Vue 增加了两个全局 API:Vue.set 和 Vue.delete,更进一步:Proxy
+
+## 路由懒加载(按需加载)
+
+非懒加载：
+
+```js
+const List = () => import("@/components/list.vue");
+const router = new VueRouter({
+  routes: [{ path: "/list", component: List }],
+});
+```
+
+懒加载方式一：使用 import 方法，切换相应的 path 时调用组件
+
+```js
+const List = () => import("@/components/list.vue");
+const router = new VueRouter({
+  routes: [{ path: "/list", component: List }],
+});
+```
