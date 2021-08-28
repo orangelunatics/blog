@@ -470,3 +470,15 @@ EC(G)下有 VOG VOG 里有 GO(?) 生成的 有的放在 VOG 有的 GO
 1、JIT 字节码(hot) => 机器码  
 2、内嵌缓存(和上面类似)  
 3、更精确的垃圾回收机制
+
+**17、函数简写的思考**
+
+```js
+const obj = {
+  get() {
+    console.log(typeof get);
+  },
+};
+
+obj.get(); // undefined  (0824 in CAINiAO)
+```
