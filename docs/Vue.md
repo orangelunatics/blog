@@ -91,5 +91,5 @@ React 推崇函数式开发(hooks)、jsx(动态，更多的是写 js，复杂的
 
 ## 记录用户浏览时间
 
-1、多页面应用：onpageshow 和 onpagehide 事件记录时长。  
-2、单页面应用：history 路由用 onpopstate 事件监听路由变化，hash 路由用 onhashchange
+1、多页面应用：进入、刷新和关闭：onload 和 beforeunload；页面跳转也是前两个；前进后退：onpageshow 和 onpagehide 事件记录时长。  
+2、单页面应用：进入、刷新和关闭：onload 和 beforeunload；页面跳转和前进后退：history 路由用 onload 和 onpopstate + pushState + replaceState ，hash 路由用 onload 和 onhashchange。其中 history 里跳转是 pushState + replaceState，前进后退是 popstate。
