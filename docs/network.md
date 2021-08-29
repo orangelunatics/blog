@@ -204,5 +204,5 @@ server {
 }
 ```
 
-Nginx 服务器的域名也为 client.com，当请求某个接口时，Nginx 进行代理转发，请求真实的服务器域名，拿到相应返回给客户端。
+Nginx 服务器的域名也为 client.com，当请求某个接口时，Nginx 进行代理转发，请求真实的服务器域名，拿到响应返回给客户端。
 [其他的跨域方法](https://www.cnblogs.com/rainman/archive/2011/02/20/1959325.html#m1)
