@@ -174,3 +174,35 @@ dll-plugin 把复用性较高的第三方模块打包到动态链接库中，在
 
 HTTP 是属于应用层的协议，最终的数据传输还是要通过传输层（比如常见的 TCP、UDP）传输。HTTP/1.1 和 HTTP/2 的传输是通过 TCP，HTTP/3 是通过 QUIC（基于 UDP）传输。  
 不管是 TCP 还是 QUIC，实际上都是通过 byte[] 字节流的方式在网络上传输的。在应用层 HTTP 通过编码（encode）把文件、图片、JSON 等转换成 byte[]，经过传输层（TCP、UDP）传给目标地址。然后目标地址接收到 byte[] 数据后，再解码（decode）成对应的对象。
+
+## 缓存相关补充
+
+一、强缓存：max-age 和 expires 和 pragma
+1、max-age 是 cache-control(强缓存)header 中的一个 key，其他两个都是单独的 key。  
+注：cookie 里既有 max-age 也有 expires  
+2、优先级问题：从高到低  
+3、为什么 max-age 优先级高：expires 是绝对时间，依赖于计算机时钟的正确设置，不靠谱。所以采用相对时间。  
+4、pragma 只有一个属性：Pragma: no-cache  
+解释：与 Cache-Control: no-cache 效果一致。强制要求缓存服务器在返回缓存的版本之前将请求提交到源头服务器进行验证。  
+二、ETag 的强弱验证器  
+弱验证器以/W 开头，表明内容发生了不那么重要的改变的时候，仍然可以用协商缓存
+
+## 代理
+
+正向代理：代理端代理的是客户端。如：VPN  
+反向代理：代理端代理的是服务端。如：Nginx  
+Nginx 解决跨域：
+客户端的域名为 client.com，服务器的域名为 server.com
+
+```js
+server {
+  listen  80;
+  server_name  client.com;
+  location /api {
+    proxy_pass server.com;
+  }
+}
+```
+
+Nginx 服务器的域名也为 client.com，当请求某个接口时，Nginx 进行代理转发，请求真实的服务器域名，拿到相应返回给客户端。
+[其他的跨域方法](https://www.cnblogs.com/rainman/archive/2011/02/20/1959325.html#m1)
