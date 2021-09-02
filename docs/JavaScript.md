@@ -414,7 +414,11 @@ ES5 的 Person.name 这种静态属性相当于 ES6 迭代 static 关键字
 返回的是数组的新的长度
 
 **9、arr.map(parseInt)**
-问题出在 map 方法接受的回调的参数的默认问题，cb 的第二个参数为索引，索引又变成了 parseInt 的第二个参数，则产生进制问题，如['1', '2', '3'].map(parseInt) => [1, NaN, NaN]。
+问题出在 map 方法接受的回调的参数的默认问题，cb 的第二个参数为索引，索引又变成了 parseInt 的第二个参数，则产生进制问题，如['1', '2', '3'].map(parseInt) => [1, NaN, NaN]。  
+parseInt 和 Number 的区别(抛砖引玉一下)：  
+1、Number 对于非字符串可以强制类型转换，比如 Number([1]) === 1  
+2、Number('11x') => NaN, parseInt('11x') === 11, 忽略后面非数字的部分  
+3、parseInt 第二个参数是指定以什么进制去解析第一个参数 string，如果省略该参数或其值为 0 则是十进制，小于 2 大于 36 都是 NaN，比如 parseInt(3,2), 3 不是一个二进制，所以解析不了，返回 NaN
 
 **10、for 循环的特殊用法**
 [14. 最长公共前缀](https://leetcode-cn.com/problems/longest-common-prefix/)
