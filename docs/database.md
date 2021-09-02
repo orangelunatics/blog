@@ -20,6 +20,7 @@ SQL：结构化查询语言，用来操作数据库，与数据库通信的语�
 ```sql
 select score,class from tab2 where id =(select id from tab1 where name="navi");
 -- sql里大小写无所谓
+-- select from 是数据库里的查询语法
 ```
 
 5、[三范式](https://www.cnblogs.com/linjiqin/archive/2012/04/01/2428695.html)  
