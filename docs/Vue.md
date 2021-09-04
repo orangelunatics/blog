@@ -16,14 +16,15 @@ Vue 增加了两个全局 API:Vue.set 和 Vue.delete,更进一步:Proxy
 
 ## 路由懒加载(按需加载)
 
+[三种](https://www.cnblogs.com/smzd/p/8665676.html)  
 非懒加载：
 
-```js
+<!-- ```js
 const List = () => import("@/components/list.vue");
 const router = new VueRouter({
   routes: [{ path: "/list", component: List }],
 });
-```
+``` -->
 
 懒加载方式一：使用 import 方法，切换相应的 path 时调用组件
 

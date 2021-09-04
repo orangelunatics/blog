@@ -131,7 +131,8 @@ Promise.all = (promiseArr) => {
 
 ## JS 六种异步方案
 
-[参考](https://juejin.cn/post/6844903760280420366)
+[参考 1](https://juejin.cn/post/6844903760280420366)  
+[参考 2](https://zhuanlan.zhihu.com/p/19750470?columnSlug=thefrontendperiodicals)
 
 ## 函数
 
