@@ -61,6 +61,11 @@ node package 的版本号解析：0.54.8
 查看源： npm config get registry  
 切换源： npm config set registry url
 
+## ESLint 与 Prettier
+
+前者是代码格式检查+js 文件的部分格式化、后者专注于格式化且不局限于 js 文件, 搭配使用  
+[详细](https://www.cnblogs.com/guangzan/p/14057876.html)
+
 ## 模块化规范
 
 ### 优点
