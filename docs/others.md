@@ -33,7 +33,8 @@ npm install 和 npm i 是一样
 
 5、package-lock.json  
 作用：锁定版本+显示模块的依赖关系  
-不同环境拉取同一个项目的依赖保证了版本的一致性。
+不同环境拉取同一个项目的依赖保证了版本的一致性。  
+[其他](https://www.cnblogs.com/luowen075/p/10362540.html)
 
 6、npm i --production  
 作用：只安装 dependencies 即生产环境下的包的 node_modules 而不安装 devDependencies 即开发环境下的包
@@ -123,6 +124,15 @@ if (x === 1) {
 
 [1、对于教材里死锁定义的补充](https://www.zhihu.com/question/263380756)
 
+### 进程间通信方式
+
+进程（Linux）间的通信方式有：  
+1、管道  
+2、消息队列  
+3、共享内存  
+4、信号量  
+5、Socket
+
 ## 设计模式
 
 1、工厂模式  
@@ -131,7 +141,8 @@ if (x === 1) {
 观察者模式是由具体目标调度，比如当事件触发，Dep 就会去调用观察者的方法，所以观察者模式的订阅者与发布者之间是存在依赖的。  
 3、单例模式  
 4、职责链模式  
-5、[MVC 模式](https://www.runoob.com/design-pattern/design-pattern-tutorial.html)
+5、[MVC 模式](https://www.runoob.com/design-pattern/design-pattern-tutorial.html)  
+6、代理模式、装饰模式(装饰器?)等, [详细](https://juejin.cn/post/6844904190947360781#comment)
 
 ### 职责链模式
 
@@ -192,7 +203,8 @@ CNAME 就是域名的别名；CDN 主要用来存储静态资源；
 1、距离最近的服务器(CDN 节点)进行响应 降低页面响应时间  
 2、前端性能优化，实际项目里的静态资源比如图片就存储在 cdn 上  
 3、cdn 不仅可以缓存资源，并且某个服务器瘫痪，可以有其他服务器进行响应  
-4、域名不能和源站一致：用户访问加速域名的网站资源，当 CDN 节点上没有缓存对应的内容时，CDN 节点会回到源站获取，然后再返回给用户。如果源站域名与加速域名一致，将会造成访问请求反复解析到 CDN 节点，导致 CDN 节点无法回源拉取请求内容。其次减少了 静态资源 cookie 的发送
+4、域名不能和源站一致：用户访问加速域名的网站资源，当 CDN 节点上没有缓存对应的内容时，CDN 节点会回到源站获取，然后再返回给用户。如果源站域名与加速域名一致，将会造成访问请求反复解析到 CDN 节点，导致 CDN 节点无法回源拉取请求内容。其次减少了 静态资源 cookie 的发送  
+[CNAME](https://www.cnblogs.com/tinywan/p/6207336.html)
 
 ## 懒加载/无限滚动
 

@@ -1,6 +1,7 @@
 ## Vue 源码
 
-[Vue](https://vue-js.com/learn-vue/start/#_1-%E5%89%8D%E8%A8%80)
+[Vue](https://vue-js.com/learn-vue/start/#_1-%E5%89%8D%E8%A8%80)  
+[响应式原理](https://juejin.cn/post/6857669921166491662)
 
 ## 响应式原理
 
