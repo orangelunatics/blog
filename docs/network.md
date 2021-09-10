@@ -141,9 +141,10 @@ SYN FLOOD 是一种 DDOS(拒绝服务攻击)
 SYN Cookie 同时也能实现 Fast Open  
 SYN Cookie 技术可以让服务器在收到客户端的 SYN 报文时，不分配资源保存客户端信息，而是将这些信息保存在 SYN+ACK 的初始序号和时间戳中。对正常的连接，这些信息会随着 ACK 报文被带回来。
 
-## cookie、session、token、JWT(JSON Web Token)
+## 前端鉴权
 
 [详细](https://mp.weixin.qq.com/s/rwp9sXi4Y8Ht0UbA6z4hSg)  
+[掘金](https://juejin.cn/post/6845166891393089544)  
 [cookie 与 samesite](https://github.com/mqyqingfeng/Blog/issues/157)  
 简单 token 的组成： uid(用户唯一的身份标识)、time(当前时间的时间戳)、sign（签名，token 的前几位以哈希算法压缩成的一定长度的十六进制字符串）  
 安全性：token > session > cookie  

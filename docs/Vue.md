@@ -50,7 +50,7 @@ const router = new VueRouter({
 1、new Vue(): 执行\_init 函数，初始化一些属性：如 initLifecycle、initEvents、initRender，然后执行 beforeCreate  
 2、调用 beforeCreate()钩子, 之后初始化 inject、state 包括 props、methods、data、computed、watch，然后执行 created  
 3、调用 created()钩子，所以在 created 能拿到 data 等数据，created 之后，调用 \$mount() 把组件挂载到 dom 上, 然后对模板进行编译，编译过程: 生成抽象语法树 AST，优化 AST+标记静态节点(因为静态节点不更新,能够优化性能)，根据 AST 生成 render 函数, 然后执行 beforeMount  
-4、调用 beforeMount 钩子之后，vm.\_update(vm.\_render(), hydrating)，render 方法生成 vnode、而 update 方法会对 vnode 进行 patch，挂载到真实 dom 上，因为是首次，不需要进行新旧节点的 diff  
+4、调用 beforeMount 钩子之后，vm.\_update(vm.\_render(), hydrating)，render 方法生成 vnode、而 update 方法会对 vnode 进行 patch，挂载到真实 dom 上，因为是首次，不需要进行新旧节点的 diff(vm.\_render 用来生成虚拟 dom、执行 dom-diff、更新真实 dom。)  
 5、调用 mounted 钩子之后，组件就已经挂载到真实 dom 上，所以可以拿到 dom  
 6、beforeUpdate 和 updated 的过程类似  
 7、beforeDestroy 和 destroyed 之间进行组件的销毁操作，比如进行清除父子关系、watcher 关闭等逻辑
