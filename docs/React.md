@@ -508,3 +508,18 @@ const signinClick = (signState: boolean, todayIcon: string) => {
   }
 };
 ```
+
+## (非)受控组件
+
+以表单的 input 为例：  
+1、非受控组件：想获得 input 的 value 就要根据真实的 dom 去获得  
+2、受控组件: 将 input 绑定了 change 事件, 实时的将 value 存到了组件的 state 中, 实现了 Vue 中的 v-model 效果, 并且绑定了事件, 就可以在回调的逻辑中对用户的输入进行相应的处理(比如大小写转换、过滤等)
+
+## React 合成事件
+
+从三个问题发现 React 的(合成)事件与 DOM 的原生事件不同：  
+1、阻止冒泡失效(因为合成事件注册到了 document)  
+2、onChange(和 input 事件一样)和原生的 onchange(失去焦点)执行条件不同  
+3、原生事件的回调执行时间早于同一元素的合成事件(因为合成事件注册到了 document)  
+三阶段: 事件注册、合成、派发  
+[详细](https://segmentfault.com/a/1190000015142568)
