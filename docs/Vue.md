@@ -91,10 +91,4 @@ React 采用合成事件，所有事件都冒泡到顶层 document 监听，然�
 Vue 推崇渐进式开发(灵活易用，只需要使用核心的响应式和 diff 即可开发)、template(静态模板)、三部分分离  
 React 推崇函数式开发(hooks)、jsx(动态，更多的是写 js，复杂的 js 逻辑，更适合复杂的 js 逻辑)
 
-## 记录用户浏览时间
-
-[详细](https://zhuanlan.zhihu.com/p/166402090) + 掘金也有类似  
-1、多页面应用：进入、刷新和关闭：onload 和 beforeunload；页面跳转也是前两个；前进后退：onpageshow 和 onpagehide 事件记录时长。  
-2、单页面应用：进入、刷新和关闭：onload 和 beforeunload；页面跳转和前进后退：history 路由用 onload 和 onpopstate + pushState + replaceState ，hash 路由用 onload 和 onhashchange。其中 history 里跳转是 pushState + replaceState，前进后退是 popstate。
-
 ## todo-list
