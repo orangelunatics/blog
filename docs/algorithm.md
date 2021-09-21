@@ -103,6 +103,26 @@ function knapsack(V, n, vw) {
 清空队列（clear）  
 判断队列是否空（isEmpty）
 
+### 贪心
+
+1、TP-Link 二面——hihocode
+[思路](// https://blog.csdn.net/qq_19864679/article/details/113608088?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522163222160916780366588531%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=163222160916780366588531&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-1-113608088.pc_search_result_cache&utm_term=%E8%A1%A5%E6%8F%90%E4%BA%A4%E5%8D%A1++javascript&spm=1018.2226.3001.4187)
+
+```js
+const longestDays = (arr, m) => {
+  // arr是缺卡日期 m是数组
+  // arr = [9, 31, 65];
+  if (m >= arr.length) return 100;
+  arr.unshift(0);
+  arr.push(101);
+  let res = 0;
+  for (let i = 0; i + m + 1 <= arr.length - 1; i++) {
+    res = Math.max(res, arr[i + m + 1] - arr[i] - 1);
+  }
+  return res;
+};
+```
+
 ## ⚡ 前端高频篇
 
 ### hex 与 RGB 转化

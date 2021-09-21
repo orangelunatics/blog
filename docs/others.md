@@ -206,29 +206,6 @@ CNAME 就是域名的别名；CDN 主要用来存储静态资源；
 4、域名不能和源站一致：用户访问加速域名的网站资源，当 CDN 节点上没有缓存对应的内容时，CDN 节点会回到源站获取，然后再返回给用户。如果源站域名与加速域名一致，将会造成访问请求反复解析到 CDN 节点，导致 CDN 节点无法回源拉取请求内容。其次减少了 静态资源 cookie 的发送  
 [CNAME](https://www.cnblogs.com/tinywan/p/6207336.html)
 
-## 懒加载/无限滚动
-
-已知有三种实现方法，但原理都是相同的，即判断待加载图片的盒子是否出现在视口中。
-法一：利用 offset、client、scroll 等属性
-
-```js
-window.scroll = () => {if (document.documentElement.scrollTop + document.documentElement.clientHeight > div.) loadImg(div)}
-```
-
-法二：Element.getBoundingClientRect() 方法返回元素的大小及其相对于视口的位置。
-
-```js
-// 大概思路
-// 返回值是个对象
-const obj = div.getBoundingClientRect();
-// if (obj.top < window.innerHeight)
-window.scroll = () => {
-  if (obj.top < document.documentElement.clientHeight) loadImg(div);
-};
-```
-
-法三：new intersectionObserver() 自带了节流效果 利用 intersectionRatio > 0 来懒加载
-
 ## 代码规范
 
 1、if else 多个 return 是多余的  
