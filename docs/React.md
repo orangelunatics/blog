@@ -315,7 +315,8 @@ App.js 是根组件(约定俗成组件的首字母都是大写的)、App.css 是
 <Route path="/xxxx" component={Demo} />
 ```
 
-4.index.js 的 App 外部包裹 BrowserRouter 或 HashRouter 标签
+4.index.js 的 App 外部包裹 BrowserRouter 或 HashRouter 标签  
+5.hash 路由无需服务端配置(因为#后面的不会发送给服务器), history 需要服务端配置
 
 ## React 实践
 

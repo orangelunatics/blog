@@ -64,7 +64,7 @@ const router = new VueRouter({
 5、更好的 Tree-Shaking  
 MDN：Tree shaking 是一个通常用于描述移除 JavaScript 上下文中的未引用代码(dead-code) 行为的术语。  
 6、更好的支持 TS  
-总结：更小(tree-shaking)、更快(改用 proxy)、维护性高(monorepo 结构)、VDOM 重构(标记静态节点、静态标记?、事件缓存?)、composition API、
+总结：更小(tree-shaking)、更快(改用 proxy, 两个优点：性能好无需递归遍历; 不用为数组单独重写原型方法)、维护性高(monorepo 结构)、VDOM Diff 重构(标记静态节点(不需比较)、静态标记?、事件缓存?)、composition API、
 
 ## Vue 常见问题
 

@@ -96,7 +96,8 @@ browserify
 使用 Babel 将 ES6 转化为浏览器可识别的 ES5，但还包含 require 语法，所以还需要 browserify(babel 还可以将 jsx 转化为 js)  
 暴露模块：export ① 分别暴露 ② 统一暴露 ③ 默认暴露  
 引入模块：import ① 通用方式 import \* as xx from 'path' ② 解构赋值 ③ 简便形式 import xx from '路径'只能用于默认暴露的情况。  
-缺点：由于 import 是静态执行，所以不能使用表达式和变量这些只有在运行时才能得到结果的语法结构。
+缺点：由于 import 是静态执行，所以不能使用表达式和变量这些只有在运行时才能得到结果的语法结构。  
+注意：浏览器端想直接用 import, 记得在引入 script 标签的时候加上 type='module'
 
 ```js
 // 报错
