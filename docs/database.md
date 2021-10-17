@@ -27,3 +27,24 @@ select score,class from tab2 where id =(select id from tab1 where name="navi");
 第一范式(确保每列保持原子性), 所有字段值都是不可分解的原子值  
 第二范式(确保表中的每列都和主键相关)  
 第三范式(确保每列都和主键列直接相关,而不是间接相关)
+
+## MongoDB
+
+### 语法对比
+
+SQL: 表、行、列、主键  
+对应着：  
+Mongo: 集合、文档、字段、对象 ID
+
+### 操作
+
+1、数据库操作  
+创建数据库: use demo  
+查看数据库: show dbs  
+删除数据库: db.dropDatabase()
+2、集合操作  
+创建集合: db.createCollection(name)  
+查看集合: show collections  
+删除集合: db.collection.drop()
+3、文档(行)操作:  
+创建、查看、删除、更新等等
