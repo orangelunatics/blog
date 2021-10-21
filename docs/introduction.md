@@ -11,11 +11,12 @@
 ## 1-学习路线
 
 HTML5🌻 CSS3🌻 ES6🌻 DOM🌻 BOM🌻 Git 部分 🌻 Node 部分 🌻 Webpack🌻 Vue🌻  
-[计算机经典书籍 PDF](https://github.com/forthespada/CS-Books)
+[计算机经典书籍 PDF](https://github.com/forthespada/CS-Books)  
+[阿里巴巴前端知识图谱](https://f2e.tech/)
 
 ## 2-近期计划
 
-Node 深入学习 🌼 React🌼 TypeScript🌼 Git 熟悉使用 🌼
+Node + Vue3 + Vite + MongoDB 项目、操作系统 Mooc
 
 ## 3-前端方向&趋势
 
