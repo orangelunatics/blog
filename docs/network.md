@@ -49,6 +49,7 @@ DOM 限制：Worker 线程无法获取主线程所在的网页的 DOM。
 
 ## Web Socket
 
+[为什么用这个](https://mp.weixin.qq.com/s/QBHMbSWSd4KU7TByRq2RRw)  
 [一种通信协议](http://www.52im.net/forum.php?mod=viewthread&tid=332)，初次认识是因为可以跨域。后续补充。  
 [掘金](https://juejin.cn/post/6844903544978407431#heading-12)
 websocket 协议名字不一样 ws+wss，端口号和 http/s 一致，最大的优点是双向通信，可以服务端推送实时性更强、更好的二进制支持、较少的控制开销  
