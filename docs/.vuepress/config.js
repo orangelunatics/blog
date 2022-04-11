@@ -54,7 +54,7 @@ module.exports = {
       { text: "Node.js", link: "/node/" },
       { text: "网络", link: "/network/" },
       { text: "算法", link: "/algorithm/" },
-      { text: "数据库", link: "/database/" },
+      { text: "CS课程", link: "/cs/" },
       { text: "其他", link: "/others/" },
       { text: "External", link: "https://google.com" },
     ],
