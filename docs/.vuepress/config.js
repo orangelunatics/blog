@@ -2,7 +2,7 @@ module.exports = {
   // theme: 'vuepress-theme-maker',
   theme: "yuu",
   base: "/blog/",
-  title: "Go big ɔ: Go home 🍁",
+  title: "爱逛豆瓣",
   description: "navi的个人blog",
   head: [
     ["meta", { name: "author", content: "navi" }],
