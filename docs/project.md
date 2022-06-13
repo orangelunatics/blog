@@ -9,15 +9,17 @@
 3、2022.5 投了一篇国内会议  
 刘之航, 钟玉华, 李巍华, 陈祝云. 基于改进梯度权重类激活映射的一维卷积可解释性研究[C]. ~, 2022.
 
-### 项目进展
+### 最近进展
 
 <ul>
-  <li>Fiber</li> 
+  <li>6.10字節三面 面試官是Vue-element-admin作者</li>
+  <li>6.13短暫地看了pro git；開始Vue3+Koa的後台管理系統開發</li>
+  <!-- <li>Fiber</li> 
   <li>hooks + composition</li>
   <li>Vue3 + vite</li>
   <li>webpack</li>
   <li>node项目</li>
-  <li>miniApp + show + dev</li>
+  <li>miniApp + show + dev</li> -->
 </ul>
     
 ### 开发效率工具

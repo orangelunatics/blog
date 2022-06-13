@@ -135,6 +135,19 @@ try {
 2、反射型和 DOM 型都是攻击者构造具有恶意代码的 url，区别是：反射型是请求 url 后，服务端将恶意代码取出，拼接成 html 后返回，前端再自动执行。  
 DOM 型是后端返回后，前端取出恶意代码并执行。
 
+## CSRF
+
+1.referer 2.验证码 3.token  
+补充：响应头 set-cookie 里的 samesite 属性，设置 lax 和 strict 都能防御 CSRF 攻击。默认为 lax。区别如下：  
+lax：Cookies 允许与顶级导航一起发送，并将与第三方网站发起的 GET 请求一起发送。这是浏览器中的默认值。  
+strict：Cookies 只会在第一方上下文中发送，不会与第三方网站发起的请求一起发送。  
+none：Cookie 将在所有上下文中发送，即允许跨站发送。  
+[第一方与第三方 cookie](https://cloud.tencent.com/developer/article/1888131)
+
+## 跨站与跨域
+
+[详细](https://alexzhong22c.github.io/2020/05/22/cross-origin-cross-site/)
+
 ## SYN Cookie
 
 SYN FLOOD 是一种 DDOS(拒绝服务攻击)  
