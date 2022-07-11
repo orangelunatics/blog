@@ -10,7 +10,9 @@
 刘之航, 钟玉华, 李巍华, 陈祝云. 基于改进梯度权重类激活映射的一维卷积可解释性研究[C]. ~, 2022.  
 4、2021.12 发明专利录用 深度学习可解释性
 
-### 最近进展
+### 日常项目
+
+1、three.js 开发跳一跳微信小游戏
 
 <ul>
   <!-- <li>6.10字節三面 面試官是Vue-element-admin作者</li> -->
@@ -24,7 +26,11 @@
   <li>miniApp + show + dev</li> -->
   <li>继续vx小游戏的开发实践——跳一跳。vx小游戏特点：借助小程序平台、轻量级。较多使用3.js，原生的webgl开发效率低、没有封装</li>
   <li>了解webGL渲染管线</li>
+  <li>vx小游戏的优点：微信平台流量大、轻量级(不用单独安装app)、随项目深入理解webGL+可视化的内容、微信底层对小游戏进行了性能优化(哪些优化？)</li>
 </ul>
+three.js封装了webGL，相当于Vue之于JS  
+webGL: 提供使浏览器具有产生3D场景能力的接口(调用GPU)  
+着色器语法：GLSL ES，是一种类C语言 [详细](https://chenpipi.cn/post/shader-quickstart-glsles-1/)
     
 ### 开发效率工具
 tabnine和copilot
