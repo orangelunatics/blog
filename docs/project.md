@@ -27,16 +27,50 @@
   <li>继续vx小游戏的开发实践——跳一跳。vx小游戏特点：借助小程序平台、轻量级。较多使用3.js，原生的webgl开发效率低、没有封装</li>
   <li>了解webGL渲染管线</li>
   <li>vx小游戏的优点：微信平台流量大、轻量级(不用单独安装app)、随项目深入理解webGL+可视化的内容、微信底层对小游戏进行了性能优化(哪些优化？)</li>
+  <li>three.js封装了webGL，相当于Vue之于JS。webGL:提供使浏览器具有产生3D场景能力的接口(调用GPU)</li>
 </ul>
-three.js封装了webGL，相当于Vue之于JS  
-webGL: 提供使浏览器具有产生3D场景能力的接口(调用GPU)  
-着色器语法：GLSL ES，是一种类C语言 [详细](https://chenpipi.cn/post/shader-quickstart-glsles-1/)
-    
+
+[着色器语法：GLSL ES，是一种类 C 语言](https://chenpipi.cn/post/shader-quickstart-glsles-1/)  
+[WebGLProgram](https://developer.mozilla.org/zh-CN/docs/Web/API/WebGLProgram)
+
+```js
+/**
+ * webGL的一个Demo
+ * 上下文、创建程序、创建着色器、给程序添加着色器、连接程序与上下文
+ */
+// 获取画布
+const canvas = document.getElementById("myCanvas");
+// 获取3d上下文(webgl)
+const gl = canvas.getContext("webgl");
+// 创建程序
+const program = gl.createProgram();
+
+const createShader = (gl, sourceCode, type) => {
+  const shader = gl.createShader(type);
+  gl.shaderSource(shader, sourceCode);
+  gl.compileShader(shader);
+  return shader;
+};
+// 创建顶点着色器和片元着色器
+// var vertexShader, fragmentShader;
+const vertexShader = createShader(gl, VSHADER_SOURCE, gl.VERTEX_SHADER);
+const fragmentShader = createShader(gl, FSHADER_SOURCE, gl.FRAGMENT_SHADER);
+// 添加着色器
+gl.attachShader(program, vertexShader);
+gl.attachShader(program, fragmentShader);
+// 连接webgl上下文和程序program
+gl.linkProgram(program);
+gl.useProgram(program);
+gl.program = program;
+```
+
 ### 开发效率工具
-tabnine和copilot
-  
-### 开发流程  
-1、后端开发：   
+
+tabnine 和 copilot
+
+### 开发流程
+
+1、后端开发：  
 理解需求、关键功能技术评审、设计表结构、设计接口文档、接口功能实现、接口联调自测提测  
 2、mock  
 地址前缀: http://localhost:3000/api
