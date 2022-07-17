@@ -29,6 +29,7 @@
     "vuepress-theme-maker": "^1.2.0"
   },
   "dependencies": {
+    "three": "^0.142.0",
     "vuepress-theme-yuu": "^3.0.1"
   }
 }
