@@ -64,6 +64,16 @@ gl.useProgram(program);
 gl.program = program;
 ```
 
+笔记：  
+1、相机 camera：  
+1.1、正交相机：远近端一样大  
+1.2、透视相机：近大远小
+
+2、ThREE.WebGLRenderer 作用：渲染器，将渲染的结果放到 canvas 画布上  
+3、渲染器要渲染的元素定义在 THREE.Scene 中，包括 Object、Texture、Light、全局坐标  
+4、将全局坐标转换为相机坐标系中的坐标  
+![基本渲染场景](/blog/assets/img/scene.png)
+
 ### 开发效率工具
 
 tabnine 和 copilot
