@@ -10,7 +10,7 @@
 
 ## 1-学习路线
 
-HTML5🌻 CSS3🌻 ES6🌻 DOM🌻 BOM🌻 Git 部分 🌻 Node 部分 🌻 Webpack🌻 Vue🌻  
+HTML5🌻 CSS3🌻 ES6🌻 DOM🌻 BOM🌻 Git 🌻 Node 🌻 Webpack🌻 Vue🌻 React🌻  
 [计算机经典书籍 PDF](https://github.com/forthespada/CS-Books)  
 [阿里巴巴前端知识图谱](https://f2e.tech/)
 
