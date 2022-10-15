@@ -49,3 +49,12 @@ VSCode HBuilder 云端 IDE
 2、稳定性：监控、告警、流水线(lint、sonar、单测、e2e)  
 3、体验设计：UI、规范  
 4、提效：状态管理、脚手架、内部 cra(lint)?、css 原子类
+
+## diary
+
+9.21 TS 类型体操通关秘籍 2  
+类型检查为了保证类型安全，包括内存空间与变量操作。变量操作指例如 js 里 true + 1 这种魔幻操作  
+9.22 TS 类型体操通关秘籍 3  
+TS 给 JS 增加了一套静态类型系统，通过 TS Compiler 编译为 JS，编译的过程做类型检查。
+
+10.16 ARIA 概念 [Accessible Rich Internet Application 可访问的富互联网应用程序](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA)
