@@ -55,6 +55,7 @@ module.exports = {
       { text: "网络", link: "/network/" },
       { text: "算法", link: "/algorithm/" },
       { text: "CS课程", link: "/cs/" },
+      { text: "MissyPeng", link: "/missyPeng" },
       { text: "其他", link: "/others/" },
       { text: "External", link: "https://google.com" },
     ],
