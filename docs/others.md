@@ -11,7 +11,13 @@ git pull 其实就是 git fetch 和 git merge FETCH_HEAD 的简写。
 改好之后，就可以 pop 出来，再清除缓存的记录即可。  
 3、rebase 衍合与 merge 合并区别：  
 merge: git 自动找到最佳的位置生成新的结点进行合并，git 分支仍然为两条，git 流程不清晰  
-rebase: 根据当前分支 1 后续的历次提交对象，生成一系列文件补丁，然后以基底分支（也就是主干分支 master）最后一个提交对象为新的出发点，逐个应用之前准备好的补丁文件，最后会生成一个新的合并提交对象，从而改写当前分支 1 的提交历史，使它成为 master 分支的直接下游，优点：git 流程清晰
+rebase: 根据当前分支 1 后续的历次提交对象，生成一系列文件补丁，然后以基底分支（也就是主干分支 master）最后一个提交对象为新的出发点，逐个应用之前准备好的补丁文件，最后会生成一个新的合并提交对象，从而改写当前分支 1 的提交历史，使它成为 master 分支的直接下游，优点：git 流程清晰  
+注：  
+· rebase 不是复制之前的 feature commit，而是产生新的 commit hash 值  
+· rebase 还经常用来合并 commit~  
+4、git pull --rebase：用于多人开发同一分支  
+5、git log --oneline: git log 的简洁版本  
+6、git log --graph --oneline --decorate：看 graph 图
 
 ## npm
 
