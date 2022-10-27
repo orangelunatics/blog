@@ -67,6 +67,10 @@ module.exports = {
               },
             ],
           },
+          {
+            text: "TS体操练习",
+            link: "/pengpeng/typeChallenge/",
+          },
         ],
       },
       { text: "其他", link: "/others/" },
