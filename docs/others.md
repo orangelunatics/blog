@@ -17,7 +17,13 @@ rebase: 根据当前分支 1 后续的历次提交对象，生成一系列文件
 · rebase 还经常用来合并 commit~  
 4、git pull --rebase：用于多人开发同一分支  
 5、git log --oneline: git log 的简洁版本  
-6、git log --graph --oneline --decorate：看 graph 图
+6、git log --graph --oneline --decorate：看 graph 图  
+7、git add 的各种区别
+
+- git add . **当前目录**下的所有变更
+- git add --all/-A (gaa) **当前项目**的所有变更
+- git add -u 不包括新增文件
+- git add \* **当前目录**下的所有变更，不包括.开头文件
 
 ## npm
 
@@ -176,7 +182,7 @@ function judge() {
 export default judge();
 
 // 文件2
-import jg from "./judge.js";
+import jg from './judge.js';
 
 const a = jg();
 console.log(a);

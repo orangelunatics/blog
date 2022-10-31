@@ -1,12 +1,10 @@
-## JavaScript & TypeScript
-
 ## 手写 JS 数组原型方法
 
 ### map
 
 ```javascript
 Array.prototype.map = function(fn, thisArg) {
-  if (typeof fn !== "function" || !Array.isArray(this)) throw new Error("×");
+  if (typeof fn !== 'function' || !Array.isArray(this)) throw new Error('×');
   const newArr = [];
   for (let i = 0; i < this.length; i++) {
     newArr[i] = fn.call(thisArg, arr[i], i, this);
@@ -19,7 +17,7 @@ Array.prototype.map = function(fn, thisArg) {
 
 ```javascript
 Array.prototype.find = function(fn, thisArg) {
-  if (typeof fn !== "function" || !Array.isArray(this)) throw new Error("×");
+  if (typeof fn !== 'function' || !Array.isArray(this)) throw new Error('×');
   for (let i = 0; i < this.length; i++) {
     if (fn.call(thisArg, this[i], i, this)) return this[i];
   }
@@ -33,7 +31,7 @@ Array.prototype.find = function(fn, thisArg) {
 
 ```javascript
 Array.prototype.some = function(fn, thisArg) {
-  if (typeof fn !== "function" || !Array.isArray(this)) throw new Error("×");
+  if (typeof fn !== 'function' || !Array.isArray(this)) throw new Error('×');
   for (let i = 0; i < this.length; i++) {
     if (fn.call(thisArg, this[i], i, this)) return true;
   }
@@ -50,7 +48,7 @@ Array.prototype.some = function(fn, thisArg) {
 
 ```javascript
 Array.prototype.filter = function(fn, thisArg) {
-  if (typeof fn !== "function" || !Array.isArray(this)) throw new Error("×");
+  if (typeof fn !== 'function' || !Array.isArray(this)) throw new Error('×');
   const newArr = [];
   for (let i = 0; i < this.length; i++) {
     if (fn.call(thisArg, arr[i], i, this)) newArr.push(arr[i]);
@@ -63,7 +61,7 @@ Array.prototype.filter = function(fn, thisArg) {
 
 ```javascript
 Array.prototype.reduce = function(fn, start) {
-  if (typeof fn !== "function" || !Array.isArray(this)) throw new Error("");
+  if (typeof fn !== 'function' || !Array.isArray(this)) throw new Error('');
   let result = start ? start : this.splice(0, 1)[0]; //没有初始值的时候缩短遍历次数
   for (let i = 0; i < this.length; i++) {
     result = fn(result, this[i], i, this);
@@ -88,7 +86,7 @@ Promise.resolve = (val) => {
     if (val instanceof Promise) {
       val.then(
         (res) => resolve(res),
-        (err) => reject(err)
+        (err) => reject(err),
       );
     } else resolve(val);
   });
@@ -101,8 +99,7 @@ Promise.reject = (val) => {
 };
 // 3、Promise.all
 Promise.all = (promiseArr) => {
-  if (typeof promiseArr[Symbol.iterator] !== "function")
-    throw new Error("not iterator");
+  if (typeof promiseArr[Symbol.iterator] !== 'function') throw new Error('not iterator');
   return new Promise((resolve, reject) => {
     const arr = [];
     for (let i = 0; i < promiseArr.length; i++) {
@@ -111,7 +108,7 @@ Promise.all = (promiseArr) => {
           arr[i] = res;
           if (i + 1 === promiseArr.length) resolve(arr);
         },
-        (err) => reject(err)
+        (err) => reject(err),
       );
     }
   });
@@ -159,7 +156,7 @@ Promise.all = (promiseArr) => {
 **注：唯一的原生类数组（array-like）对象是 Strings**
 
 ```js
-Array.from("abc");
+Array.from('abc');
 // ["a", "b", "c"]
 ```
 
@@ -340,13 +337,17 @@ const judge = (arr) => {
 };
 ```
 
+## JSDoc
+
+补充常用语法
+
 ## tips
 
 **1、空字符串的索引**
 
 ```javascript
-const str = "123";
-console.log(str.indexOf("")); //0
+const str = '123';
+console.log(str.indexOf('')); //0
 ```
 
 **2、[substr、substring、slice 的区别](https://www.cnblogs.com/echolun/p/7646025.html)**
