@@ -24,7 +24,7 @@ module.exports = {
   ],
   themeConfig: {
     yuu: {
-      defaultDarkTheme: true,
+      defaultDarkTheme: false,
     },
     lastUpdated: "Last Updated",
     logo: "/assets/img/hero.png",
