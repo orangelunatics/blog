@@ -72,7 +72,7 @@ MDN：Tree shaking 是一个通常用于描述移除 JavaScript 上下文中的�
 由于 dom(数据)的更新是异步的(类比 setState)，Vue 的 this.\$nextTick 方法是将执行逻辑放在 dom 更新之后执行，可以拿到最新的 dom/数据，再比如 created 钩子中 dom 还未挂载，那么也可以用这个方法来实现操作 dom。  
 2、[Vue 模板编译过程](https://juejin.cn/post/6863241580753616903#heading-12)  
 3、[keep-alive 缓存组件的原理](https://segmentfault.com/a/1190000022248237)  
-① 首次渲染(执行正常的生命周期钩子和 activated)的时候，除了再 <keep-alive> 中建立缓存，设置 vnode.data.keepAlive 为 true，其他的过程和普通组件一样。  
+① 首次渲染(执行正常的生命周期钩子和 activated)的时候，除了再 <keep-alive /> 中建立缓存，设置 vnode.data.keepAlive 为 true，其他的过程和普通组件一样。  
 ② 命中缓存进行渲染时，不执行其他钩子，只执行 activated，并且对缓存的组件进行 patch，进行更新。  
 4、[前端路由](https://juejin.cn/post/6844903890278694919#heading-4)
 
