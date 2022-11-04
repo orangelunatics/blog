@@ -1,7 +1,7 @@
 <h2 style="text-align: center;">talking about Vue.js/devtools</h2>
-各框架都有自身的devtools，有助于开发调试。正式环境一般会隐藏devtools，但也有办法调出。
+- 各框架都有自身的devtools，有助于开发调试。正式环境一般会隐藏devtools，但也有办法调出。
 
-### Vue 项目
+## Vue 项目
 
 - 复制到控制台执行后，重启控制台即可。
 
@@ -23,7 +23,7 @@ while ((node = walker.nextNode())) {
 }
 ```
 
-### Nuxt 项目
+## Nuxt 项目
 
 - 复制到控制台执行后，重启控制台即可。
 

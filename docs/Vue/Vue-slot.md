@@ -1,10 +1,12 @@
 <h2 style="text-align: center;">talking about 插槽</h2>
 - 注：在 2.6.0 中，我们为具名插槽和作用域插槽引入了一个新的统一的语法 (即 v-slot 指令)。它取代了 slot 和 slot-scope 这两个目前已被废弃但未被移除且仍在文档中的 attribute。
 
-### 为什么发明/使用 slot
+## why slot
 
 - 复用性、更优雅
 - 让父组件可以向子组件指定位置插入 html 结构，也是组件间通信的一种方式
+
+## all kind of slots
 
 ### 默认插槽 slot
 
