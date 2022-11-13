@@ -82,7 +82,7 @@ MDN：Tree shaking 是一个通常用于描述移除 JavaScript 上下文中的�
 [详细](https://juejin.cn/post/6844904158093377549#heading-2)  
 1、响应式：  
 Vue: 2 里是 defineProperty 和发布订阅模式、3 是 proxy  
-React：react 通过 setState 主动触发数据变化。
+React：react 通过 setState 主动触发数据变化。  
 2、diff：  
 相同点：同层级 On、唯一 key
 Vue 采用双端指针(找到同一 key 的节点，移动即可，复用)，找到新旧节点的位置，边移动指针边对比边更新  
