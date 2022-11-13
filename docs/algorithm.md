@@ -39,10 +39,7 @@ function knapsack(V, n, vw) {
       if (i - vw[j - 1][0] < 0) {
         dp[i][j] = dp[i][j - 1];
       } else {
-        dp[i][j] = Math.max(
-          dp[i][j - 1],
-          dp[i - vw[j - 1][0]][j - 1] + vw[j - 1][1]
-        );
+        dp[i][j] = Math.max(dp[i][j - 1], dp[i - vw[j - 1][0]][j - 1] + vw[j - 1][1]);
       }
     }
   }
@@ -160,6 +157,24 @@ const longestDays = (arr, m) => {
 
 思路和大数之和一致，区别在于需要首先给一个数组存储 36 进制的 10 个数字和 26 个字母用来进行索引。
 
-## KMP？
+## KMP
 
-1
+## 2022 下半年每日一题
+
+- [791. 自定义字符串排序](https://leetcode.cn/problems/custom-sort-string/)
+
+```js
+const m = new Map([
+  ['z', 1],
+  ['b', 2],
+  ['c', 3],
+]);
+const arr = ['b', 'c', 'z', 'b'];
+arr.sort((a, b) => m.get(a) - m.get(b));
+// log ： ['z', 'b', 'b', 'c']
+
+// 不存在的情况：
+const arr = ['b', 'c', 'z', 'l', 'b', 'a', 'q'];
+arr.sort((a, b) => m.get(a) - m.get(b))(7)[('z', 'b', 'b', 'c', 'l', 'a', 'q')];
+// log：['z', 'b', 'b', 'c', 'l', 'a', 'q']
+```
