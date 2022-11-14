@@ -50,6 +50,8 @@ module.exports = {
               { text: '在Vue中使用混入mixin', link: '/Vue/Vue-mixin/' },
               { text: '如何在控制台中调用Vue开发者工具', link: '/Vue/Vue-devtools/' },
               { text: 'Vue3基础', link: '/Vue/Vue3/' },
+              { text: 'Vu响应式原理', link: '/Vue/Vue-reactive/' },
+              { text: 'nectTick的原理', link: '/Vue/Vue-nextTick/' },
             ],
           },
           {

@@ -341,6 +341,16 @@ const judge = (arr) => {
 
 补充常用语法
 
+## 定时器
+
+1. setTimeout(fn, 0)设计为 4ms 的原因：setTimeout 4ms 是历史设计问题，当年设计成 0ms 或 1ms 的时候，导致耗电量增大和浏览器崩溃等问题，后来控制在 4ms。
+
+- 需要同时满足嵌套层级超过 5 层，timeout 小于 4ms，才会设置 4ms
+- 不同浏览器的设计不同
+- "其原因在于如果浏览器允许 0ms，会导致 JavaScript 引擎过度循环，也就是说如果浏览器架构是单进程的，那么可能网站很容易无响应。因为浏览器本身也是建立在 event loop 之上的，如果速度很慢的 JavaScript engine 通过 0ms timer 不断安排唤醒系统，那么 event loop 就会被阻塞。那么此时用户会面对什么情况呢？同时遇到 CPU spinning 和基本挂起的浏览器，想想就让人崩溃。"
+
+2. setInterval 的问题
+
 ## tips
 
 **1、空字符串的索引**
