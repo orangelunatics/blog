@@ -59,6 +59,7 @@ module.exports = {
               { text: 'Vue3基础', link: '/Vue/Vue3/' },
               { text: 'Vu响应式原理', link: '/Vue/Vue-reactive/' },
               { text: 'nectTick的原理', link: '/Vue/Vue-nextTick/' },
+              { text: 'Vue.component与Vue.extend', link: '/Vue/Vue-component/' },
             ],
           },
           {
