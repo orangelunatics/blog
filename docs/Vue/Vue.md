@@ -92,6 +92,7 @@ const router = new VueRouter({
    相同点：同层级 On、唯一 key
    Vue 采用双端指针(找到同一 key 的节点，移动即可，复用)，找到新旧节点的位置，边移动指针边对比边更新  
    React 是从头开始比对 node，从而去新增、删除或移动节点(没有采用双端指针)
+   传统 diff 是 On³ 的原因：老树的每一个节点都去遍历新树的节点，直到找到新树对应的节点。那么这个流程就是 O(n^2)，再紧接着找到不同之后，再计算最短修改距离然后修改节点，这里是 O(n^3)
 3. 事件  
    React 采用合成事件，所有事件都冒泡到顶层 document 监听，然后在这里合成事件下发
 4. 核心思想不同  
@@ -104,7 +105,7 @@ const router = new VueRouter({
 
 ## 表单输入绑定
 
-用 v-model 指令在表单 <input>、<textarea> 及 <select> 元素上创建双向数据绑定
+用 v-model 指令在表单 input、textarea 及 select 元素上创建双向数据绑定
 
 - text 和 textarea 元素使用 value property 和 input 事件 (文本框，用 input 是因为让其实时触发)
 - checkbox 和 radio 使用 checked property 和 change 事件 (选择框)
