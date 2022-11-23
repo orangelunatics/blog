@@ -51,7 +51,7 @@ function MyComponent() {
   return <h2>我是用函数定义的组件(适用于【简单组件】的定义)</h2>;
 }
 //2.渲染组件到页面
-ReactDOM.render(<MyComponent />, document.getElementById("test")); //注意首字母大写
+ReactDOM.render(<MyComponent />, document.getElementById('test')); //注意首字母大写
 /* 
   执行了ReactDOM.render(<MyComponent/>.......之后，发生了什么？
       1.React解析组件标签，找到了MyComponent组件。
@@ -71,12 +71,12 @@ class MyComponent extends React.Component {
   render() {
     //render是放在哪里的？—— MyComponent的原型对象上，供实例使用。
     //render中的this是谁？—— MyComponent的实例对象 <=> MyComponent组件实例对象。
-    console.log("render中的this:", this);
+    console.log('render中的this:', this);
     return <h2>我是用类定义的组件(适用于【复杂组件】的定义)</h2>;
   }
 }
 //2.渲染组件到页面
-ReactDOM.render(<MyComponent />, document.getElementById("test"));
+ReactDOM.render(<MyComponent />, document.getElementById('test'));
 /* 
   执行了ReactDOM.render(<MyComponent/>.......之后，发生了什么？
       1.React解析组件标签，找到了MyComponent组件。
@@ -102,12 +102,12 @@ ReactDOM.render(<MyComponent />, document.getElementById("test"));
   //1.创建组件
   class Weather extends React.Component {
     //初始化状态
-    state = { isHot: false, wind: "微风" };
+    state = { isHot: false, wind: '微风' };
     render() {
       const { isHot, wind } = this.state;
       return (
         <h1 onClick={this.changeWeather}>
-          今天天气很{isHot ? "炎热" : "凉爽"}，{wind}
+          今天天气很{isHot ? '炎热' : '凉爽'}，{wind}
         </h1>
       );
     }
@@ -118,7 +118,7 @@ ReactDOM.render(<MyComponent />, document.getElementById("test"));
     };
   }
   //2.渲染组件到页面
-  ReactDOM.render(<Weather />, document.getElementById("test"));
+  ReactDOM.render(<Weather />, document.getElementById('test'));
 </script>
 ```
 
@@ -127,10 +127,7 @@ ReactDOM.render(<MyComponent />, document.getElementById("test"));
 
 ```javascript
 //1、传Number类型的数据,用大括号包裹
-ReactDOM.render(
-  <Person name="jerry" age={19} sex="男" />,
-  document.getElementById("test1")
-);
+ReactDOM.render(<Person name="jerry" age={19} sex="男" />, document.getElementById('test1'));
 // 2、对props的数据类型进行限制(在类外部写该逻辑，相当于静态属性)
 Person.propTypes = {
   name: PropTypes.string.isRequired, //限制name必传，且为字符串
@@ -142,7 +139,7 @@ Person.propTypes = {
 // 3、对props的部门props设置默认值(在类外部写该逻辑，相当于静态属性)
 Person.defaultProps = {
   // 默认的意思是,如果不传该属性,就采用默认的值
-  sex: "男", //sex默认值为男
+  sex: '男', //sex默认值为男
   age: 18, //age默认值为18
 };
 ```
@@ -157,8 +154,8 @@ class Person extends React.Component {
     // console.log(props);
     super(props);
     // console.log('30',this);//实例
-    console.log("constructor", this.props);
-    console.log("constructor", props);
+    console.log('constructor', this.props);
+    console.log('constructor', props);
     // 如果构造器里不用this.props 则可以不写构造器
   }
 
@@ -171,7 +168,7 @@ class Person extends React.Component {
 
   //指定默认标签属性值
   static defaultProps = {
-    sex: "男", //sex默认值为男
+    sex: '男', //sex默认值为男
     age: 18, //age默认值为18
   };
 
@@ -190,7 +187,7 @@ class Person extends React.Component {
   }
 }
 //渲染组件到页面
-ReactDOM.render(<Person name="jerry" />, document.getElementById("test1"));
+ReactDOM.render(<Person name="jerry" />, document.getElementById('test1'));
 ```
 
 ③ 函数式组件使用 props：  
@@ -218,12 +215,12 @@ Person.propTypes = {
 
 //指定默认标签属性值
 Person.defaultProps = {
-  sex: "男", //sex默认值为男
+  sex: '男', //sex默认值为男
   age: 18, //age默认值为18
 };
 console.log(Person);
 //渲染组件到页面
-ReactDOM.render(<Person name="jerry" />, document.getElementById("test1"));
+ReactDOM.render(<Person name="jerry" />, document.getElementById('test1'));
 ```
 
 **3、refs**  
@@ -237,11 +234,7 @@ console.log(this.refs); //{input1: input}
 ② 回调函数形式：
 
 ```js
-<input
-  ref={(c) => (this.input1 = c)}
-  type="text"
-  placeholder="点击按钮提示数据"
-/>;
+<input ref={(c) => (this.input1 = c)} type="text" placeholder="点击按钮提示数据" />;
 //c代表currentNode，react自动执行这个回调函数，传的参数为当前真实的DOM(当前ref所处的节点)
 //此处的this代表实例对象
 //和形式字符串不同的是，字符串形式是将节点存在refs，
@@ -391,7 +384,7 @@ constantjs 文件用来定义 type 变量，防止写错单词，并且可以统
 
 ```js
 // 定义：
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 const useTitle = (title) => {
   useEffect(() => {
@@ -403,10 +396,10 @@ const useTitle = (title) => {
 export default useTitle;
 
 // 使用：
-import useTitle from "./useTitle";
+import useTitle from './useTitle';
 
 const fish = () => {
-  useTitle("a few fish");
+  useTitle('a few fish');
 
   return <div>home</div>;
 };
@@ -504,7 +497,7 @@ const signinClick = (signState: boolean, todayIcon: string) => {
           return { ...item, icon: todayIcon };
         }
         return item;
-      })
+      }),
     );
   }
 };
@@ -518,9 +511,30 @@ const signinClick = (signState: boolean, todayIcon: string) => {
 
 ## React 合成事件
 
-从三个问题发现 React 的(合成)事件与 DOM 的原生事件不同：  
-1、阻止冒泡失效(因为合成事件注册到了 document)  
-2、onChange(和 input 事件一样)和原生的 onchange(失去焦点)执行条件不同  
-3、原生事件的回调执行时间早于同一元素的合成事件(因为合成事件注册到了 document)  
-三阶段: 事件注册、合成、派发  
-[详细](https://segmentfault.com/a/1190000015142568)
+优点：
+
+- 最大程度上解决了 IE 等浏览器的不兼容问题
+- 事件绑定到 Document 上，减少事件绑定的开销。
+- React 通过对象池的形式管理合成事件对象的创建和销毁，减少了垃圾的生成和新对象内存的分配，提高了性能。
+- 事件合成，即事件自定义，React 可以更加自由的定义事件，比如表单的一些 onChange 事件。
+- 抽象跨平台事件机制，这点和 VirtualDOM 的意义相似。
+- React 打算干预事件的分发，不同类型的事件有不同的优先级，比如高优先级的事件可以中断渲染，让用户代码可以及时响应用户交互。
+
+<!-- 从三个问题发现 React 的(合成)事件与 DOM 的原生事件不同：
+1、阻止冒泡失效(因为合成事件注册到了 document)
+2、onChange(和 input 事件一样)和原生的 onchange(失去焦点)执行条件不同
+3、原生事件的回调执行时间早于同一元素的合成事件(因为合成事件注册到了 document)
+三阶段: 事件注册、合成、派发
+[详细](https://segmentfault.com/a/1190000015142568) -->
+
+## 状态更新
+
+数据改变，触发 re-render，和 Vue 的响应式是不同的
+
+## diff
+
+- react 的 简单 diff 本质:
+  React 每次更新时，会将新的 ReactElement（即 React.createElement() 的返回值）与旧的 fiber 树作对比，比较出它们的差异后，构建出新的 fiber 树，因此多节点的 diff 实际上是用 fiber（旧子节点）和 ReactElement 数组（新子节点）进行对比。
+
+- 为什么不用双端 diff:
+  由于双端 diff 需要向前查找节点，但每个 fiber 节点上都没有反向指针，即前一个 fiber 通过 sibling 属性指向后一个 fiber，只能从前往后遍历，而不能反过来（你可以在上文的各个示例图中看到这种实现），因此该算法无法通过双端搜索来进行优化。React 想看下现在用这种方式能走多远，如果这种方式不理想，以后再考虑实现双端 diff。React 认为对于列表反转和需要进行双端搜索的场景是少见的，所以在这一版的实现中，先不对 bad case 做额外的优化。

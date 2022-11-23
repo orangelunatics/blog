@@ -17,12 +17,19 @@
 
 3. 流程: 有空再补充~
 
+## 派发更新
+
+问：派发更新主要做什么事情？  
+答：派发更新就是当响应式数据发生变动的时候，通知所有订阅了这个数据变化的 Watcher(既 Dep 依赖)执行 update。对于 render watcher 渲染 Watcher 而言，update 就是触发组件重新进行渲染；对于 computed watcher 计算属性 Watcher 而言，update 就是对计算属性重新求值；对于 user watcher 用户自定义 Watcher 而言，update 就是调用用户提供的回调函数。
+
+#
+
 ### Object
 
 添加和删除属性无法监听，需要 vm.$set和vm.$delete
 
-1. set 原理：对新增的属性再次执行 defineReactive()进行响应式绑定，再通过 dep.notify()向依赖进行通知
-2. delete 原理：delete 属性后用 dep.notify()通知依赖
+1. set 原理：对新增的属性再次执行 defineReactive()进行响应式绑定，再通过 dep.notify()向依赖进行通知 **也属于派发更新**
+2. delete 原理：delete 属性后用 dep.notify()通知依赖 **也属于派发更新**
 
 ### Array
 
@@ -80,6 +87,8 @@ proxy.name = 'ivan';
 1. 抹平了对象和数组的实现上的差异
 2. 能够监听新增属性和删除属性
 3. proxy 代理的是对象，因此不需要遍历属性，但深层的对象仍需深度遍历。而 difineProperty 需要递归遍历所有属性，实际监听的是属性而不是对象
+4. 使用了懒递归的方式。vue2 使用的是强制递归的方式对嵌套中的对象进行监听。而 vue3 是在读取对象内部的嵌套的对象时，才会为其建立代理
+5. 能够监听 set 和 map、weakset 和 weakmap
 
 ### Reflect：
 

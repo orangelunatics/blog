@@ -60,6 +60,7 @@ module.exports = {
               { text: 'Vu响应式原理', link: '/Vue/Vue-reactive/' },
               { text: 'nectTick的原理', link: '/Vue/Vue-nextTick/' },
               { text: 'Vue.component与Vue.extend', link: '/Vue/Vue-component/' },
+              { text: 'diff算法的不断优化', link: '/Vue/Vue-diff/' },
             ],
           },
           {
