@@ -260,19 +260,19 @@ Symbol.keyFor(a); // 类型强制转换返回string类型 '1'， 如果上面是
 1、对于**undefined**、**任意的函数**以及**symbol**三个特殊的值分别作为**对象属性的值**、**数组元素**、**单独的值**时的不同返回结果。  
 ①undefined、任意的函数以及 symbol 作为对象属性值时，JSON.stringify() 跳过(忽略)对它们进行序列化(不输出)  
 ②undefined、任意的函数以及 symbol 作为数组元素值时，JSON.stringify() 将会将它们序列化为 null  
-③undefined、任意的函数以及 symbol 被 JSON.stringify() 作为单独的值进行序列化时都会返回 undefined
+③undefined、任意的函数以及 symbol 被 JSON.stringify() 作为单独的值进行序列化时都会返回 undefined  
 ④ 布尔值、数字、字符串的包装对象在序列化过程中会自动转换成对应的原始值。  
 ⑤new Date().toJSON()："2021-08-09T14:25:17.008Z"，和 toString()稍微不一样。
 
 ## 实现科里化
 
 ```js
-const curry = (fn) => {
-  return function curryIn(...args1) {
+const myCurry = (fn) => {
+  return function curry(...args1) {
     if (fn.length <= args1.length) {
       return fn(...args1);
     }
-    return (...args2) => curryIn(...args1, ...args2);
+    return (...args2) => curry(...args1, ...args2);
   };
 };
 ```
@@ -349,7 +349,20 @@ const judge = (arr) => {
 - 不同浏览器的设计不同
 - "其原因在于如果浏览器允许 0ms，会导致 JavaScript 引擎过度循环，也就是说如果浏览器架构是单进程的，那么可能网站很容易无响应。因为浏览器本身也是建立在 event loop 之上的，如果速度很慢的 JavaScript engine 通过 0ms timer 不断安排唤醒系统，那么 event loop 就会被阻塞。那么此时用户会面对什么情况呢？同时遇到 CPU spinning 和基本挂起的浏览器，想想就让人崩溃。"
 
-2. setInterval 的问题
+2. setInterval 的问题，也是时间的误差，事件循环的问题：如果你的代码逻辑执行时间可能比定时器时间间隔要长，建议你使用递归调用了 setTimeout() 的具名函数。例如，使用 setInterval() 以 5 秒的间隔轮询服务器，可能因网络延迟、服务器无响应以及许多其它的问题而导致请求无法在分配的时间内完成。但 setTimeout 也有误差，所以也要解决
+
+```js
+(function loop() {
+  setTimeout(function() {
+    // Your logic here
+
+    loop();
+  }, delay);
+})();
+```
+
+3. requestAnimationFrame：回调函数会在浏览器重绘之前调用，利用了浏览器刷新率即重绘频率这一特性进行动画的绘制，比 setInterval 更好(setInterval 或 Timeout 需要考量时间的大小，容易掉帧)。为了提高性能和电池寿命，因此在大多数浏览器里，当 requestAnimationFrame() 运行在后台标签页或者隐藏的 iframe 里时，requestAnimationFrame() 会被暂停调用以提升性能和电池寿命。
+4. requestIdleCallback：requestAnimationFrame 会在每次屏幕刷新的时候被调用，而 requestIdleCallback 则会在每次屏幕刷新时，判断当前帧是否还有多余的时间，如果有，则会调用 requestAnimationFrame 的回调函数，可以和 requestAnimationFrame 搭配，可以实现一些页面性能方面的的优化
 
 ## tips
 
@@ -499,3 +512,6 @@ const obj = {
 
 obj.get(); // undefined  (0824 in CAINiAO)
 ```
+
+**18、类中的方法默认开启了严格模式**
+**19、箭头函数的严格模式与非严格模式的行为一致**
