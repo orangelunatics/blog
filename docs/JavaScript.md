@@ -257,10 +257,10 @@ Symbol.keyFor(a); // 类型强制转换返回string类型 '1'， 如果上面是
 ## JSON
 
 主要探讨 JSON.stringify。[详细](https://juejin.cn/post/6844904016212672519#heading-26)  
-1、对于**undefined**、**任意的函数**以及**symbol**三个特殊的值分别作为**对象属性的值**、**数组元素**、**单独的值**时的不同返回结果。  
-①undefined、任意的函数以及 symbol 作为对象属性值时，JSON.stringify() 跳过(忽略)对它们进行序列化(不输出)  
-②undefined、任意的函数以及 symbol 作为数组元素值时，JSON.stringify() 将会将它们序列化为 null  
-③undefined、任意的函数以及 symbol 被 JSON.stringify() 作为单独的值进行序列化时都会返回 undefined  
+1、对于**undefined**、**任意的函数**以及**Symbol**三个特殊的值分别作为**对象属性的值**、**数组元素**、**单独的值**时的不同返回结果。  
+①undefined、任意的函数以及 Symbol 作为对象属性值时，JSON.stringify() 跳过(忽略)对它们进行序列化(不输出)  
+②undefined、任意的函数以及 Symbol 作为数组元素值时，JSON.stringify() 将会将它们序列化为 null  
+③undefined、任意的函数以及 Symbol 被 JSON.stringify() 作为单独的值进行序列化时都会返回 undefined  
 ④ 布尔值、数字、字符串的包装对象在序列化过程中会自动转换成对应的原始值。  
 ⑤new Date().toJSON()："2021-08-09T14:25:17.008Z"，和 toString()稍微不一样。
 
@@ -487,16 +487,16 @@ EC(G)下有 VOG VOG 里有 GO(?) 生成的 有的放在 VOG 有的 GO
 1、可以用来判断数组等对象："[object Array]"  
 2、1 和 new Number(1)都是"[object Number]"
 
-**14、变量提升**
+**14、变量提升**  
 1、let 的「创建」过程被提升了，但是初始化没有提升。  
 2、var 的「创建」和「初始化」都被提升了。  
 3、function 的「创建」「初始化」和「赋值」都被提升了。  
 [可以看看](https://www.jianshu.com/p/0f49c88cf169)
 
-**15、for in**
+**15、for in**  
 字符串也能 for in 输出索引
 
-**16、V8 性能好的原因**
+**16、V8 性能好的原因**  
 1、JIT 字节码(hot) => 机器码  
 2、内嵌缓存(和上面类似)  
 3、更精确的垃圾回收机制

@@ -23,7 +23,7 @@
 ```javascript
 // 主线程使用new命令调用Worker()构造函数创建一个Worker线程
 // Worker构造函数接收参数为脚本文件路径
-var worker = new Worker("xxxxx.js");
+var worker = new Worker('xxxxx.js');
 
 // 主线成指定监听函数监听Worker线程的返回消息
 worker.onmessage = function(event) {
@@ -31,7 +31,7 @@ worker.onmessage = function(event) {
 }; // data为Worker发来的数据
 
 // 由于主线程与Worker线程存在通信限制,不再同一个上下文中,所以只能通过消息完成
-worker.postMessage("hello world");
+worker.postMessage('hello world');
 
 // 当使用完成后，如果不需要再使用可以在主线程中关闭Worker
 worker.terminate();
@@ -99,10 +99,10 @@ try {
   const response = await fetch(`/api1/search/users2?q=${keyWord}`);
   const data = await response.json();
   console.log(data);
-  PubSub.publish("atguigu", { isLoading: false, users: data.items });
+  PubSub.publish('atguigu', { isLoading: false, users: data.items });
 } catch (error) {
-  console.log("请求出错", error);
-  PubSub.publish("atguigu", { isLoading: false, err: error.message });
+  console.log('请求出错', error);
+  PubSub.publish('atguigu', { isLoading: false, err: error.message });
 }
 ```
 
@@ -206,7 +206,7 @@ HTTP 是属于应用层的协议，最终的数据传输还是要通过传输层
 ## 代理
 
 正向代理：代理端代理的是客户端。如：VPN  
-反向代理：代理端代理的是服务端。如：Nginx  
+反向代理：代理端代理的是服务端。如：Nginx(nginx 代理跨域，实质和 CORS 跨域原理一样，通过配置文件设置请求响应头 Access-Control-Allow-Origin...等字段)  
 Nginx 解决跨域：
 客户端的域名为 client.com，服务器的域名为 server.com
 
@@ -222,3 +222,21 @@ server {
 
 Nginx 服务器的域名也为 client.com，当请求某个接口时，Nginx 进行代理转发，请求真实的服务器域名，拿到响应返回给客户端。
 [其他的跨域方法](https://www.cnblogs.com/rainman/archive/2011/02/20/1959325.html#m1)
+
+## CORS
+
+请求头添加 origin 表明来源，服务器根据这个值，决定是否同意这次请求(响应头 Access-Control-Allow-Origin)。  
+简单请求满足两个要求：
+
+1. 请求方法为 get、post、head
+2. 请求 header 是 accept、accept-language、content-language、content-type 并且值为这三个：application/x-www-form-urlencoded(窗体数据被编码为名称/值对。这是标准的编码格式)、multipart/form-data(窗体数据被编码为一条消息，页上的每个控件对应消息中的一个部分)、text/plain(窗体数据以纯文本形式进行编码，其中不含任何控件或格式字符)
+
+其他为非简单请求，要先进行预检(preflight、使用 OPTIONS 方法),"预检"请求的头信息包括两个特殊字段:
+
+1. Access-Control-Request-Method 必选
+2. Access-Control-Request-Headers 必选
+
+## options method
+
+1、检测服务器所支持的请求方法
+2、cors 预检
