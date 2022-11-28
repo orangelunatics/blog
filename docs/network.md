@@ -223,6 +223,40 @@ server {
 Nginx 服务器的域名也为 client.com，当请求某个接口时，Nginx 进行代理转发，请求真实的服务器域名，拿到响应返回给客户端。
 [其他的跨域方法](https://www.cnblogs.com/rainman/archive/2011/02/20/1959325.html#m1)
 
+## JSONP
+
+- 利用 script 标签(本质是 src 可跨域)的 get 请求执行回调进行跨域，缺点：只能 get、不像 cors 会在浏览器报错、安全性差。基本不怎么用了...
+- 请求 jsonp 之前就定义好回调函数 cb，后端返回的是调用 cb 函数的 js 代码(json padding)，浏览器加载这段代码后立即执行
+
+```js
+const jsonp = (url, data, callback = 'callback') => {
+  let str = url.indexOf('?') === -1 ? '?' : '&';
+  for (const key in data) {
+    str += `${key}=${data[key]}&`;
+  }
+  url = url + str + 'callback=callback';
+
+  const jsonpScript = document.createElement('script');
+  jsonpScript.src = url;
+  document.body.appendChild(jsonpScript);
+
+  return new Promise((resolve, reject) => {
+    window[callback] = (res) => {
+      try {
+        resolve(res);
+      } catch (e) {
+        reject(e);
+      } finally {
+        jsonpScrip.parentNode.removeChild(script);
+      }
+    };
+  });
+};
+jsonp('xx.com', { x: 'xx' }).then((res) => {
+  console.log(res);
+});
+```
+
 ## CORS
 
 请求头添加 origin 表明来源，服务器根据这个值，决定是否同意这次请求(响应头 Access-Control-Allow-Origin)。  
