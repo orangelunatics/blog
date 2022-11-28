@@ -153,7 +153,7 @@ Promise.all = (promiseArr) => {
 ③、Array.prototype.slice.call(arguments)  
 其实这样也行: [].slice.call(arguments)  
 原因从 slice 源码可以看出，利用了 arguments 可以索引。  
-**注：唯一的原生类数组（array-like）对象是 Strings**
+**注：唯一的原生类数组（array-like）对象是 Strings**，也就是说字符串也是类数组
 
 ```js
 Array.from('abc');
