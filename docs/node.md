@@ -95,8 +95,6 @@ requestAnimationFrame 回调在下次重绘前执行
 
 - 微任务：
 
-# 浏览器 Node
-
 |                            | 浏览器 | Node |
 | -------------------------- | ------ | ---- |
 | process.nextTick           | ❌     | ✅   |
@@ -104,3 +102,7 @@ requestAnimationFrame 回调在下次重绘前执行
 | Promise.then catch finally | ✅     | ✅   |
 
 执行顺序：同步任务 > 微任务 > requestAnimationFrame > DOM 渲染 > 宏任务
+
+### this 指向
+
+最外层的 this 并不是全局对象 global。而是 module.exports

@@ -45,9 +45,10 @@ const router = new VueRouter({
 如果组件中 data 选项是一个函数，那么每个实例可以维护一份被返回对象的独立的拷贝，组件实例之间的 data 属性值不会互相影响;  
 而 new Vue 的实例(根组件)，是不会被复用的，因此不存在引用对象的问题。[例子](https://www.cnblogs.com/lovekunkun/p/12144596.html)
 
-## Vue 生命周期
+## Vue 生命周期函数/钩子
 
 四个阶段：初始化、模板编译、挂载、卸载
+钩子(hooks): 在特定的动作发生时触发自定义脚本，这个功能就叫钩子 hooks
 
 1. new Vue(): 执行\_init 函数，初始化一些属性：如 initLifecycle、initEvents、initRender，然后执行 beforeCreate
 2. 调用 beforeCreate()钩子, 之后初始化 inject、state 包括 props、methods、data、computed、watch，然后执行 created
@@ -112,3 +113,7 @@ const router = new VueRouter({
 - checkbox 和 radio 使用 checked property 和 change 事件 (选择框)
 - select 字段将 value 作为 prop 并将 change 作为事件(下拉框)
   补充：change 事件在**失焦**并且内容变化时才触发回调，input 事件是实时触发
+
+## 理解虚拟 DOM
+
+所有 html 结构，都可以用 js dom 来构造，而且能将构造的步骤封装起来，做到「数据-dom 结构」的映射。缓存初始数据，新数据进来时，与旧数据对比，找到差异，根据差异本身的性质进行 dom 操作；无差异，则不作为。dom 本身在 js 中就是一种数据结构，console.dir(document.body)，在控制台可以看到 body 的数据结构。然而，dom 相关的数据丰富而且复杂，我们其实只关心少数元素的少数属性。建立一个 javascript plain object，非常轻量，用它保存我们真正关心的与 dom 相关的少数数据；对它进行操作，然后对比操作前后的差异，再根据映射关系去操作真正的 dom，无疑能提高性能。

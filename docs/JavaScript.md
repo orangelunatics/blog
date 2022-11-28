@@ -279,9 +279,9 @@ const myCurry = (fn) => {
 
 ## 遍历属性
 
-1、for in 自身和原型链 可枚举  
-2、Object.keys() 自身 可枚举  
-3、Object.getOwnPropertyNames() 自身可枚举+不可枚举 不包括 symbol
+1、for in 自身和原型链 可枚举, 不包括 symbol  
+2、Object.keys() 自身 可枚举, 不包括 symbol  
+3、Object.getOwnPropertyNames() 自身可枚举+不可枚举 不包括 symbol  
 4、obj.prototype.hasOwnProperty() 自身可枚举+不可枚举 包括 symbol
 
 ## forEach 和 map 不能通过 return、continue、break 提前退出
@@ -443,7 +443,8 @@ ES5 的 Person.name 这种静态属性相当于 ES6 迭代 static 关键字
 parseInt 和 Number 的区别(抛砖引玉一下)：  
 1、Number 对于非字符串可以强制类型转换，比如 Number([1]) === 1  
 2、Number('11x') => NaN, parseInt('11x') === 11, 忽略后面非数字的部分  
-3、parseInt 第二个参数是指定以什么进制去解析第一个参数 string，如果省略该参数或其值为 0 则是十进制，小于 2 大于 36 都是 NaN，比如 parseInt(3,2), 3 不是一个二进制，所以解析不了，返回 NaN
+3、parseInt 第二个参数是指定以什么进制去解析第一个参数 string(返回十进制)，如果省略该参数或其值为 0 则是十进制，小于 2 大于 36 都是 NaN，比如 parseInt(3,2), 3 不是一个二进制，所以解析不了，返回 NaN  
+4、parseInt 是其他进制转化为十进制、toString 是十进制转化为其他进制
 
 **10、for 循环的特殊用法**
 [14. 最长公共前缀](https://leetcode-cn.com/problems/longest-common-prefix/)

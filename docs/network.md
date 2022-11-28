@@ -5,7 +5,7 @@
 先主要讲一下 js、css、dom 的[阻塞问题](https://www.cnblogs.com/caizhenbo/p/6679478.html)。  
 此外还要注意查询 ip 时先查询本地 hosts 文件，以及最后的**格栅化**。
 
-1、dom 解析时，遇见 script 标签会阻塞 dom 的解析及渲染(执行或者下载并执行 js，这取决于内联还是外联)。解决办法：defer 和 async(从下载和执行两个角度对比)。所以 js 标签放在底部。  
+1、dom 解析时，遇见 script 标签会阻塞 dom 的解析及渲染(执行或者下载并执行 js，这取决于内联还是外联)。解决办法：defer 和 async(从下载和执行两个角度对比)。所以 js 标签放在底部。[defer 与 async](https://zh.javascript.info/script-async-defer)  
 ![对比图](/blog/assets/img/defer&async.png)
 
 2、network 里的蓝色线就是 domContentLoaded 事件触发的时间，红色线是 load 事件触发的时间，前者需要分情况，但总归都是 dom 解析完成时触发，即页面出现内容，可以拿到节点。load 需要所有资源都加载完成后触发，包括图片。
@@ -238,5 +238,17 @@ Nginx 服务器的域名也为 client.com，当请求某个接口时，Nginx 进
 
 ## options method
 
-1、检测服务器所支持的请求方法
-2、cors 预检
+1. 检测服务器所支持的请求方法
+2. cors 预检
+
+## iframe
+
+1. 展示广告(样式隔离之类的优势)
+2. 解决跨域，包括和 document.domain、location.hash、window.name、postMessage 搭配使用
+3. 形成沙箱，比如 figma 插件是 iframe 和 postMessage 结合使用实现的
+4. 用来实现长连接(ws 出现之前)
+
+<!-- ## 二维码登录流程
+
+1. 一般用轮询的方式，[流程如下](https://cloud.tencent.com/developer/article/1893465)：
+   ![qrcode](/blog/assets/img/qrcode.png) -->
