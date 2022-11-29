@@ -362,7 +362,7 @@ const judge = (arr) => {
 ```
 
 3. requestAnimationFrame：回调函数会在浏览器重绘之前调用，利用了浏览器刷新率即重绘频率这一特性进行动画的绘制，比 setInterval 更好(setInterval 或 Timeout 需要考量时间的大小，容易掉帧)。为了提高性能和电池寿命，因此在大多数浏览器里，当 requestAnimationFrame() 运行在后台标签页或者隐藏的 iframe 里时，requestAnimationFrame() 会被暂停调用以提升性能和电池寿命。
-4. requestIdleCallback：requestAnimationFrame 会在每次屏幕刷新的时候被调用，而 requestIdleCallback 则会在每次屏幕刷新时，判断当前帧是否还有多余的时间，如果有，则会调用 requestAnimationFrame 的回调函数，可以和 requestAnimationFrame 搭配，可以实现一些页面性能方面的的优化
+4. requestIdleCallback：requestAnimationFrame 会在每次屏幕刷新的时候被调用，而 requestIdleCallback 则会在每次屏幕刷新时，判断当前帧是否还有多余的时间，如果有，则会调用回调，实现一些页面性能方面的的优化
 
 ## tips
 
@@ -375,7 +375,7 @@ console.log(str.indexOf('')); //0
 
 **2、[substr、substring、slice 的区别](https://www.cnblogs.com/echolun/p/7646025.html)**
 
-**3、Math.max()和 min()的细节**  
+**3、Math.max()和 min()的坑**  
 Math.max()如果不接受参数则返回-Infinity，同理 Math.min()返回 Infinity，如果接受的参数不能转化为数字或者接受 NaN，则返回 NaN。另外关于 map：
 
 ```javascript
@@ -517,4 +517,8 @@ obj.get(); // undefined  (0824 in CAINiAO)
 **18、类中的方法默认开启了严格模式**
 **19、箭头函数的严格模式与非严格模式的行为一致**
 **20、async+forEach 的问题**  
-由于 async 和 await 放在了循环内部，所以表现为并行，改成外部 async，内部 for 循环，就可以间隔 x 秒打印相应数据
+由于 async 和 await 放在了循环内部，所以表现为并行，改成外部 async，内部 for 循环，就可以间隔 x 秒打印相应数据  
+**21、var 和 no var 的区别**
+
+- no var 赋值的变量可以用 delete 删除 window 上的属性
+- no var 赋值的变量作用于全局作用域，var 作用于函数作用域
