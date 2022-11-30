@@ -279,10 +279,12 @@ const myCurry = (fn) => {
 
 ## 遍历属性
 
-1、for in 自身和原型链 可枚举, 不包括 symbol  
-2、Object.keys() 自身 可枚举, 不包括 symbol  
-3、Object.getOwnPropertyNames() 自身可枚举+不可枚举 不包括 symbol  
-4、obj.prototype.hasOwnProperty() 自身可枚举+不可枚举 包括 symbol
+1. for in 自身和原型链 可枚举, 不包括 symbol
+2. Object.keys() 自身 可枚举, 不包括 symbol
+3. Object.getOwnPropertyNames() 自身可枚举+不可枚举 不包括 symbol
+4. obj.prototype.hasOwnProperty() 判断属性：自身可枚举+不可枚举 包括 symbol
+5. Reflect.ownKeys 方法返回一个由目标对象**自身**的属性键组成的数组。它的返回值等同于 Object.getOwnPropertyNames(target).concat(Object.getOwnPropertySymbols(target))。
+6. obj.propertyIsEnumerable(key)判断是否可枚举，比如数组的 length 是不可枚举
 
 ## forEach 和 map 不能通过 return、continue、break 提前退出
 
@@ -363,6 +365,89 @@ const judge = (arr) => {
 
 3. requestAnimationFrame：回调函数会在浏览器重绘之前调用，利用了浏览器刷新率即重绘频率这一特性进行动画的绘制，比 setInterval 更好(setInterval 或 Timeout 需要考量时间的大小，容易掉帧)。为了提高性能和电池寿命，因此在大多数浏览器里，当 requestAnimationFrame() 运行在后台标签页或者隐藏的 iframe 里时，requestAnimationFrame() 会被暂停调用以提升性能和电池寿命。
 4. requestIdleCallback：requestAnimationFrame 会在每次屏幕刷新的时候被调用，而 requestIdleCallback 则会在每次屏幕刷新时，判断当前帧是否还有多余的时间，如果有，则会调用回调，实现一些页面性能方面的的优化
+
+## 深拷贝
+
+考虑循环引用和 Symbol，不考虑函数
+
+```js
+const getType = (obj) => {
+  const val = Object.prototype.toString.call(obj);
+  const type = /\[object (.*)\]/.exec(val)[1]; // 第一个小括号匹配到的
+  return type;
+};
+
+const iteratorObject = (obj, res, m) => {
+  // 自身的可枚举 不可枚举和 symbol属性
+  Reflect.ownKeys(obj).forEach((key) => {
+    // 移除不可枚举
+    if (obj.propertyIsEnumerable(key)) {
+      res[key] = deepClone(obj[key], m);
+    }
+  });
+};
+
+/**
+ * @param {object}  obj
+ * @returns {object} res
+ */
+const deepClone = (obj, wm = new WeakMap()) => {
+  if (typeof obj !== 'object' || obj === null) return obj;
+  if (wm.has(obj)) return wm.get(obj); // 解决循环引用
+  let res;
+  const type = getType(obj);
+  switch (type) {
+    case 'Set': // 可以再补充weakmap ws之类的
+      res = new Set();
+      wm.set(obj, res);
+      obj.forEach((value) => res.add(deepClone(value, wm)));
+      break;
+    case 'Map':
+      res = new Map();
+      wm.set(obj, res);
+      obj.forEach((value, key) => res.set(key, deepClone(value, wm)));
+      break;
+    case 'Date':
+      res = new Date(obj);
+      break;
+    case 'RegExp':
+      res = new RegExp(obj.source, obj.flags);
+      break;
+    case 'Array':
+      res = [];
+      wm.set(obj, res);
+      iteratorObject(obj, res, wm);
+      break;
+    case 'Object':
+      res = {};
+      wm.set(obj, res);
+      iteratorObject(obj, res, wm);
+      break;
+    default:
+      // 其他 补充
+      return obj;
+  }
+  return res;
+};
+
+const arr = [1, 2, [3]];
+const darr = deepClone(arr);
+darr[0] = 5;
+console.log(arr); //[ 1, 2, [ 3 ] ]
+console.log(darr); //[ 5, 2, [ 3 ] ]
+
+const obj = { a: 1 };
+const dobj = deepClone(obj);
+dobj.a = 5;
+console.log(obj); //{ a: 1 }
+console.log(dobj); //{ a: 5 }
+
+const s1 = new Set([1, 2, 3]);
+const s2 = deepClone(s1);
+s2.add(4);
+console.log(s1); //Set(3) { 1, 2, 3 }
+console.log(s2); //Set(4) { 1, 2, 3, 4 }
+```
 
 ## tips
 
@@ -522,3 +607,9 @@ obj.get(); // undefined  (0824 in CAINiAO)
 
 - no var 赋值的变量可以用 delete 删除 window 上的属性
 - no var 赋值的变量作用于全局作用域，var 作用于函数作用域
+
+**22、WeakMap 和 WeakSet 与 Map 和 Set 的区别**
+
+- WeakMap 只接受对象作为键名（null 除外），不接受其他类型的值作为键名,值任意；WeakSet 的值只能是对象
+- 引用(避免内存泄漏)：WeakMap 持有的是每个键对象的“弱引用”，这意味着在没有其他引用存在时垃圾回收能正确进行
+- 没有遍历的方法比如 forEach，也没有 size 属性，因为不知道什么时候就被垃圾回收了
