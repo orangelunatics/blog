@@ -678,3 +678,5 @@ obj.get(); // undefined  (0824 in CAINiAO)
 - WeakMap 只接受对象作为键名（null 除外），不接受其他类型的值作为键名,值任意；WeakSet 的值只能是对象
 - 引用(避免内存泄漏)：WeakMap 持有的是每个键对象的“弱引用”，这意味着在没有其他引用存在时垃圾回收能正确进行
 - 没有遍历的方法比如 forEach，也没有 size 属性，因为不知道什么时候就被垃圾回收了
+
+**23、Number.EPSILON 值为 2^-52**
