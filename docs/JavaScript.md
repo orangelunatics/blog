@@ -449,6 +449,71 @@ console.log(s1); //Set(3) { 1, 2, 3 }
 console.log(s2); //Set(4) { 1, 2, 3, 4 }
 ```
 
+## 显式绑定 call、apply、bind
+
+1. bind，修改指向但不直接执行，可以分批传参
+
+```js
+// bind: https://mp.weixin.qq.com/s/istdqF_k0hbXmaWUivtf9A
+Function.prototype.bind2 = function(context, ...args1) {
+  if (typeof this !== 'function') throw new TypeError();
+  const self = this;
+  // 这里不用箭头函数是因为可能fn是构造函数 要实例化
+  const fn = function(...args2) {
+    // 记得要return 因为函数要有返回值
+    return self.apply(this instanceof self ? this : context, [...args1, ...args2]);
+  };
+  const newFn = function() {};
+  newFn.prototype = self.prototype;
+  fn.prototype = new newFn(); // 为了继承function原型
+  return fn;
+};
+
+var name = 'Jack';
+var Yve = {
+  name: 'Yvette',
+};
+function person(age, job, gender) {
+  console.log(this.name, age, job, gender);
+}
+person(22, 'engineer', 'female');
+// Jack 22 engineer female
+var bindYve = person.bind2(Yve, 22, 'engineer');
+bindYve('female');
+// Yvette 22 engineer female
+```
+
+2. call & apply
+   call 接受上下文和参数列表，apply 接受上下文和数组(或类数组)
+
+```js
+// apply只需要把...args改成args
+Function.prototype.call2 = function(context, ...args) {
+  // 剩余参数不用和箭头函数一起;
+  if (typeof this !== 'function') throw new TypeError(); // 错误处理
+  context = context ?? window; // 非严格模式下 undefined或null 会包装为window
+  if (typeof context !== 'object') context = Object(context); // 简单类型 包装为对象
+  const key = Symbol(); // 防止重名
+  context[key] = this; // context是对象
+  const result = context[key](...args); // 执行时隐式绑定为context
+  delete context[key]; // 删除symbol key
+  return result;
+};
+```
+
+## new 操作符
+
+```js
+const myNew = function(fn, ...args) {
+  const obj = Object.create(fn.prototype);
+  const result = fn.apply(obj, args);
+  if (typeof result !== 'object' || result === null) {
+    return obj;
+  }
+  return result;
+};
+```
+
 ## tips
 
 **1、空字符串的索引**
