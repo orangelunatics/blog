@@ -514,6 +514,34 @@ const myNew = function(fn, ...args) {
 };
 ```
 
+## 同域跨页面通信
+
+1. sw+postMessage
+2. localStorage
+3. indexedDB
+
+## 处理所有 async 的错误
+
+1. 事件监听
+
+```js
+window.addEventListener('unhandledrejection', function(event) {
+  event.reason; //获取到catch的err的原因(内容) 与控制台报错一致
+  event.promise; //获取到未处理的promise对象
+});
+```
+
+2. 封装一层 promise
+
+```js
+export const handler = (promise) => {
+  return promise.then((res) => [undefined, res]).catch((err) => [err, undefined]); // err是有值的情况
+};
+```
+
+3. 手写个 babel 插件处理
+   思路：寻找每个 await，然后再加上对应的 try catch
+
 ## tips
 
 **1、空字符串的索引**
@@ -680,3 +708,9 @@ obj.get(); // undefined  (0824 in CAINiAO)
 - 没有遍历的方法比如 forEach，也没有 size 属性，因为不知道什么时候就被垃圾回收了
 
 **23、Number.EPSILON 值为 2^-52**
+**24、sessionStorage 的问题**：多窗口之间 sessionStorage 不可以共享状态，但是在某些特定场景下新开的同源页面会复制之前页面的 sessionStorage，注意是复制新开时的状态而不是共享，比如 window.open()或 点击 a 标签
+
+- 页面会话在浏览器打开期间一直保持，并且重新加载或恢复页面仍会保持原来的页面会话。
+- 在新标签或窗口打开一个页面时会复制顶级浏览会话的上下文作为新会话的上下文， 这点和 session cookies 的运行方式不同。
+- 打开多个相同的 URL 的 Tabs 页面，会创建各自的  sessionStorage。
+- 关闭对应浏览器标签或窗口，会清除对应的  sessionStorage。
