@@ -529,7 +529,7 @@ const signinClick = (signState: boolean, todayIcon: string) => {
 
 ## 状态更新
 
-数据改变，触发 re-render，和 Vue 的响应式是不同的
+数据改变，触发 re-render，和 Vue 的响应式是不同的，也就是说：在 react 中，组件的状态是不能被修改的(Immutable)，setState 没有修改原来那块内存中的变量，而是去新开辟一块内存
 
 ## diff
 
@@ -537,4 +537,4 @@ const signinClick = (signState: boolean, todayIcon: string) => {
   React 每次更新时，会将新的 ReactElement（即 React.createElement() 的返回值）与旧的 fiber 树作对比，比较出它们的差异后，构建出新的 fiber 树，因此多节点的 diff 实际上是用 fiber（旧子节点）和 ReactElement 数组（新子节点）进行对比。
 
 - 为什么不用双端 diff:
-  由于双端 diff 需要向前查找节点，但每个 fiber 节点上都没有反向指针，即前一个 fiber 通过 sibling 属性指向后一个 fiber，只能从前往后遍历，而不能反过来（你可以在上文的各个示例图中看到这种实现），因此该算法无法通过双端搜索来进行优化。React 想看下现在用这种方式能走多远，如果这种方式不理想，以后再考虑实现双端 diff。React 认为对于列表反转和需要进行双端搜索的场景是少见的，所以在这一版的实现中，先不对 bad case 做额外的优化。
+  由于双端 diff 需要向前查找节点，但每个 fiber 节点上都没有反向指针，即前一个 fiber 通过 sibling 属性指向后一个 fiber，只能从前往后遍历，而不能反过来，因此该算法无法通过双端搜索来进行优化。React 想看下现在用这种方式能走多远，如果这种方式不理想，以后再考虑实现双端 diff。React 认为对于列表反转和需要进行双端搜索的场景是少见的，所以在这一版的实现中，先不对 bad case 做额外的优化。
