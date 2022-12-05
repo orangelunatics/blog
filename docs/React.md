@@ -15,7 +15,7 @@
 
 ### JSX
 
-1、JS 与 HTML 的混合写法，创建虚拟 DOM 更简洁快速(语法糖)。原生 JS 用 React.creactElement 创建虚拟 DOM 需要嵌套，太繁琐。(babel 翻译之后其实就是用的 React.creactElement)  
+1、JS 与 HTML 的混合写法，创建虚拟 DOM 更简洁快速(语法糖)。原生 JS 用 React.creactElement 创建虚拟 DOM 需要嵌套，太繁琐。(babel 翻译之后其实就是用的 React.creactElement),但由于本质是 JS，是动态的，难以做静态分析，因此需要 fiber 来提升性能，而 Vue 是用模板来做静态分析的  
 2、使用 Babel 将 JSX 转化为 JS。  
 3、通过打印虚拟 DOM 可以发现虚拟 DOM 对象的键值对比真实 DOM 的少(真实 DOM 可以通过打断点查看)，因为创建虚拟 DOM 只需要添加必要的键值对。  
 4、给 React 的 DOM 传数组数据，会自动遍历，而对象不行。  
@@ -410,11 +410,14 @@ const fish = () => {
 
 ## React 常见问题
 
-1、[setState 异步/同步](https://www.it610.com/article/1360017164731441152.htm)  
-异步：在 React 合成事件和生命周期中。同步：原生事件和定时器中。(class)  
+1、setState 异步/同步
+
+- 异步：在 React 合成事件和生命周期中。同步：原生事件和定时器中。(class)
+- 本质上是同步的，是其**批处理机制**(合成事件和生命周期中)造成了一种异步的假象: 无论调用多少次 setState，都不会立即执行更新。而是将要更新的 state 存入'\_pendingStateQuene',将要更新的组件存入'dirtyComponent';当根组件 didMount 后，批处理机制更新为 false。此时再取出'\_pendingStateQuene'和'dirtyComponent'中的 state 和组件进行合并更新；
+
 2、useEffect 的 return 不仅在组件销毁时执行，也会在下一次 useEffect 执行前执行(但在渲染之后，也就是函数组件重新执行一遍之后)。  
 3、React 每次渲染的 props 和 state 是互相独立的，实际上，每次渲染后 React 是把最新的 state 赋给当前的组件，可以用定时器证明此结论。解决办法：利用 useRef。  
-4、ref 在所有 render 中都保持着唯一的引用，因此所有的对 ref 的赋值或者取值拿到的都是一个最终的状态，而不会存在隔离。这也是为什么 ref 需要是一个对象，从而通过 current 属性才能拿到 dom 或者值。而不能一个简单类型的值。  
+4、ref 在所有 render 中都保持着唯一的引用，因此所有的对 ref 的赋值或者取值拿到的都是一个最终的状态，而不会存在隔离。这也是为什么 ref 需要是一个对象，从通过 current 属性才能拿到 dom 或者值。而不能一个简单类型的值。  
 5、定时器的 setState 同步 对函数组件的 useEffect 不适用。  
 6、useCallback useMemo。类似于计算属性，前者缓存函数，后者可以缓存任意类型数据。每次渲染就不必重新定义。
 7、React 规定我们必须把 hooks 写在函数的最外层，不能写在 if else 等条件语句当中，来确保 hooks 的执行顺序一致。  
@@ -529,7 +532,9 @@ const signinClick = (signState: boolean, todayIcon: string) => {
 
 ## 状态更新
 
-数据改变，触发 re-render，和 Vue 的响应式是不同的，也就是说：在 react 中，组件的状态是不能被修改的(Immutable)，setState 没有修改原来那块内存中的变量，而是去新开辟一块内存
+- 数据改变，触发 re-render，和 Vue 的响应式是不同的，也就是说：在 react 中，组件的状态是不能被修改的(Immutable)，setState 没有修改原来那块内存中的变量，而是去新开辟一块内存
+- 调用 setState 方法后，会自顶向下重新渲染组件，自顶向下的含义是，该组件以及它的子组件全部需要渲染，所以当一个数据改变，react 的组件渲染是很消耗性能的——父组件的状态更新了，所有的子组件得跟着一起渲染，它不能像 vue 一样，精确到当前组件的粒度
+- 由于 react 和 vue 的响应式实现原理不同，数据更新时，第一步中 react 组件会渲染出一棵更大的虚拟 dom 树。
 
 ## diff
 
@@ -538,3 +543,29 @@ const signinClick = (signState: boolean, todayIcon: string) => {
 
 - 为什么不用双端 diff:
   由于双端 diff 需要向前查找节点，但每个 fiber 节点上都没有反向指针，即前一个 fiber 通过 sibling 属性指向后一个 fiber，只能从前往后遍历，而不能反过来，因此该算法无法通过双端搜索来进行优化。React 想看下现在用这种方式能走多远，如果这种方式不理想，以后再考虑实现双端 diff。React 认为对于列表反转和需要进行双端搜索的场景是少见的，所以在这一版的实现中，先不对 bad case 做额外的优化。
+
+## fiber 时间分片
+
+### why(性能)
+
+- react15 中，React 会递归比对 VirtualDOM 树，找出需要变动的节点，然后同步更新它们, 一气呵成。这个过程 React 称为 Reconcilation(中文可以译为协调)
+- 递归过程相当于函数调用栈的执行，缺点是不能中断，也难以恢复，只能从头开始(效率低)。中断指的是交给浏览器做其他高优先级的任务(比如交互事件等)
+
+### 过程
+
+- 改用单向链表实现, return 是父节点的引用，sibling 兄弟节点的引用，child 第一个子节点的引用
+- 有三个引用，为什么说是单向链表？child、return 是用来构建“树”，“sibling”用来构建同级元素的“单向”链表，通过遍历这个“单向”链表来 dom diff。将虚拟 dom 连接，使得组件更新的流程可以被中断恢复；它把组件渲染的工作分片，到时会主动让出主线程。
+- ![对比图](/blog/assets/img/react.png)
+
+### 结果
+
+- 快速响应用户操作和输入，提升用户交互体验
+- 让动画更加流畅，通过调度，可以让应用保持高帧率
+- 利用好 I/O 操作空闲期或者 CPU 空闲期，进行一些预渲染。 比如离屏(offscreen)不可见的内容，优先级最低，可以让 React 等到 CPU 空闲时才去渲染这部分内容。这和浏览器的 preload 等预加载技术差不多。
+- 用 Suspense 降低加载状态(load state)的优先级，减少闪屏。比如数据很快返回时，可以不必显示加载状态，而是直接显示出来，避免闪屏；如果超时没有返回才显示加载状态。
+- 但是它肯定不是完美的，因为浏览器无法实现抢占式调度，无法阻止开发者做傻事的，开发者可以随心所欲，想挖多大的坑，就挖多大的坑。因此该做的优化还需要做: 纯组件、虚表、简化组件、缓存...
+
+### 为什么 Vue 不需要 fiber
+
+- Vue 是基于 template 和 watcher 的组件级更新，把每个更新任务分割得足够小，不需要使用到 Fiber 架构，将任务进行更细粒度的拆分
+- React 是不管在哪里调用 setState，都是从根节点开始更新的，更新任务还是很大，需要使用到 Fiber 将大任务分割为多个小任务，可以中断和恢复，不阻塞主进程执行高优先级的任务

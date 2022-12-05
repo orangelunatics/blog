@@ -364,7 +364,7 @@ const judge = (arr) => {
 ```
 
 3. requestAnimationFrame：回调函数会在浏览器重绘之前调用，利用了浏览器刷新率即重绘频率这一特性进行动画的绘制，比 setInterval 更好(setInterval 或 Timeout 需要考量时间的大小，容易掉帧)。为了提高性能和电池寿命，因此在大多数浏览器里，当 requestAnimationFrame() 运行在后台标签页或者隐藏的 iframe 里时，requestAnimationFrame() 会被暂停调用以提升性能和电池寿命。
-4. requestIdleCallback：requestAnimationFrame 会在每次屏幕刷新的时候被调用，而 requestIdleCallback 则会在每次屏幕刷新时，判断当前帧是否还有多余的时间，如果有，则会调用回调，实现一些页面性能方面的的优化
+4. requestIdleCallback：requestAnimationFrame 会在每次屏幕刷新的时候被调用，而 requestIdleCallback 则会在每次屏幕刷新时(也是 每 16ms 调用)，判断当前帧是否还有多余的时间，如果有，则会调用回调，实现一些页面性能方面的的优化(**react fiber 使用了类似该 api 的 polyfill**)
 
 ## 深拷贝
 
@@ -618,7 +618,7 @@ ES5 的 Person.name 这种静态属性相当于 ES6 迭代 static 关键字
 
 **9、arr.map(parseInt)**
 问题出在 map 方法接受的回调的参数的默认问题，cb 的第二个参数为索引，索引又变成了 parseInt 的第二个参数，则产生进制问题，如['1', '2', '3'].map(parseInt) => [1, NaN, NaN]。  
-parseInt 和 Number 的区别(抛砖引玉一下)：  
+parseInt 和 Number 的区别：  
 1、Number 对于非字符串可以强制类型转换，比如 Number([1]) === 1  
 2、Number('11x') => NaN, parseInt('11x') === 11, 忽略后面非数字的部分  
 3、parseInt 第二个参数是指定以什么进制去解析第一个参数 string(返回十进制)，如果省略该参数或其值为 0 则是十进制，小于 2 大于 36 都是 NaN，比如 parseInt(3,2), 3 不是一个二进制，所以解析不了，返回 NaN  

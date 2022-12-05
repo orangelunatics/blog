@@ -16,12 +16,12 @@ await this.$nextTick(); // 或者把回调放到()中
 
 ### why
 
-更新数据后，需要对新 DOM 进行操作，但获取不到更新后的 DOM，因为 DOM 更新是异步的。
-我理解为什么把 nextTick 设计成微任务，因为想更快地插队从而执行回调(微任务优先级更高)
+更新数据后，需要对新 DOM 进行操作，但获取不到更新后的 DOM，因为 DOM 更新是异步的(批处理是微任务)。
+因此 nextTick 设计成微任务，因为想更快地插队从而执行回调(微任务优先级更高)
 
 ### 原理
 
-对 cb 进行封装，在不同版本采取不同策略
+对 cb 进行封装，在不同版本采取不同策略，[一篇好的文章](https://segmentfault.com/a/1190000008589736)
 
 - 2.0-2.4: promise => MutationObserver => setTimeout
 - 2.5: setImmediate => MessageChannel => Promise => setTimeout

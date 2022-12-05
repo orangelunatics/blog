@@ -102,7 +102,8 @@ requestAnimationFrame 回调在下次重绘前执行
 | MutationObserver           | ✅     | ❌   |
 | Promise.then catch finally | ✅     | ✅   |
 
-- 执行顺序：同步任务 > 微任务 > requestAnimationFrame > DOM 渲染 > 宏任务
+- 执行顺序：script 宏任务(同步任务) > 微任务 > requestAnimationFrame > DOM 渲染 > 宏任务 > requestIdleCallback [进一步理解](https://zhuanlan.zhihu.com/p/142742003)
+- 浏览器在每一轮 Event Loop 事件循环中不一定会去重新渲染屏幕，会根据浏览器刷新率以及页面性能或是否后台运行等因素判断的，浏览器的每一帧是比较固定的，会尽量保持 60Hz 的刷新率运行，每一帧中间可能会进行多轮事件循环。
 - Node 和浏览器的事件循环区别：  
   在浏览器中，microtask 的任务队列是每个 macrotask 执行完之后执行。而在 Node.js 中，microtask 会在事件循环的各个阶段之间执行，也就是一个阶段执行完毕，就会去执行 microtask 队列的任务。(Node11 开始有所改变)
 
