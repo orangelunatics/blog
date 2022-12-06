@@ -22,8 +22,6 @@
 问：派发更新主要做什么事情？  
 答：派发更新就是当响应式数据发生变动的时候，通知所有订阅了这个数据变化的 Watcher(既 Dep 依赖)执行 update。对于 render watcher 渲染 Watcher 而言，update 就是触发组件重新进行渲染；对于 computed watcher 计算属性 Watcher 而言，update 就是对计算属性重新求值；对于 user watcher 用户自定义 Watcher 而言，update 就是调用用户提供的回调函数。
 
-#
-
 ### Object
 
 添加和删除属性无法监听，需要 vm.$set和vm.$delete
