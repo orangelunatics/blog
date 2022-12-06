@@ -300,4 +300,47 @@ jsonp('xx.com', { x: 'xx' }).then((res) => {
 
 1. 长轮询
 
-## Chrome timing 指标
+## Chrome 开发者工具
+
+持续补充中
+
+### network timing
+
+单个资源的生命周期，配合 performance.timing 使用
+
+1. Queueing（队列）：排队的时间花费。可能由于该请求被渲染引擎认为是优先级比较低的资源（图片）、服务器不可用、超过浏览器并发请求的最大连接数（在 HTTP1 中 Chrome 的最大并发连接数是 6-8），解决方法：多个子域名提供服务资源，将资源拆分到多个子域中，均匀分配。HTTP2 之后由于没有并发限制因此这个方法不适用
+2. Stalled（阻塞，卡顿）：Queueing 完成后，准备发出请求 ——> 实际发出请求消耗的时间。浏览器准备要发出这个请求，但由于一些情况不能发出请求指令，例如此刻没有可复用的 TCP 链接
+3. Proxy negotiation：与代理服务器连接的时间花费
+4. DNS Lookup(DNS 查找)
+5. Initial connection(初始化连接): TCP 三次握手
+6. Request sent：发送 HTTP 请求的时间（从第一个字节发出前到最后一个字节发出后的时间
+7. TTFB(Time To First Byte)：发送请求完毕到接收请求的第一个字节的时间 影响因素：线路、服务器距离、后台服务性能，MySQL 查询等
+8. Content Download：资源下载时间 影响因素：资源大小、是否使用缓存
+
+### performance 指标
+
+![performance](/blog/assets/img/perform.awebp)
+常见指标：
+
+1. FP（First Paint），首次绘制：这个指标用于记录页面第一次**绘制像素**的时间。
+2. FCP（First Contentful Paint），首次内容绘制：这个指标用于记录页面**首次绘制文本、图片**、非空白 Canvas 或 SVG 的时间。注意：**FP 一定小于 FCP**
+3. LCP（Largest Contentful Paint），最大内容绘制：在渲染过程这个最大内容可能改变，并且重要程度大于 FP 和 FCP
+4. TTI（Time to Interactive），首次可交互时间：条件如下
+
+- 从 FCP 指标后开始计算
+- 持续 5 秒内无**长任务（执行时间超过 50 ms）**且无两个以上正在进行中的 GET 请求
+- 往前回溯至 5 秒前的最后一个长任务结束的时间
+
+5. FID（First Input Delay）,首次输入延迟: ，记录在 FCP 和 TTI 之间用户首次与页面交互时响应的延迟。
+6. TBT（Total Blocking Time）,总阻塞时间
+7. CLS（Cumulative Layout Shift），累计位移偏移
+
+三大核心指标：LCP、FID、CLS  
+获取指标：
+
+1. lighthouse
+2. 其他库(API 计算)
+
+## HTTP2 与 HTTP3
+
+[手册](https://tsejx.github.io/javascript-guidebook/computer-networks/http/http2/)
