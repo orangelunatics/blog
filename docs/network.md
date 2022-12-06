@@ -299,3 +299,5 @@ jsonp('xx.com', { x: 'xx' }).then((res) => {
 ## 长连接方案
 
 1. 长轮询
+
+## Chrome timing 指标
