@@ -714,3 +714,13 @@ obj.get(); // undefined  (0824 in CAINiAO)
 - 在新标签或窗口打开一个页面时会复制顶级浏览会话的上下文作为新会话的上下文， 这点和 session cookies 的运行方式不同。
 - 打开多个相同的 URL 的 Tabs 页面，会创建各自的  sessionStorage。
 - 关闭对应浏览器标签或窗口，会清除对应的  sessionStorage。
+  **25、创建 26 个英文字母数组**：
+
+```js
+const arr = [];
+for (let i = 65; i < 91; i++) {
+  arr.push(String.fromCharCode(i)); // i是ascii码
+}
+console.log(arr);
+65 -> A   97 -> a
+```
