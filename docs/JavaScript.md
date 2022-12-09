@@ -153,7 +153,7 @@ Promise.all = (promiseArr) => {
 ③、Array.prototype.slice.call(arguments)  
 其实这样也行: [].slice.call(arguments)  
 原因从 slice 源码可以看出，利用了 arguments 可以索引。  
-**注：唯一的原生类数组（array-like）对象是 Strings**，也就是说字符串也是类数组
+类数组（array-like）有: Strings 字符串对象、Nodelist、arguments(所有实参，有 callee 属性指向该函数)、typedArray(webgl 使用，一个 TypedArray 对象描述了底层二进制数据缓冲区的类数组视图)
 
 ```js
 Array.from('abc');
@@ -714,7 +714,8 @@ obj.get(); // undefined  (0824 in CAINiAO)
 - 在新标签或窗口打开一个页面时会复制顶级浏览会话的上下文作为新会话的上下文， 这点和 session cookies 的运行方式不同。
 - 打开多个相同的 URL 的 Tabs 页面，会创建各自的  sessionStorage。
 - 关闭对应浏览器标签或窗口，会清除对应的  sessionStorage。
-  **25、创建 26 个英文字母数组**：
+
+**25、创建 26 个英文字母数组**：
 
 ```js
 const arr = [];
@@ -724,3 +725,5 @@ for (let i = 65; i < 91; i++) {
 console.log(arr);
 65 -> A   97 -> a
 ```
+
+**26、强弱类型/动静态**：强弱的区分是是否能进行隐式转化，比如相加是否报错；动静的区分是运行时是否能改变变量类型，因此 python 是强类型，JS 是弱类型，二者都是动态语言。

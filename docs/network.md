@@ -166,15 +166,26 @@ SYN Cookie 技术可以让服务器在收到客户端的 SYN 报文时，不分�
 
 ## 前端鉴权
 
+鉴权的原因是 HTTP 无状态！
 [详细](https://mp.weixin.qq.com/s/rwp9sXi4Y8Ht0UbA6z4hSg)  
 [掘金](https://juejin.cn/post/6845166891393089544)  
-[cookie 与 samesite](https://github.com/mqyqingfeng/Blog/issues/157)  
-简单 token 的组成： uid(用户唯一的身份标识)、time(当前时间的时间戳)、sign（签名，token 的前几位以哈希算法压缩成的一定长度的十六进制字符串）  
+[cookie 与 samesite](https://github.com/mqyqingfeng/Blog/issues/157)
+
+- session：种在 cookie 上(sessionId)、数据存在服务端
+- token: 通常基于 base64，或增加加密算法防篡改，jwt 是一种成熟的编码方案。只需要校验 token 的有效性，因此不需要在服务端存数据。客户端把 token 存哪都行、数据存在 token 里；一般两种用法：放在 cookie 里(容易 CSRF)、放在 Authorization(header)，但是存的时候也可以存在 storage 里
+- 简单 token 的组成： uid(用户唯一的身份标识)、time(当前时间的时间戳)、sign（签名，token 的前几位以哈希算法压缩成的一定长度的十六进制字符串）
+- session 和 token 区别：「客户端种在 cookie 里/种在其他地方；服务端存数据/不存」
+  1. 存 cookie 里的问题：~~脱离浏览器则不行~~容易引发 csrf 问题；cookie 自动带上，每个同域名下的请求都有，造成流量的浪费，比如静态资源不需要鉴权，因此静态资源可以用其他域名
+  2. 服务端存数据(session 方案)：因为服务端通常是集群，请求要经过负载均衡，流量不一定打到哪个机器上，因此要存在 Redis 或普通数据库中。而 token 方案不需要存数据，因此不需要考虑数据的分布式存储问题，降低了硬件成本，降低查库带来的延迟。
+- 单点登录：
+  1. 同父域名的单点，设置 domain 即可共享 cookie
+  2. 不同域名的单点：一次登录，全线通用，通常由独立的单点登录(SSO) 系统记录登录状态、下发 ticket，各业务系统配合存储和认证 ticket
+
 安全性：token > session > cookie  
 cookie 重要的属性：name=value、domain、path、maxAge、expires、secure、httpOnly、samesite  
 **SameSite**(声明该 Cookie 是否仅限于第一方或者同一站点上下文。) 可以有下面三种值：  
-Strict 仅允许一方请求携带 Cookie，即浏览器将只发送相同站点请求的 Cookie，即当前网页 URL 与请求目标 URL 完全一致。  
-Lax 允许部分第三方请求携带 Cookie  
+Strict 仅允许第一方请求携带 Cookie，即浏览器将只发送相同站点请求的 Cookie，即当前网页 URL 与请求目标 URL 完全一致。  
+Lax 允许第三方 get 请求携带 Cookie 和同站(第一方)请求携带 cookie  
 None 无论是否跨站都会发送 Cookie
 
 ## 性能优化
@@ -272,7 +283,7 @@ jsonp('xx.com', { x: 'xx' }).then((res) => {
 简单请求满足两个要求：
 
 1. 请求方法为 get、post、head
-2. 请求 header 是 accept、accept-language、content-language、content-type 并且值为这三个：application/x-www-form-urlencoded(窗体数据被编码为名称/值对。这是标准的编码格式)、multipart/form-data(窗体数据被编码为一条消息，页上的每个控件对应消息中的一个部分)、text/plain(窗体数据以纯文本形式进行编码，其中不含任何控件或格式字符)
+2. 请求 header 是 accept、accept-language、content-language、content-type 并且值为这三个：application/x-www-form-urlencoded(常见于表单，窗体数据被编码为名称/值对。这是标准的编码格式)、multipart/form-data(常见于表单，窗体数据被编码为一条消息，页上的每个控件对应消息中的一个部分)、text/plain(窗体数据以纯文本形式进行编码，其中不含任何控件或格式字符)
 
 其他为非简单请求，要先进行预检(preflight、使用 OPTIONS 方法),"预检"请求的头信息包括两个特殊字段:
 
