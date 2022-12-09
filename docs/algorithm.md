@@ -87,15 +87,15 @@ function knapsack(V, n, vw) {
 对栈的基本操作：  
 入栈（push）  
 出栈（pop）  
-查看栈顶元素（peek）  
+查看栈顶元素（peek，length - 1）  
 获取栈的长度（length）  
 清空栈（clear）  
 判断栈是否空（isEmpty）
 
 对队列的基本操作：  
 入队（push）  
-出队（pop）  
-查看对头元素（peek）  
+出队（shift）  
+查看对头元素（peek，0）  
 获取队列的长度（length）  
 清空队列（clear）  
 判断队列是否空（isEmpty）

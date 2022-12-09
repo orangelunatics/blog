@@ -65,7 +65,7 @@ module.exports = {
             ],
           },
           {
-            text: 'Vue',
+            text: 'React',
             items: [
               { text: 'React', link: '/React/React/' },
               { text: 'React生命周期', link: '/React/React-life/' },
