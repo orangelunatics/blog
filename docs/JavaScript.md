@@ -424,8 +424,9 @@ const deepClone = (obj, wm = new WeakMap()) => {
       iteratorObject(obj, res, wm);
       break;
     default:
-      // 其他 补充
-      return obj;
+      break;
+    // 其他 补充
+    // return obj;
   }
   return res;
 };
@@ -699,7 +700,7 @@ obj.get(); // undefined  (0824 in CAINiAO)
 **21、var 和 no var 的区别**
 
 - no var 赋值的变量可以用 delete 删除 window 上的属性
-- no var 赋值的变量作用于全局作用域，var 作用于函数作用域
+- 在函数中声明时，no var 赋值的变量作用于全局作用域，var 作用于函数作用域
 
 **22、WeakMap 和 WeakSet 与 Map 和 Set 的区别**
 

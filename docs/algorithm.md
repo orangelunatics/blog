@@ -19,10 +19,10 @@
 法一、splice 从后往前遍历  
 法二、双指针做法
 
-### 背包问题
+<!-- ### 背包问题
 
-①01 背包，01 指的是对此物品拿或不拿，且每个物体只能选一次  
-题目：  
+①01 背包，01 指的是对此物品拿或不拿，且每个物体只能选一次
+题目：
 [牛客：01 背包原型](https://www.nowcoder.com/practice/2820ea076d144b30806e72de5e5d4bbf?tpId=188&tqId=38312&rp=1&ru=%2Factivity%2Foj&qru=%2Fta%2Fjob-code-high-week%2Fquestion-ranking&tab=answerKey) 二维 dp 进阶做法：滚动数组降为一维
 
 ```javascript
@@ -49,9 +49,9 @@ function knapsack(V, n, vw) {
 
 力扣：分割等和子集、最后一块石头的重量 II、目标和、一和零
 
-② 完全背包，每个元素可以多次选取。力扣 零钱兑换 I II + 组合总和 Ⅳ  
-[背包技巧](https://leetcode-cn.com/problems/combination-sum-iv/solution/xi-wang-yong-yi-chong-gui-lu-gao-ding-bei-bao-wen-/)  
-注意内外 for 循环的参照物以及内层循环的正序倒序问题
+② 完全背包，每个元素可以多次选取。力扣 零钱兑换 I II + 组合总和 Ⅳ
+[背包技巧](https://leetcode-cn.com/problems/combination-sum-iv/solution/xi-wang-yong-yi-chong-gui-lu-gao-ding-bei-bao-wen-/)
+注意内外 for 循环的参照物以及内层循环的正序倒序问题 -->
 
 ### 二分法
 
