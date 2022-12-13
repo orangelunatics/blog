@@ -543,6 +543,14 @@ export const handler = (promise) => {
 3. 手写个 babel 插件处理
    思路：寻找每个 await，然后再加上对应的 try catch
 
+## 长连接(持久连接)
+
+1. 常规轮询与长轮询
+
+- 常规轮询：每 n 秒请求一次
+- 长轮询：服务器在有消息之前不会关闭连接，进入 pending 状态，消息出现时进行响应
+- 缺点：每个消息都是一个单独的请求，并带有 header，身份验证开销等，开销大，性能不好，因此要采用 websocket 或 server sent events 等
+
 ## tips
 
 **1、空字符串的索引**
