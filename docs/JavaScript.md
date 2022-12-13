@@ -270,6 +270,7 @@ Symbol.keyFor(a); // 类型强制转换返回string类型 '1'， 如果上面是
 const myCurry = (fn) => {
   return function curry(...args1) {
     if (fn.length <= args1.length) {
+      // fn.length是形参个数
       return fn(...args1);
     }
     return (...args2) => curry(...args1, ...args2);
@@ -551,6 +552,33 @@ export const handler = (promise) => {
 - 长轮询：服务器在有消息之前不会关闭连接，进入 pending 状态，消息出现时进行响应
 - 缺点：每个消息都是一个单独的请求，并带有 header，身份验证开销等，开销大，性能不好，因此要采用 websocket 或 server sent events 等
 
+## 可迭代属性(迭代器对象)
+
+- 例如 new Map()/Set().keys()/values()/entries()
+
+```js
+const map1 = new Map();
+
+map1.set('0', 'foo');
+map1.set(1, 'bar');
+
+const iterator1 = map1.entries();
+
+console.log(Array.from(iterator1));
+// expected output:  Array [Array ["0", "foo"], Array [1, "bar"]]
+
+// console.log(iterator1.next().value);
+// expected output: [1, "bar"]
+
+const iterator1 = map1.keys();
+
+console.log(iterator1.next().value);
+// expected output: "0"
+
+console.log(iterator1.next());
+// expected output: Object { value: 1, done: false }
+```
+
 ## tips
 
 **1、空字符串的索引**
@@ -736,5 +764,18 @@ console.log(arr);
 ```
 
 **26、强弱类型/动静态**：强弱的区分是是否能进行隐式转化，比如相加是否报错；动静的区分是运行时是否能改变变量类型，因此 python 是强类型，JS 是弱类型，二者都是动态语言。
-**27、Object 的属性是按照数字升序(如果属性是非负整数时)，Map 按照插入顺序**因此，如果你强烈依赖插入顺序，那么 Map 可以保证这一点。
+**27、Object 的属性是按照数字升序(如果属性是非负整数时)，Map 按照插入顺序**
+
+- 因此，如果强烈依赖插入顺序，那么 Map 可以保证这一点。
+- 注意，Map 或 Set 的插入顺序是按照第一次插入而定的，后续更新的只会更改值。
+
+```js
+const map1 = new Map();
+
+map1.set('b', 1);
+map1.set('a', 2);
+map1.set('b', 3);
+console.log(map1); // Map(2) {'b' => 3, 'a' => 2}
+```
+
 **28、作用域**: node 中有模块作用域，const 和 let 在全局中声明会形成 script 作用域，并不是全局(global)作用域
