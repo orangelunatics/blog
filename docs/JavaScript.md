@@ -658,7 +658,7 @@ ES5 的 Person.name 这种静态属性相当于 ES6 迭代 static 关键字
 parseInt 和 Number 的区别：  
 1、Number 对于非字符串可以强制类型转换，比如 Number([1]) === 1  
 2、Number('11x') => NaN, parseInt('11x') === 11, 忽略后面非数字的部分  
-3、parseInt 第二个参数是指定以什么进制去解析第一个参数 string(返回十进制)，如果省略该参数或其值为 0 则是十进制，小于 2 大于 36 都是 NaN，比如 parseInt(3,2), 3 不是一个二进制，所以解析不了，返回 NaN  
+3、parseInt 第二个参数是指定以什么进制去解析第一个参数 string(返回十进制)，如果省略该参数或其值为 0 则是十进制(取决于浏览器)，小于 2 大于 36 都是 NaN，比如 parseInt(3,2), 3 不是一个二进制，所以解析不了，返回 NaN  
 4、parseInt 是其他进制转化为十进制、toString 是十进制转化为其他进制
 
 **10、for 循环的特殊用法**
