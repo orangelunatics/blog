@@ -554,6 +554,7 @@ export const handler = (promise) => {
 
 ## 可迭代属性(迭代器对象)
 
+- 迭代器对象与类数组没有任何关系
 - 例如 new Map()/Set().keys()/values()/entries()
 
 ```js
@@ -578,6 +579,25 @@ console.log(iterator1.next().value);
 console.log(iterator1.next());
 // expected output: Object { value: 1, done: false }
 ```
+
+## JS 脚本的延迟加载
+
+1. defer
+
+- 不会阻塞页面
+- 脚本要等到 DOM 解析完毕，但在 DOMContentLoaded 事件之前执行
+- 具有 defer 特性的脚本保持其相对顺序，就像常规脚本一样
+
+2. async
+
+- 也不会阻塞页面
+- DOMContentLoaded 和异步脚本不会彼此等待(与 defer 不同)
+- 其他脚本不会等待 async 脚本加载完成，同样，async 脚本也不会等待其他脚本。(比如两个 async 脚本谁先加载完谁执行)
+
+## window 和 document
+
+1. window 对象表示浏览器中打开的窗口，如果有 iframe 则还有 iframe 的 window
+2. document 对象表示 html 文档，包括文档中的所有元素，是 window 对象的一部分
 
 ## tips
 
