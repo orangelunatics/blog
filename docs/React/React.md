@@ -569,3 +569,79 @@ const signinClick = (signState: boolean, todayIcon: string) => {
 
 - Vue 是基于 template 和 watcher 的组件级更新，把每个更新任务分割得足够小，不需要使用到 Fiber 架构，将任务进行更细粒度的拆分
 - React 是不管在哪里调用 setState，都是从根节点开始更新的，更新任务还是很大，需要使用到 Fiber 将大任务分割为多个小任务，可以中断和恢复，不阻塞主进程执行高优先级的任务
+
+## hooks
+
+### why
+
+1. 更好的状态复用(相比 mixin 等方式，不会出现变量重复命名等问题)
+2. 代码组织更好。把同个功能的代码通过 hooks 聚合到一起，而不是分散在各种生命周期函数中
+3. 不需要像 class 组件那样需要处理各种 this
+4. 友好的渐进式
+
+### 常用的 hooks
+
+1. useState 保存组件状态
+2. useEffect 处理副作用
+
+- useEffect 是来解决类组件 某些执行代码被分散在不同的生命周期函数中 的问题。
+- componentDidMount，componentDidUpdate 和 componentWillUnmount 这三个函数的组合。
+- 运行时机：
+  · useEffect 必然会在 render 的时候执行一次，其他的运行时机取决于以下情况  
+  · 有没有第二个参数。useEffect hook 接受两个参数，第一个是要执行的代码，第二个是一个数组，指定一组依赖的变量，其中任何一个变量发生变化时，此 effect 都会重新执行一次。  
+  · 有没有返回值。 useEffect 的执行代码中可以返回一个函数，在每一次新的 render 进行前或者组件 unmount 之时，都会执行此函数，进行清理工作。
+
+3. useLayoutEffect(特定场景的优化), 和 useEffect 的区别：
+
+- useEffect 是异步执行的，而 useLayoutEffect 是同步执行的。
+- useEffect 的执行时机是**浏览器完成渲染之后**，而 useLayoutEffect 的执行时机是浏览器把内容真正渲染到界面之前，**和 componentDidMount 等价**。
+  总结：
+- 优先使用 useEffect，因为它是异步执行的，不会阻塞渲染
+- 会影响到渲染的操作尽量放到 useLayoutEffect 中去，避免出现闪烁问题(比如在钩子中修改 DOM)
+- useLayoutEffect 和 componentDidMount 是等价的，会同步调用，阻塞渲染
+  <!-- - 在服务端渲染的时候使用会有一个 warning，因为它可能导致首屏实际内容和服务端渲染出来的内容不一致。 -->
+
+4. useRef 保存引用值
+
+- 可以生成 DOM 的引用或直接创建一个引用值，ref.current 拿到真实的节点或值，ref 是引用类型的原因是**在所有 render 过程中保持唯一的引用，不会像 state 一样在不同的 render 下存在状态隔离**
+
+5. useContext 处理多层级传递数据(透传)
+6. useReducer 状态管理，类似 useState，但各有所长。写法类似 redux，通过 action 修改 state
+
+- 简单类型用 useState，复杂类型数据或者复杂逻辑可以用 useReducer
+
+7. useCallback 记忆函数，避免不必要的 re-render，配合 React.memo 使用
+
+- 当依赖项发生变化时，才会返回新的函数
+
+8. useMemo 记忆组件
+
+- useCallback 的功能完全可以由 useMemo 所取代，如果你想通过使用 useMemo 返回一个记忆函数也是完全可以的：  
+  useCallback(fn, inputs) is equivalent to useMemo(() => fn, inputs).
+- 当依赖项变化时，才会渲染子组件
+
+## 组件通信
+
+1. 父子组件：父 → 子 props 传值，子 → 父回调
+2. 兄弟组件：子 A→ 父 → 子 B
+3. 多层级组件：context(provider 提供数据，consumer 消费数据)
+4. 状态管理工具：redux、mobx
+5. eventEmmiter 发布订阅模式管理状态
+
+## React 性能优化
+
+1. 减少渲染的节点/降低渲染计算量(复杂度)
+
+- 减少不必要的嵌套。可能由于高阶组件使用过多导致，用 hooks 替代
+- 用虚拟列表优化长列表(图片等)
+- 组件懒加载
+
+2. 避免不必要的 re-render
+
+- shouldComponentUpdate 比对 state 和 props, 确定是否要重新渲染
+- useCallback、useMemo、React.memo。React.memo() 是一个高阶组件，我们可以使用它来包装我们不想重新渲染的组件，除非其中的 props 发生变化
+  useMemo() 是一个 React Hook，我们可以使用它在组件中包装函数。 我们可以使用它来确保该函数中的值仅在其依赖项之一发生变化时才重新计算
+
+3. 精细化渲染
+
+- 不要滥用 context。Context 只放置必要的，关键的，被大多数组件所共享的状态

@@ -57,7 +57,7 @@ Array.prototype.filter = function(fn, thisArg) {
 };
 ```
 
-### reduce
+### reduce/reduceRight(从右往左)
 
 ```javascript
 Array.prototype.reduce = function(fn, start) {
@@ -454,6 +454,8 @@ console.log(s2); //Set(4) { 1, 2, 3, 4 }
 
 1. bind，修改指向但不直接执行，可以分批传参
 
+- 手写源码
+
 ```js
 // bind: https://mp.weixin.qq.com/s/istdqF_k0hbXmaWUivtf9A
 Function.prototype.bind2 = function(context, ...args1) {
@@ -482,6 +484,30 @@ person(22, 'engineer', 'female');
 var bindYve = person.bind2(Yve, 22, 'engineer');
 bindYve('female');
 // Yvette 22 engineer female
+```
+
+- bind 注意事项：bind 多次后执行，函数 this 还是指向第一次 bind 的对象
+
+```js
+var x = 1;
+var bar = function() {
+  console.log(this.x);
+};
+
+var obj1 = { x: 1 };
+var obj2 = { x: 2 };
+var obj3 = { x: 3 };
+var func = bar.bind(obj1);
+func(); // 1
+
+func = bar.bind(obj1).bind(obj2);
+func(); // 1
+
+func = bar
+  .bind(obj1)
+  .bind(obj2)
+  .bind(obj3);
+func(); // 1
 ```
 
 2. call & apply

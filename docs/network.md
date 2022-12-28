@@ -94,7 +94,7 @@ websocket 协议名字不一样 ws+wss，端口号和 http/s 一致，最大的�
 5. get 数据在 url 中，有长度限制且不安全，post 数据在请求体中，没限制且安全
 
 - HEAD 方法：返回和 GET 方法同样的响应头
-- OPTIONS 方法：返回获取该资源时支持的 HTTP 方法；CORS 非简单请求判断是否支持跨域
+- OPTIONS 方法：返回获取该资源时支持的 HTTP 方法；CORS 非简单请求判断是否支持跨域(服务器所返回的 Access-Control-Allow-Methods 首部字段将所有允许的请求方法告知客户端)
 
 ## Ajax 请求
 

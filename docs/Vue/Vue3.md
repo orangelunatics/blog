@@ -88,8 +88,8 @@ export default {
 4. mounted=======>onMounted
 5. beforeUpdate===>onBeforeUpdate
 6. updated =======>onUpdated
-7. beforeUnmount ==>onBeforeUnmount
-8. unmounted =====>onUnmounted
+7. beforeDestroy ==>onBeforeUnmount
+8. Destroyed =====>onUnmounted
    使用：
 
 ```js
