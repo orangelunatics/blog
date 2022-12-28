@@ -38,7 +38,7 @@ module.exports = {
     nav: [
       { text: 'Home', link: '/' },
       { text: 'intro', link: '/introduction/' },
-      { text: '项目', link: '/project/' },
+      { text: '杂项', link: '/project/' },
       {
         text: '前端',
         items: [
