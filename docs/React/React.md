@@ -536,7 +536,7 @@ const signinClick = (signState: boolean, todayIcon: string) => {
 - 调用 setState 方法后，会自顶向下重新渲染组件，自顶向下的含义是，该组件以及它的子组件全部需要渲染，所以当一个数据改变，react 的组件渲染是很消耗性能的——父组件的状态更新了，所有的子组件得跟着一起渲染，它不能像 vue 一样，精确到当前组件的粒度
 - 由于 react 和 vue 的响应式实现原理不同，数据更新时，第一步中 react 组件会渲染出一棵更大的虚拟 dom 树。
 
-## diff
+## diff 待补充
 
 - react 的 简单 diff 本质:
   React 每次更新时，会将新的 ReactElement（即 React.createElement() 的返回值）与旧的 fiber 树作对比，比较出它们的差异后，构建出新的 fiber 树，因此多节点的 diff 实际上是用 fiber（旧子节点）和 ReactElement 数组（新子节点）进行对比。

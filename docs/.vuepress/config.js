@@ -77,24 +77,24 @@ module.exports = {
       { text: '网络', link: '/network/' },
       { text: '算法', link: '/algorithm/' },
       { text: 'CS课程', link: '/cs/' },
-      {
-        text: 'MissyPeng',
-        items: [
-          {
-            text: '技术文档',
-            items: [
-              {
-                text: '十分钟让你学会本地git配置以及gitlab、github开发环境配置',
-                link: '/pengpeng/gitConfig/',
-              },
-            ],
-          },
-          {
-            text: 'TS体操练习',
-            link: '/pengpeng/typeChallenge/',
-          },
-        ],
-      },
+      // {
+      //   text: 'MissyPeng',
+      //   items: [
+      //     {
+      //       text: '技术文档',
+      //       items: [
+      //         {
+      //           text: '十分钟让你学会本地git配置以及gitlab、github开发环境配置',
+      //           link: '/pengpeng/gitConfig/',
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       text: 'TS体操练习',
+      //       link: '/pengpeng/typeChallenge/',
+      //     },
+      //   ],
+      // },
       { text: '其他', link: '/others/' },
       { text: 'External', link: 'https://google.com' },
     ],
