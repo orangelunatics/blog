@@ -77,7 +77,19 @@ module.exports = {
           },
         ],
       },
-      { text: 'Node.js', link: '/node/' },
+      {
+        text: '工程化',
+        items: [
+          {
+            text: 'Node.js',
+            items: [{ text: '基础', link: '/node/base/' }],
+          },
+          {
+            text: 'webpack',
+            items: [{ text: 'webpack分包', link: '/webpack/split/' }],
+          },
+        ],
+      },
       { text: '网络', link: '/network/' },
       { text: '算法', link: '/algorithm/' },
       { text: 'CS课程', link: '/cs/' },
