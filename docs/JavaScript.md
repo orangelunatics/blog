@@ -231,10 +231,10 @@ JS 是动态语言(不声明变量类型)，虽然灵活，但不容易找错误
 3)不能调用 Date.now()或者 Math.random()等不纯的方法  
 补充：redux 的 reducer 函数必须是一个纯函数
 
-## WebAssembly
+## JIT 与 WASM
 
-运用 JIT 技术之后，JS 的运行速度已经变得很快，而 WebAssembly 可以使其更快。  
-本身.wasm 格式文件就是二进制字节码，不用像 js 一样从 AST 转换，所以运行更快，并且体积小，可移植能力强(多种语言都可以编译成 wasm 文件)
+- 补充字节码
+- 运用 JIT 技术之后，JS 的运行速度已经变得很快，而 WebAssembly 可以使其更快。本身.wasm 格式文件就是二进制字节码，不用像 js 一样从 AST 转换，所以运行更快，并且体积小，可移植能力强(多种语言都可以编译成 wasm 文件)
 
 ## Serverless
 

@@ -71,6 +71,10 @@ module.exports = {
               { text: 'React生命周期', link: '/React/React-life/' },
             ],
           },
+          {
+            text: '小程序',
+            items: [{ text: 'miniprogram', link: '/miniprogram/' }],
+          },
         ],
       },
       { text: 'Node.js', link: '/node/' },
