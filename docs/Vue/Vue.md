@@ -104,6 +104,7 @@ const router = new VueRouter({
 ## Vue 样式问题
 
 1. vue 动态创建的元素的类 要单独写一个 style 标签里
+2. [修改第三方组件样式](https://www.cnblogs.com/youhong/p/11637695.html)
 
 ## 表单输入绑定
 
@@ -122,3 +123,9 @@ const router = new VueRouter({
 
 1. 单向数据流：比如父子传值，有利于状态管理，可维护性高
 2. 双向绑定：一般用于 UI 组件，v-model
+
+## Vue 组件间通信
+
+1. 父子组件通信：props、emit、refs、children、parent、slot
+2. 爷孙组件通信：v-on="listeners"、v-bind="attrs"
+3. 跨组件通信：eventbus(发布订阅)、vuex
