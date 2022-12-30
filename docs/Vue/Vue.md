@@ -129,3 +129,31 @@ const router = new VueRouter({
 1. 父子组件通信：props、emit、refs、children、parent、slot
 2. 爷孙组件通信：v-on="listeners"、v-bind="attrs"
 3. 跨组件通信：eventbus(发布订阅)、vuex
+
+## 前端路由
+
+以 vue 为例，称为 vue-router，单页面应用(SPA)的核心之一是: 更新视图而不重新请求页面，要做到：
+
+- 可以监听到 url 的变化，展示不同内容
+- 改变 url 且不让浏览器像服务器发送请求
+
+### hash 模式
+
+- 修改#后面的锚点值(location.hash)
+- 通过 window.onhashchange 的方式，来监听 hash 的改变，借此实现无刷新跳转的功能
+- 切换 hash 时不进行请求
+
+### history 模式
+
+- 利用了 HTML5 History Interface 中新增的 history.pushState() 和 history.replaceState() 方法,分别可以添加和修改历史记录条目。这些方法通常与 window.onpopstate 配合使用。 history.pushState() 和 history.replaceState() 可以**改变 url 同时，不会刷新页面**
+- 对于单页应用的 history 模式而言，url 的改变只能由下面四种方式引起：
+
+1. 点击浏览器的前进或后退按钮
+2. 点击 a 标签
+3. 在 JS 代码中触发 history.pushState 函数
+4. 在 JS 代码中触发 history.replaceState 函数
+
+- 给不同的 path 注册对应的回调(加载视图)，切换视图时利用 pushState 和 replaceState 切换 url，触发回调展示不同视图；对于前进后退，利用 popstate 事件监听这些行为，切换不同的视图。
+- 缺点 1：需要注意，在修改 url 后，虽然页面并不会刷新，但我们在手动刷新，或通过 url 直接进入应用的时候， 服务端是无法识别这个 url 的，因为我们是单页应用，只有一个 html 文件，服务端在处理其他路径的 url 的时候，就会出现 404 的情况。所以，如果要应用 history 模式，需要在服务端增加一个覆盖所有情况的候选资源：如果 URL 匹配不到任何静态资源，则应该返回单页应用的 html 文件。(**也就是说需要服务端做好 url 适配**)
+- 缺点 2：兼容性
+- 优点：pushState 和 replaceState 设置的 url 可以是任意同源的 url；新的 url 和原来的 url 一样，也可以添加到历史记录栈中，而 hash 模式对于两个相同的 hash 值不行

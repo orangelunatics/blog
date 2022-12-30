@@ -16,7 +16,8 @@
 2. getDerivedStateFromProps:
 
 - 用法：static getDerivedStateFromProps(nextProps, prevState)
-- 可以比较 props 和 state 来加一些限制条件，防止无用的 state 更新
+- 让组件在 props 变化时更新 state。
+  <!-- - 可以比较 props 和 state 来加一些限制条件，防止无用的 state 更新(性能优化) -->
 
 3. render: 渲染 DOM
 4. componentDidMount: DOM 挂载完毕调用，可以用来发送请求等

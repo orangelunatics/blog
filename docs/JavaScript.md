@@ -830,3 +830,40 @@ console.log(map1); // Map(2) {'b' => 3, 'a' => 2}
 2. [] + {} = '[object Object]'
 3. {} + '' = 0 , 相当于+''
 4. {} + {} = '[object Object][object object]', 这个是特例
+
+**30、Object.freeze()冻结**
+
+```js
+// 可以由 const 声明的特征而联想到，复杂类型可以修改内容 Object.freeze()  浅冻结 对象和数组
+// 冻结了一个对象则不能向这个对象添加新的属性，不能删除已有属性，不能修改该对象已有属性的可枚举性、可配置性、可写性（数据属性），以及不能修改已有属性的值。
+// 已有属性的访问器属性也不能修改  getter setter Object.defineProperty
+// 非严格模式 不报错 但是添加修改删除属性无效
+// 严格模式抛出 类型错误
+var obj = {
+  prop: function() {},
+  foo: 'bar',
+};
+
+Object.freeze(obj);
+
+function fail() {
+  // 'use strict'
+  obj.foo = 'sparky'; // throws a TypeError
+  delete obj.quaxxor; // 返回true，因为quaxxor属性从来未被添加
+  obj.sparky = 'arf'; // throws a TypeError
+}
+fail(); //严格模式报throw type类型错误
+
+// 注意 freeze方法对值为对象的数据并不能冻结
+// 深冻结实现：
+const deepFreeze = function(obj) {
+  const arr = Object.getOwnPropertyNames(obj); //自身所有属性包括可枚举和不可枚举
+  // 遍历每一项，如果value是复杂类型则继续冻结
+  for (const k of arr) {
+    if (typeof obj[k] === 'object' && obj[k] !== null) deepFreeze(obj[k]);
+  }
+  return Object.freeze(obj);
+};
+console.log(Object.getOwnPropertyNames([1, 2, 3]));
+//  ["0", "1", "2", "length"] 自身可枚举和不可枚举的属性
+```
