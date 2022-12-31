@@ -603,6 +603,8 @@ console.log(iterator1.next().value);
 
 console.log(iterator1.next());
 // expected output: Object { value: 1, done: false }
+console.log(iterator1.next());
+// expected output: {value: undefined, done: true}
 ```
 
 ## JS 脚本的延迟加载
@@ -785,7 +787,7 @@ obj.get(); // undefined  (0824 in CAINiAO)
 
 **22、WeakMap 和 WeakSet 与 Map 和 Set 的区别**
 
-- WeakMap 只接受对象作为键名（null 除外），不接受其他类型的值作为键名,值任意；WeakSet 的值只能是对象
+- WeakMap 只接受对象作为键名（null 除外），不接受其他类型的值作为键名,值任意；WeakSet 的值只能是对象(不能是 null)
 - 引用(避免内存泄漏)：WeakMap 持有的是每个键对象的“弱引用”，这意味着在没有其他引用存在时垃圾回收能正确进行
 - 没有遍历的方法比如 forEach，也没有 size 属性，因为不知道什么时候就被垃圾回收了
 
