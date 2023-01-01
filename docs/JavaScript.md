@@ -261,7 +261,17 @@ Symbol.keyFor(a); // 类型强制转换返回string类型 '1'， 如果上面是
 ②undefined、任意的函数以及 Symbol 作为数组元素值时，JSON.stringify() 将会将它们序列化为 null  
 ③undefined、任意的函数以及 Symbol 被 JSON.stringify() 作为单独的值进行序列化时都会返回 undefined  
 ④ 布尔值、数字、字符串的包装对象在序列化过程中会自动转换成对应的原始值。  
-⑤new Date().toJSON()："2021-08-09T14:25:17.008Z"，和 toString()稍微不一样。
+⑤new Date().toJSON()："2021-08-09T14:25:17.008Z"，和 toString()稍微不一样。  
+⑥NaN 和 Infinity 格式的数值及 null 都会被当做 null
+
+```js
+JSON.stringify({ a: NaN });
+// ('{"a":null}');
+JSON.stringify([NaN]);
+// ('[null]');
+JSON.stringify(NaN);
+// ('null');
+```
 
 ## 实现科里化
 
