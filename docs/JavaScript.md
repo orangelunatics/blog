@@ -126,10 +126,10 @@ Promise.all = (promiseArr) => {
 主要思想：让执行 cb 的频率和屏幕刷新率保持一致，而不是通过定时器的时间进行控制，这样不会丢帧。  
 此外，可以利用此 API 的特性进行**节流**。
 
-## JS 六种异步方案
+<!-- ## JS 六种异步方案
 
-[参考 1](https://juejin.cn/post/6844903760280420366)  
-[参考 2](https://zhuanlan.zhihu.com/p/19750470?columnSlug=thefrontendperiodicals)
+[参考 1](https://juejin.cn/post/6844903760280420366)
+[参考 2](https://zhuanlan.zhihu.com/p/19750470?columnSlug=thefrontendperiodicals) -->
 
 ## 函数
 
