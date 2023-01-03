@@ -98,15 +98,16 @@ Promise.reject = (val) => {
   });
 };
 // 3、Promise.all
-Promise.all = (promiseArr) => {
-  if (typeof promiseArr[Symbol.iterator] !== 'function') throw new Error('not iterator');
+Promise.all = (iterable) => {
+  if (typeof iterable[Symbol.iterator] !== 'function') throw new Error('not iterator');
   return new Promise((resolve, reject) => {
+    if (iterable.length === 0) resolve([]);
     const arr = [];
-    for (let i = 0; i < promiseArr.length; i++) {
-      Promise.resolve(promiseArr[i]).then(
+    for (let i = 0; i < iterable.length; i++) {
+      Promise.resolve(iterable[i]).then(
         (res) => {
           arr[i] = res;
-          if (i + 1 === promiseArr.length) resolve(arr);
+          if (i + 1 === iterable.length) resolve(arr);
         },
         (err) => reject(err),
       );
@@ -114,8 +115,47 @@ Promise.all = (promiseArr) => {
   });
 };
 // 4、Promise.race
+Promise.race = function(iterable) {
+  if (typeof iterable[Symbol.iterator] !== 'function') throw new TypeError('');
+  return new Promise(function(resolve, reject) {
+    for (let i = 0; i < iterable.length; i++) {
+      iterable[i].then(resolve, reject);
+    }
+  });
+};
 
 // 5、Promise.allSettled
+Promise.allSettled = (iterable) => {
+  if (typeof iterable[Symbol.iterator] !== 'function') {
+    throw new TypeError();
+  }
+  return new Promise((resolve, reject) => {
+    const res = []; // 结果数组
+    let count = 0;
+    // forEach的话 则对类数组不可以用  改为for比较好  但对set map又不可以用
+    iterable.forEach((item, index) => {
+      // Promise.resolve可以接受成功的或者失败的promise并返回成功或失败 ！！
+      Promise.resolve(item).then(
+        (value) => {
+          count++;
+          res[index] = {
+            status: 'fulfilled',
+            value,
+          };
+          if (count === iterable.length) resolve(res);
+        },
+        (reason) => {
+          count++;
+          res[index] = {
+            status: 'rejected',
+            reason,
+          };
+          if (count === iterable.length) resolve(res);
+        },
+      );
+    });
+  });
+};
 ```
 
 ### Promise 构造函数
