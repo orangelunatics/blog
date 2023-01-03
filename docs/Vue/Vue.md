@@ -55,19 +55,21 @@ const router = new VueRouter({
 3. 调用 created()钩子，所以在 created 能拿到 data 等数据，created 之后，~~调用 \$mount() 把组件挂载到 dom 上, 然后~~对模板进行编译，编译过程: 生成抽象语法树 AST，优化 AST+标记静态节点(因为静态节点不更新,能够优化性能)，根据 AST 生成 render 函数, 然后执行 beforeMount
 4. 调用 beforeMount 钩子之后，vm.\_update(vm.\_render(), hydrating)，render 方法生成 vnode、而 update 方法会对 vnode 进行 patch，挂载到真实 dom 上，因为是首次，不需要进行新旧节点的 diff(vm.\_render 用来生成虚拟 dom、执行 dom-diff、更新真实 dom。)
 5. 调用 mounted 钩子之后，组件就已经挂载到真实 dom 上，所以可以拿到 dom
-6. beforeUpdate 和 updated 的过程类似
+6. beforeUpdate 和 updated 的过程,进行 diff
 7. beforeDestroy 和 destroyed 之间进行组件的销毁操作，比如将自身从父组件中移除、取消依赖追踪、移除所有事件监听器等
 
 ## Vue2 和 Vue3 区别
 
 1. 响应式原理改为 proxy
-2. diff 优化：patchFlag：给动态节点加上标记，动态节点类似于：{{ msg }}，编译解析过程中会给动态节点添加标记。这样做有利于 diff 算法在对比 dom 树的时候，省去对比静态节点，直接对比有标记的动态节点。
+2. diff 优化：最长递增子序列
+   <!-- patchFlag：给动态节点加上标记，动态节点类似于：{{ msg }}，编译解析过程中会给动态节点添加标记。这样做有利于 diff 算法在对比 dom 树的时候，省去对比静态节点，直接对比有标记的动态节点。 -->
 3. 生命周期更改：beforeCreate 和 created 被 setup 替换、beforeDestroy 替换为 beforeUnmount、destroyed 替换为 unmounted(更加语义化)
 4. 采用 Fragment: template 可以写多个根元素
 5. 更好的 Tree-Shaking  
    MDN：Tree shaking 是一个通常用于描述移除 JavaScript 上下文中的未引用代码(dead-code) 行为的术语。
 6. 更好的支持 TS  
    总结：更小(tree-shaking)、更快(改用 proxy, 两个优点：性能好无需递归遍历; 不用为数组单独重写原型方法)、维护性高(monorepo 结构)、VDOM Diff 重构(标记静态节点(不需比较)、静态标记?、事件缓存?)、composition API、
+7. 应用层上最重要的是 composition API
 
 ## Vue 常见问题
 
@@ -103,7 +105,7 @@ const router = new VueRouter({
 
 ## Vue 样式问题
 
-1. vue 动态创建的元素的类 要单独写一个 style 标签里
+1. vue 动态创建的元素的类要单独写一个 style 标签里
 2. [修改第三方组件样式](https://www.cnblogs.com/youhong/p/11637695.html)
 
 ## 表单输入绑定
@@ -112,12 +114,13 @@ const router = new VueRouter({
 
 - text 和 textarea 元素使用 value property 和 input 事件 (文本框，用 input 是因为让其实时触发)
 - checkbox 和 radio 使用 checked property 和 change 事件 (选择框)
-- select 字段将 value 作为 prop 并将 change 作为事件(下拉框)
-  补充：change 事件在**失焦**并且内容变化时才触发回调，input 事件是实时触发
+- select 下拉框将 value 作为 prop 并将 change 作为事件(下拉框)
+
+补充：change 事件在**失焦**并且内容变化时才触发回调，input 事件是实时触发
 
 ## 理解虚拟 DOM
 
-所有 html 结构，都可以用 js dom 来构造，而且能将构造的步骤封装起来，做到「数据-dom 结构」的映射。缓存初始数据，新数据进来时，与旧数据对比，找到差异，根据差异本身的性质进行 dom 操作；无差异，则不作为。dom 本身在 js 中就是一种数据结构，console.dir(document.body)，在控制台可以看到 body 的数据结构。然而，dom 相关的数据丰富而且复杂，我们其实只关心少数元素的少数属性。建立一个 javascript plain object，非常轻量，用它保存我们真正关心的与 dom 相关的少数数据；对它进行操作，然后对比操作前后的差异，再根据映射关系去操作真正的 dom，无疑能提高性能。
+所有 html 结构，都可以用 js dom 来构造，而且能将构造的步骤封装起来，做到「数据-dom 结构」的映射。缓存初始数据，新数据进来时，与旧数据对比，找到差异，根据差异本身的性质进行 dom 操作；无差异，则不作为。dom 本身在 js 中就是一种数据结构，console.dir(document.body)，在控制台可以看到 body 的数据结构。然而，dom 相关的数据丰富而且复杂，**我们其实只关心少数元素的少数属性**。建立一个 javascript plain object，非常轻量，用它保存我们真正关心的与 dom 相关的少数数据；对它进行操作，然后对比操作前后的差异，再根据映射关系去操作真正的 dom，无疑能提高性能。
 
 ## 单向数据流和双向绑定
 
@@ -127,7 +130,7 @@ const router = new VueRouter({
 ## Vue 组件间通信
 
 1. 父子组件通信：props、emit、refs、children、parent、slot
-2. 爷孙组件通信：v-on="listeners"、v-bind="attrs"
+2. 爷孙组件通信：v-on="listeners"、v-bind="attrs"、provide 和 inject(祖先组件通过 provide 提供数组，后代组件 inject 消费)
 3. 跨组件通信：eventbus(发布订阅)、vuex
 
 ## 前端路由

@@ -19,6 +19,7 @@ createApp(App).mount('#app'); // 创建 vm 层并挂载到#app 容器中
 
 1. props：值为对象，包含组件外部传递过来，且组件内部声明接收了的属性。
 2. context：上下文对象
+
    2.1 attrs: 值为对象，包含：组件外部传递过来，但没有在 props 配置中声明的属性, 相当于 this.\$attrs。  
    2.2 slots: 收到的插槽内容, 相当于 this.$slots。  
    2.3 emit: 分发自定义事件的函数, 相当于 this.$emit。
@@ -27,7 +28,7 @@ createApp(App).mount('#app'); // 创建 vm 层并挂载到#app 容器中
 
 - 需要引入：import { ref } from 'vue';
 - 作用：定义一个响应式的数据，接收的数据可以是：基本类型、也可以是对象类型。JS 读取需要.value，模板里读取不需要.value
-- 基本类型的数据：响应式依然是靠 Object.defineProperty()的 get 与 set 完成的。
+- **基本类型的数据：响应式依然是靠 Object.defineProperty()的 get 与 set 完成的。**
 - 对象类型的数据：内部 “ 求助 ” 了 Vue3.0 中的一个新函数—— reactive 函数。
 - 原来的\$refs 对象仍可以使用
 
@@ -131,7 +132,7 @@ export default function() {
 }
 
 // demo.vue
-import { usePoint } from './usePoint'
+import usePoint from './usePoint'
 setup() {
   let point = usePoint();
   return {point}
@@ -166,7 +167,7 @@ return {
 - 什么时候使用?
 
 1. 如果有一个对象数据，结构比较深, 但变化时只是外层属性变化 ===> shallowReactive。 **性能优化**
-2. 如果有一个对象数据，后续功能不会修改该对象中的属性，而是生新的对象来替换 ===> shallowRef。
+2. 如果有一个对象数据，后续功能不会修改该对象中的属性，而是生成新的对象来替换 ===> shallowRef。
 
 ### readonly 与 shallowReadonly
 
@@ -214,6 +215,7 @@ return {
 
 ## Teleport
 
+- 有时我们可能会遇到这样的场景：一个组件模板的一部分在逻辑上从属于该组件，但从整个应用视图的角度来看，它在 DOM 中应该被渲染在整个 Vue 应用外部的其他地方。这类场景最常见的例子就是全屏的模态框。理想情况下，我们希望触发模态框的按钮和模态框本身是在同一个组件中，因为它们都与组件的开关状态有关。但这意味着该模态框将与按钮一起渲染在应用 DOM 结构里很深的地方。这会导致该模态框的 CSS 布局代码很难写。
 - 能够将我们的组件 html 结构移动到指定位置
 
 ```html
@@ -229,7 +231,7 @@ return {
 
 ## Suspense
 
-- 等待异步组件时渲染一些额外内容，让应用有更好的用户体验(实际开发时需要权衡，比如核心功能直接加载、周边功能异步加载)
+- **等待异步组件时渲染一些额外内容**，让应用有更好的用户体验(实际开发时需要权衡，比如核心功能直接加载、周边功能异步加载)
 - 使用步骤：
 
 1. 异步引入组件

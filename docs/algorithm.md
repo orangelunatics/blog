@@ -172,7 +172,41 @@ const longestDays = (arr, m) => {
 - 64 匹马，8 个赛道，取前 4 名，最少要 10 场，[分情况实际上是 10 或 11 场](https://www.cnblogs.com/reanote/p/find_4th_in_64horse.html)
 - 25 匹马，5 个赛道，取前 3 名，最少 7 场
 
-## KMP
+<!-- ## KMP -->
+
+## 数组排序
+
+### 快排
+
+```js
+const sortArray = function(nums, left = 0, right = nums.length - 1) {
+  // 快排
+  // 递归出口
+  if (left >= right) return nums;
+  // 分区函数 这个内部没有递归
+  const partition = (nums, left, right) => {
+    const random = parseInt(Math.random() * (right - left + 1)) + left; // 随机枢轴
+    [nums[random], nums[left]] = [nums[left], nums[random]]; // 交换枢轴到最左边 便于遍历
+    let partitionIndex = left + 1; // 待交换的索引
+    for (let i = partitionIndex; i < nums.length; i++) {
+      if (nums[i] < nums[left]) {
+        // 小值放左侧
+        [nums[partitionIndex], nums[i]] = [nums[i], nums[partitionIndex]];
+        partitionIndex++; // 索引+1
+      }
+    }
+    // 循环结束时partitionIndex的位置的大于枢轴的，因此partitionIndex - 1是小于枢轴的
+    [nums[partitionIndex - 1], nums[left]] = [nums[left], nums[partitionIndex - 1]];
+    return partitionIndex - 1; // 返回枢轴
+  };
+  // 分区的索引
+  const index = partition(nums, left, right);
+  // 排序左侧和右侧子数组
+  sortArray(nums, left, index - 1);
+  sortArray(nums, index + 1, right);
+  return nums;
+};
+```
 
 ## 2022 下半年每日一题
 

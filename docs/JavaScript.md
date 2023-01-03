@@ -193,7 +193,8 @@ Promise.allSettled = (iterable) => {
 ③、Array.prototype.slice.call(arguments)  
 其实这样也行: [].slice.call(arguments)  
 原因从 slice 源码可以看出，利用了 arguments 可以索引。  
-类数组（array-like）有: Strings 字符串对象、Nodelist、arguments(所有实参，有 callee 属性指向该函数)、typedArray(webgl 使用，一个 TypedArray 对象描述了底层二进制数据缓冲区的类数组视图)
+类数组（array-like）有: Strings 字符串对象、Nodelist、arguments(所有实参，有 callee 属性指向该函数)、typedArray(webgl 使用，一个 TypedArray 对象描述了底层二进制数据缓冲区的类数组视图)  
+arguments 对应所有实参，args 是没有形参对应的实参，fn.length 是形参个数
 
 ```js
 Array.from('abc');
@@ -246,10 +247,27 @@ console.log(foo); //输出foo函数体
 6、闭包(较规范的定义)  
 在 JavaScript 中，根据词法作⽤域的规则，内部函数总是可以访问其外部函数中声明的变量，当通过调⽤一个外部函数返回⼀个内部函数后，即使该外部函数已经执⾏结束了，但是内部函数引⽤外部函数的变量依然保存在内存中，我们就把这些变量的集合称为闭包。⽐如外部函数是 foo，那么这些变量的集合就称为 foo 函数的闭包。
 
+```js
+function f1() {
+  var n = 999;
+
+  function f2() {
+    return n;
+  }
+
+  return f2;
+}
+
+var result = f1();
+
+console.log(result()); // 999
+```
+
 ## 栈堆问题
 
-1、为什么引用类型数据的值存放在堆中  
-引用数据类型占据空间大、大小不固定，如果存储在栈中，将影响程序的运行性能。
+本质是时间和空间的交换问题
+
+- 引用数据类型占据空间大、大小不固定，如果存储在栈中，将影响程序的运行性能。
 
 ## TypeScript
 
@@ -413,7 +431,7 @@ const judge = (arr) => {
 - 不同浏览器的设计不同
 - "其原因在于如果浏览器允许 0ms，会导致 JavaScript 引擎过度循环，也就是说如果浏览器架构是单进程的，那么可能网站很容易无响应。因为浏览器本身也是建立在 event loop 之上的，如果速度很慢的 JavaScript engine 通过 0ms timer 不断安排唤醒系统，那么 event loop 就会被阻塞。那么此时用户会面对什么情况呢？同时遇到 CPU spinning 和基本挂起的浏览器，想想就让人崩溃。"
 
-2. setInterval 的问题，也是时间的误差，事件循环的问题：如果你的代码逻辑执行时间可能比定时器时间间隔要长，建议你使用递归调用了 setTimeout() 的具名函数。例如，使用 setInterval() 以 5 秒的间隔轮询服务器，可能因网络延迟、服务器无响应以及许多其它的问题而导致请求无法在分配的时间内完成。但 setTimeout 也有误差，所以也要解决
+2. setInterval 的问题，也是时间的误差，事件循环的问题：如果你的代码逻辑执行时间可能比定时器时间间隔要长(导致定时器代码连续执行，没有达到定时器效果)，建议你使用递归调用了 setTimeout() 的具名函数。例如，使用 setInterval() 以 5 秒的间隔轮询服务器，可能因网络延迟、服务器无响应以及许多其它的问题而导致请求无法在分配的时间内完成。但 setTimeout 也有误差，所以也要解决
 
 ```js
 (function loop() {
@@ -515,11 +533,11 @@ console.log(s2); //Set(4) { 1, 2, 3, 4 }
 ## 显式绑定 call、apply、bind
 
 1. bind，修改指向但不直接执行，可以分批传参
+   <!-- bind: https://mp.weixin.qq.com/s/istdqF_k0hbXmaWUivtf9A -->
 
 - 手写源码
 
 ```js
-// bind: https://mp.weixin.qq.com/s/istdqF_k0hbXmaWUivtf9A
 Function.prototype.bind2 = function(context, ...args1) {
   if (typeof this !== 'function') throw new TypeError();
   const self = this;
@@ -581,7 +599,7 @@ Function.prototype.call2 = function(context, ...args) {
   // 剩余参数不用和箭头函数一起;
   if (typeof this !== 'function') throw new TypeError(); // 错误处理
   context = context ?? window; // 非严格模式下 undefined或null 会包装为window
-  if (typeof context !== 'object') context = Object(context); // 简单类型 包装为对象
+  if (typeof context !== 'object' || context === null) context = Object(context); // 简单类型 包装为对象
   const key = Symbol(); // 防止重名
   context[key] = this; // context是对象
   const result = context[key](...args); // 执行时隐式绑定为context
@@ -591,6 +609,8 @@ Function.prototype.call2 = function(context, ...args) {
 ```
 
 ## new 操作符
+
+步骤：创建对象并改变原型对象，修改 this 指向，执行函数，返回的是引用类型则返回这个引用类型数据，否则返回实例
 
 ```js
 const myNew = function(fn, ...args) {
@@ -606,8 +626,8 @@ const myNew = function(fn, ...args) {
 ## 同域跨页面通信
 
 1. sw+postMessage
-2. localStorage
-3. indexedDB
+2. localStorage + 监听 storage 事件
+3. indexedDB(容量大、异步、同源策略)
 
 ## 处理所有 async 的错误
 
@@ -621,6 +641,14 @@ window.addEventListener('unhandledrejection', function(event) {
 ```
 
 2. 封装一层 promise
+   <!-- (async () => {
+     const [err, res] = await to(request.get('/xxx'));
+     if (err) {
+       handle error
+       return;
+     }
+       handle bussiness
+   })() -->
 
 ```js
 export const handler = (promise) => {
@@ -810,7 +838,7 @@ EC(G)下有 VOG VOG 里有 GO(?) 生成的 有的放在 VOG 有的 GO
 实现的，⽽变量提升是通过变量环境来实现，通过这两者的结合，JavaScript引擎也就同时⽀持了变量提升
 和块级作⽤域了。 -->
 
-全局上下文的 var function 存在于 GO 、全局上下文的 let const 存在于 VOG  
+全局上下文的 var function 存在于 GO 、全局上下文的 let const 存在于 VOG(script 作用域)  
 ~~函数在存储的时候 堆中存储分为三部分~~
 
 **13、Object.prototype.toString.call(各种类型对象)**
@@ -844,8 +872,8 @@ const obj = {
 obj.get(); // undefined  (0824 in CAINiAO)
 ```
 
-**18、类中的方法默认开启了严格模式**
-**19、箭头函数的严格模式与非严格模式的行为一致**
+**18、类中的方法默认开启了严格模式**  
+**19、箭头函数的严格模式与非严格模式的行为一致**  
 **20、async+forEach 的问题**  
 由于 async 和 await 放在了循环内部，所以表现为并行，改成外部 async，内部 for 循环，就可以间隔 x 秒打印相应数据  
 **21、var 和 no var 的区别**
@@ -859,8 +887,8 @@ obj.get(); // undefined  (0824 in CAINiAO)
 - 引用(避免内存泄漏)：WeakMap 持有的是每个键对象的“弱引用”，这意味着在没有其他引用存在时垃圾回收能正确进行
 - 没有遍历的方法比如 forEach，也没有 size 属性，因为不知道什么时候就被垃圾回收了
 
-**23、Number.EPSILON 值为 2^-52**
-**24、sessionStorage 的问题**：多窗口之间 sessionStorage 不可以共享状态，但是在某些特定场景下新开的同源页面会复制之前页面的 sessionStorage，注意是复制新开时的状态而不是共享，比如 window.open()或 点击 a 标签
+**23、Number.EPSILON 值为 2^-52**  
+**24、sessionStorage 的问题**：多窗口之间 sessionStorage 不可以共享状态，但是在某些特定场景下新开的同源页面会复制之前页面的 sessionStorage，注意是复制新开时的状态而不是共享，比如 A 页面中 window.open(与 A 同源的 B 页面)或 点击 a 标签
 
 - 页面会话在浏览器打开期间一直保持，并且重新加载或恢复页面仍会保持原来的页面会话。
 - 在新标签或窗口打开一个页面时会复制顶级浏览会话的上下文作为新会话的上下文， 这点和 session cookies 的运行方式不同。
@@ -878,7 +906,7 @@ console.log(arr);
 65 -> A   97 -> a
 ```
 
-**26、强弱类型/动静态**：强弱的区分是是否能进行隐式转化，比如相加是否报错；动静的区分是运行时是否能改变变量类型，因此 python 是强类型，JS 是弱类型，二者都是动态语言。
+**26、强弱类型/动静态**：强弱的区分是是否能进行隐式转化，比如相加是否报错；动静的区分是运行时是否能改变变量类型，因此 python 是强类型，JS 是弱类型，二者都是动态语言。  
 **27、Object 的属性是按照数字升序(如果属性是非负整数时)，Map 按照插入顺序**
 
 - 因此，如果强烈依赖插入顺序，那么 Map 可以保证这一点。
@@ -893,13 +921,14 @@ map1.set('b', 3);
 console.log(map1); // Map(2) {'b' => 3, 'a' => 2}
 ```
 
-**28、作用域**: node 中有模块作用域，const 和 let 在全局中声明会形成 script 作用域，并不是全局(global)作用域
+**28、作用域**: node 中有模块作用域，const 和 let 在全局中声明会形成 script 作用域，并不是全局(global)作用域  
 **29、代码块{}**: 加法运算，{}放在前时，被认为是代码块，忽略掉
 
-1. {} + [] = ''
+1. {} + [] = 0
 2. [] + {} = '[object Object]'
 3. {} + '' = 0 , 相当于+''
 4. {} + {} = '[object Object][object object]', 这个是特例
+5. [] + [] = ''
 
 **30、Object.freeze()冻结**
 
@@ -927,7 +956,7 @@ fail(); //严格模式报throw type类型错误
 // 注意 freeze方法对值为对象的数据并不能冻结
 // 深冻结实现：
 const deepFreeze = function(obj) {
-  const arr = Object.getOwnPropertyNames(obj); //自身所有属性包括可枚举和不可枚举
+  const arr = Object.getOwnPropertyNames(obj); //自身所有属性包括可枚举和不可枚举 或者用Reflect.ownKeys(obj)包括symbol
   // 遍历每一项，如果value是复杂类型则继续冻结
   for (const k of arr) {
     if (typeof obj[k] === 'object' && obj[k] !== null) deepFreeze(obj[k]);
