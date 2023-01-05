@@ -100,6 +100,10 @@ websocket 协议名字不一样 ws+wss，端口号和 http/s 一致，最大的�
 1、xhr：① 原生、② 封装 xhr 的 jQ、③ 封装 xhr 的 axios。后两者都是基于 promise 的链式调用，但都是第三方的模块。  
 2、fetch：原生的并且基于 promise，关注分离的设计模式(可以先看服务器是否连接上，然后再处理数据，也就是说并不是直接给数据)。缺点：兼容性差(ie 全系列都不行)。
 
+- fetch 只对网络请求报错，对 400，500 都当做成功的请求，需要封装去处理
+- fetch 默认不会带 cookie，需要添加配置项 credentials
+- fetch 的跨域设置较简单，配置中设置 mode: no-cors 即可
+
 ```js
 //使用async和await的版本，更加简洁，同步表示异步。注意response.json()返回的是promise实例
 //外部需要配合async使用
@@ -128,7 +132,8 @@ try {
 发送表单数据：xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");  
 发送纯文本：xhr.setRequestHeader("Content-type", "text/plain; charset=utf-8");  
 发送 html 文本：xhr.setRequestHeader("Content-type", "text/html; charset=utf-8");  
-其余还有 image/gif ; image/jpeg; image/png
+其余还有 image/gif ; image/jpeg; image/png  
+7、Content-Encoding: gzip(nginx 中配置)  
 补充：xhr.readyState:  
 0: xhr 被创建，尚未调用 open() 方法。  
 1：open() 方法已经被调用。可以通过 setRequestHeader() 方法来设置请求的头部， 可以调用 send() 方法来发起请求。  
@@ -249,11 +254,11 @@ HTTP 是属于应用层的协议，最终的数据传输还是要通过传输层
 
 ## 缓存相关补充
 
-一、强缓存：max-age 和 expires 和 pragma
+一、强缓存：max-age 和 expires 和 pragma  
 1、max-age 是 cache-control(强缓存)header 中的一个 key，其他两个都是单独的 key。  
 注：cookie 里既有 max-age 也有 expires  
 2、优先级问题：从高到低  
-3、为什么 max-age 优先级高：expires 是绝对时间，依赖于计算机时钟的正确设置，不靠谱。所以采用相对时间。  
+3、为什么 max-age 优先级高：expires 是绝对时间，依赖于计算机时钟的正确设置(可能前后端时间不一致)，不靠谱。所以采用相对时间。  
 4、pragma 只有一个属性：Pragma: no-cache  
 解释：与 Cache-Control: no-cache 效果一致。强制要求缓存服务器在返回缓存的版本之前将请求提交到源头服务器进行验证。  
 二、ETag 的强弱验证器  
@@ -262,7 +267,7 @@ HTTP 是属于应用层的协议，最终的数据传输还是要通过传输层
 ## 代理
 
 正向代理：代理端代理的是客户端。如：VPN  
-反向代理：代理端代理的是服务端。如：Nginx(nginx 代理跨域，实质和 CORS 跨域原理一样，通过配置文件设置请求响应头 Access-Control-Allow-Origin...等字段)  
+反向代理：代理端代理的是服务端。如：Nginx(解决跨域实质和 CORS 跨域原理一样，通过配置文件设置请求响应头 Access-Control-Allow-Origin...等字段)  
 Nginx 解决跨域：
 客户端的域名为 client.com，服务器的域名为 server.com
 
@@ -319,14 +324,15 @@ jsonp('xx.com', { x: 'xx' }).then((res) => {
 简单请求满足两个要求：
 
 1. 请求方法为 get、post、head
-2. 请求 header 是 accept、accept-language、content-language、content-type 并且值为这三个：application/x-www-form-urlencoded(常见于表单，窗体数据被编码为名称/值对。这是标准的编码格式)、multipart/form-data(常见于表单，窗体数据被编码为一条消息，页上的每个控件对应消息中的一个部分)、text/plain(窗体数据以纯文本形式进行编码，其中不含任何控件或格式字符)
+2. 请求 header 除了被用户代理自动设置的 header 之外(connection\[keep-alive\],user-agent 等)，只能是这些： accept(告知服务器本次请求的资源类型)、accept-language、content-language、content-type 并且值为这三个：application/x-www-form-urlencoded(常见于表单，窗体数据被编码为名称/值对。这是标准的编码格式)、multipart/form-data(常见于表单，窗体数据被编码为一条消息，页上的每个控件对应消息中的一个部分)、text/plain(窗体数据以纯文本形式进行编码，其中不含任何控件或格式字符)
 
-其他为非简单请求，要先进行预检(preflight、使用 OPTIONS 方法),"预检"请求的头信息包括两个特殊字段:
+- 其他为非简单请求，要先进行预检(preflight、使用 OPTIONS 方法),"预检"请求的头信息包括两个特殊字段:
 
-1. Access-Control-Request-Method 必选
-2. Access-Control-Request-Headers 必选
+1. Access-Control-**Request**-Method 必选，告知服务器本次的请求方法
+2. Access-Control-**Request**-Headers 必选，告知服务器本次的请求头
+3. 响应头为：Access-Control-**Allow**-Methods
 
-## options method
+### options method
 
 1. 检测服务器所支持的请求方法
 2. cors 预检
@@ -351,10 +357,6 @@ jsonp('xx.com', { x: 'xx' }).then((res) => {
 - 签名的产生算法：首先，使用散列函数计算公开的明文信息的信息摘要，然后，采用 CA 的私钥对信息摘要进行加密，密文即签名；
 - 客户端 C 向服务器 S 发出请求时，S 返回证书文件；
 - 客户端 C 读取证书中的相关的明文信息，采用相同的散列函数计算得到信息摘要，然后，利用对应 CA 的公钥解密签名数据，对比证书的信息摘要，如果一致，则可以确认证书的合法性，即公钥合法；
-
-## 长连接方案
-
-1. 长轮询
 
 ## Chrome 开发者工具
 
