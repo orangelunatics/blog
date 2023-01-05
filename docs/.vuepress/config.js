@@ -86,7 +86,10 @@ module.exports = {
           },
           {
             text: 'webpack',
-            items: [{ text: 'webpack分包', link: '/webpack/split/' }],
+            items: [
+              { text: 'webpack基础', link: '/webpack/base/' },
+              { text: 'webpack分包', link: '/webpack/split/' },
+            ],
           },
         ],
       },
