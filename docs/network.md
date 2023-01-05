@@ -50,10 +50,9 @@ DOM 限制：Worker 线程无法获取主线程所在的网页的 DOM。
 ## Web Socket
 
 [为什么用这个](https://mp.weixin.qq.com/s/QBHMbSWSd4KU7TByRq2RRw)  
-[一种通信协议](http://www.52im.net/forum.php?mod=viewthread&tid=332)，初次认识是因为可以跨域。后续补充。  
+[一种通信协议](http://www.52im.net/forum.php?mod=viewthread&tid=332)，  
 [掘金](https://juejin.cn/post/6844903544978407431#heading-12)
-websocket 协议名字不一样 ws+wss，端口号和 http/s 一致，最大的优点是双向通信，可以服务端推送实时性更强、更好的二进制支持、较少的控制开销  
-还有支持扩展。ws 协议定义了扩展，用户可以扩展协议，或者实现自定义的子协议。（比如支持自定义压缩算法等）  
+websocket 协议名字不一样 ws+wss，端口号和 http/s 一致，最大的优点是双向通信，可以服务端推送实时性更强、更好的二进制支持、较少的控制开销。还有支持扩展。ws 协议定义了扩展，用户可以扩展协议，或者实现自定义的子协议。（比如支持自定义压缩算法等）。也不受同源策略限制  
 1、客户端发起升级协议请求 connection + update + Sec-WebSocket-Key  
 2、服务端返回同意升级的响应 connection + update + Sec-WebSocket-Accept  
 3、“Sec-WebSocket-Accept”头的值，返回给客户端。客户端收到这个之后，就会将通信协议 upgrade 到 websocket 协议  
@@ -93,7 +92,7 @@ websocket 协议名字不一样 ws+wss，端口号和 http/s 一致，最大的�
 4. get 没有请求体
 5. get 数据在 url 中，有长度限制且不安全，post 数据在请求体中，没限制且安全
 
-- HEAD 方法：返回和 GET 方法同样的响应头
+- HEAD 方法：返回和 GET 方法同样的响应头，但没有响应体
 - OPTIONS 方法：返回获取该资源时支持的 HTTP 方法；CORS 非简单请求判断是否支持跨域(服务器所返回的 Access-Control-Allow-Methods 首部字段将所有允许的请求方法告知客户端)
 
 ## Ajax 请求
