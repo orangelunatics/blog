@@ -103,11 +103,13 @@ Promise.all = (iterable) => {
   return new Promise((resolve, reject) => {
     if (iterable.length === 0) resolve([]);
     const arr = [];
+    let count = 0;
     for (let i = 0; i < iterable.length; i++) {
       Promise.resolve(iterable[i]).then(
         (res) => {
+          count++;
           arr[i] = res;
-          if (i + 1 === iterable.length) resolve(arr);
+          if (count === iterable.length) resolve(arr);
         },
         (err) => reject(err),
       );
@@ -119,7 +121,7 @@ Promise.race = function(iterable) {
   if (typeof iterable[Symbol.iterator] !== 'function') throw new TypeError('');
   return new Promise(function(resolve, reject) {
     for (let i = 0; i < iterable.length; i++) {
-      iterable[i].then(resolve, reject);
+      Promise.resolve(iterable[i]).then(resolve, reject);
     }
   });
 };

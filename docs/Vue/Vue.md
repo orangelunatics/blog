@@ -80,6 +80,7 @@ const router = new VueRouter({
 
 - 首次渲染(执行正常的生命周期钩子和 activated)的时候，除了再 <keep-alive /> 中建立缓存，设置 vnode.data.keepAlive 为 true，其他的过程和普通组件一样。
 - 命中缓存进行渲染时，不执行其他钩子，只执行 activated，并且对缓存的组件进行 patch，进行更新。
+- 初始进入和离开 created ---> mounted ---> activated --> deactivated, 后续进入和离开 activated --> deactivated
 
 4. [前端路由](https://juejin.cn/post/6844903890278694919#heading-4)
 5. Vue 项目的执行顺序： index.html(模板) => main.js(入口文件) => App.vue(根组件)
