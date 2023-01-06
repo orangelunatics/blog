@@ -96,6 +96,7 @@ proxy.name = 'ivan';
 2. set 返回布尔值，能判断是否执行成功
 3. 和 proxy 的 handler 完全一致，天然适合搭配使用
 4. 发生继承时可以明确调用主体
+5. 以 Reflect.get(target, key, receiver)为例，第三个参数为调用 get 时的 this 指向，receiver 设置为代理对象(p = new Proxy()中的 p)，这样可以将 this 指向代理对象，从而建立响应式的联系(和第四点类似)
 
 ```js
 let miaoMiao = {

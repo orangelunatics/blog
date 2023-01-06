@@ -724,6 +724,30 @@ console.log(iterator1.next());
 1. window 对象表示浏览器中打开的窗口，如果有 iframe 则还有 iframe 的 window
 2. document 对象表示 html 文档，包括文档中的所有元素，是 window 对象的一部分
 
+## 生成器 Generator
+
+异步的一种方案，yield 表达式可以暂停函数执行，next 方法用于恢复函数执行，异步任务同步化，后来 await 代替了 yield 进行等待，更加简洁和语义化
+
+## 装饰器 Decorator
+
+- 思想和装饰者模式一样，装饰器是函数，放在类或者类的属性/方法的定义之前，用于增强类，拓展功能，还能起到注释的作用
+
+```js
+// 1.定义类:
+class soldier {}
+// 2. 定义装饰器
+function strong(target) {
+  target.weapon = true; // 具有武器
+}
+// 3. 增强类
+@strong
+class soldier {} // 注意：class不能重复声明
+console.log(soldier.weapon);
+```
+
+- 装饰器不能作用于函数，因为可能存在变量提升，导致失效。(class 没有变量提升所以可以)
+- 补充：实例方法是继承到实例中的方法，静态方法是构造函数中的方法，外部可以调用，私有方法是构造函数中定义的方法，外部不能直接用但可以用闭包调用
+
 ## tips
 
 **1、空字符串的索引**
