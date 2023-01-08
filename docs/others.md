@@ -27,14 +27,18 @@ rebase: 根据当前分支 1 后续的历次提交对象，生成一系列文件
 
 ## npm
 
-[千锋 node 文档](https://lurongtao.gitee.io/felixbooks-gp19-node.js/basics/01-Node.js%E5%9F%BA%E7%A1%80.html)  
-1、npm 与 npx 区别：  
-对于 node_modules 中安装的模块，全局中没有安装，这时不能使用 npm，而 npx 会优先寻找当前项目的 node_modules，如果没有，会自动安装
+<!-- [千锋 node 文档](https://lurongtao.gitee.io/felixbooks-gp19-node.js/basics/01-Node.js%E5%9F%BA%E7%A1%80.html)   -->
+
+1、npm 与 npx 区别：
+
+<!-- 对于 node_modules 中安装的模块，全局中没有安装，这时不能使用 npm，而 npx 会优先寻找当前项目的 node_modules，如果没有，会自动安装 -->
+
+npm -g 会全局安装包，一直存在本机中；而 npx 会安装在临时安装包中，项目初始化完成后就删除，避免污染
 
 2、nvm
 
 3、npm  
-Node Package Manager node.js 的包管理工具 包就是模块
+Node Package Manager node.js 的包管理工具
 
 4、npm 命令简写  
 npm install 和 npm i 是一样  
@@ -45,8 +49,9 @@ npm install 和 npm i 是一样
 
 5、package-lock.json  
 作用：锁定版本+显示模块的依赖关系  
-不同环境拉取同一个项目的依赖保证了版本的一致性。  
-[其他](https://www.cnblogs.com/luowen075/p/10362540.html)
+不同环境拉取同一个项目的依赖保证了版本的一致性。
+
+<!-- [其他](https://www.cnblogs.com/luowen075/p/10362540.html) -->
 
 6、npm i --production  
 作用：只安装 dependencies 即生产环境下的包的 node_modules 而不安装 devDependencies 即开发环境下的包
@@ -76,8 +81,9 @@ node package 的版本号解析：0.54.8
 
 ## ESLint 与 Prettier
 
-前者是代码格式检查+js 文件的部分格式化、后者专注于格式化且不局限于 js 文件, 搭配使用  
-[详细](https://www.cnblogs.com/guangzan/p/14057876.html)
+前者是代码格式检查+js 文件的部分格式化、后者专注于格式化且不局限于 js 文件, 搭配使用
+
+<!-- [详细](https://www.cnblogs.com/guangzan/p/14057876.html) -->
 
 ## 模块化规范
 
@@ -97,10 +103,9 @@ node package 的版本号解析：0.54.8
 暴露模块：define 方法  
 引入模块：require 方法  
 3、CommonJS  
-在服务器端，模块的加载是运行时同步加载的(服务端读取快)；在浏览器端(不能直接在浏览器端执行，这是缺点)，模块需要提前编译打包处理(因为浏览器不认识 CommonJS 语法如 require)，优点：不用依赖前置，用的时候再导入即可。  
+在服务器端，模块的加载是运行时同步加载的(服务端读取快)；在浏览器端(不能直接在浏览器端执行，这是缺点，后来有了 Browserify)，模块需要提前编译打包处理(因为浏览器不认识 CommonJS 语法如 require)，优点：不用依赖前置，用的时候再导入即可。  
 暴露模块：module.exports = value / exports.xxx = value。暴露的本质是 exports 对象。第一种暴露是把 value 赋给了 exports 对象，第二种是添加属性。  
 引入模块：① 内置模块(如 url、http)或第三方模块直接 require(模块名字)② 自定义模块要 require(模块文件相对路径)  
-browserify  
 4、CMD 规范(seaJS)(淘系)  
 基于 CommonJS，使其能用于浏览器端，异步加载模块。(按需加载)  
 5、ES6(应用最广泛,浏览器和服务器通用的模块解决方案)  
@@ -129,9 +134,30 @@ if (x === 1) {
 
 6、ES6 模块与 CommonJS 模块的差异  
 ①CommonJS 模块输出的是一个值的拷贝(有缓存)，ES6 模块输出的是值的引用。  
-②CommonJS 模块是运行时加载(动态加载)，ES6 模块是编译时(解析时)加载(静态加载，且效率高)，所以 import 命令有变量提升(这种行为的本质是，import 命令是编译阶段执行的，在代码运行之前)。
+②CommonJS 模块是运行时加载(动态加载)，ES6 模块是编译时(解析时)加载(**静态加载**，效率高)，所以 import 命令有变量提升(这种行为的本质是，import 命令是编译阶段执行的，在代码运行之前)。
 ③ 对于简单类型和复杂类型的问题：[详细](https://github.com/YvetteLau/Step-By-Step/issues/43#issuecomment-509229722)  
 commonjs 虽然是拷贝，但复杂对象是浅拷贝，修改源数据会影响引入后的数据; esm 虽然是引用，但对于默认导出而言，源文件(导出的文件)里修改简单类型的数据时，并不会影响引入后的数据，可以想成 赋值给 default 之后，只读引用与 default 关联，此时基础类型的变量的任何修改都与 default 无关
+
+```js
+// cjs 对于value是复杂类型时是浅拷贝，修改源文件数据会影响新文件数据
+// a.js
+const hobbies = ['a'];
+let name = 'ivan';
+module.exports = { name, hobbies };
+setTimeout(() => {
+  name = 'navi';
+  hobbies.push('b');
+}, 300);
+// b.js
+const { name, hobbies } = require('./a.js');
+console.log(hobbies); //['a']
+console.log(name); //['ivan']
+
+setTimeout(() => {
+  console.log(name); //['ivan']
+  console.log(hobbies); //['a', 'b']  被成功修改了
+}, 500);
+```
 
 ## 操作系统
 
@@ -144,27 +170,27 @@ commonjs 虽然是拷贝，但复杂对象是浅拷贝，修改源数据会影�
 
 ### 进程间通信方式
 
-进程（Linux）间的通信方式有：  
-1、管道  
-2、消息队列  
-3、共享内存  
-4、信号量  
+进程（Linux）间的通信方式有：
+1、管道
+2、消息队列
+3、共享内存
+4、信号量
 5、Socket
 
 ## 设计模式
 
-1、工厂模式: 这种方式创建对象缺点是无法识别对象类型  
-2、发布订阅模式与观察者模式 [example](https://juejin.cn/post/6847902215571505166#comment)  
-发布/订阅模式由统一调度中心调用，因此发布者和订阅者不需要知道对方的存在。  
-观察者模式是由具体目标调度，比如当事件触发，Dep 就会去调用观察者的方法，所以观察者模式的订阅者与发布者之间是存在依赖的。  
-3、单例模式  
-4、职责链模式  
-5、[MVC 模式](https://www.runoob.com/design-pattern/design-pattern-tutorial.html)  
+1、工厂模式: 这种方式创建对象缺点是无法识别对象类型
+2、发布订阅模式与观察者模式 [example](https://juejin.cn/post/6847902215571505166#comment)
+发布/订阅模式由统一调度中心调用，因此发布者和订阅者不需要知道对方的存在。
+观察者模式是由具体目标调度，比如当事件触发，Dep 就会去调用观察者的方法，所以观察者模式的订阅者与发布者之间是存在依赖的。
+3、单例模式
+4、职责链模式
+5、[MVC 模式](https://www.runoob.com/design-pattern/design-pattern-tutorial.html)
 6、代理模式、装饰模式等, [详细](https://juejin.cn/post/6844904190947360781#comment)
 
 ### 职责链模式
 
-[12. 整数转罗马数字](https://leetcode-cn.com/problems/integer-to-roman/)  
+[12. 整数转罗马数字](https://leetcode-cn.com/problems/integer-to-roman/)
 从这道题的官解和普通解之间的对比，可以更好地理解职责链模式，该模式可以解决面条式代码。
 
 ### 单例模式

@@ -102,7 +102,7 @@ websocket 协议名字不一样 ws+wss，端口号和 http/s 一致，最大的�
 
 - fetch 只对网络请求报错，对 400，500 都当做成功的请求，需要封装去处理
 - fetch 默认不会带 cookie，需要添加配置项 credentials
-- fetch 的跨域设置较简单，配置中设置 mode: no-cors 即可
+- fetch 的跨域设置较简单，前端在配置中设置 mode: cors 即可
 
 ```js
 //使用async和await的版本，更加简洁，同步表示异步。注意response.json()返回的是promise实例
