@@ -45,7 +45,8 @@ npm install 和 npm i 是一样
 --save 和 -S 是一样  
 --save-dev 和 -D 是一样的  
 -S, --save 安装包信息将加入到 dependencies（生产阶段的依赖,也就是项目运行时的依赖，就是程序上线后仍然需要依赖, 开发和生产都需要）  
--D, --save-dev 安装包信息将加入到 devDependencies（开发阶段的依赖，就是我们在开发过程中需要的依赖，只在开发阶段起作业的）
+-D, --save-dev 安装包信息将加入到 devDependencies（开发阶段的依赖，就是我们在开发过程中需要的依赖，只在开发阶段起作业的）  
+peerDependency 就可以避免类似的核心依赖库被重复下载的问题
 
 5、package-lock.json  
 作用：锁定版本+显示模块的依赖关系  
