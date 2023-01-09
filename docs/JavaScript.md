@@ -450,7 +450,7 @@ const judge = (arr) => {
 
 ## 深拷贝
 
-考虑循环引用和 Symbol，不考虑函数
+考虑循环引用和 Symbol，不考虑函数，暂时不考虑 new Number(1)生成的对象数字等情况，[参考](https://juejin.cn/post/6844903929705136141#heading-11)
 
 ```js
 const getType = (obj) => {
@@ -493,7 +493,7 @@ const deepClone = (obj, wm = new WeakMap()) => {
       res = new Date(obj);
       break;
     case 'RegExp':
-      res = new RegExp(obj.source, obj.flags);
+      res = new RegExp(obj.source, obj.flags); // 正则这里需要改进
       break;
     case 'Array':
       res = [];
@@ -512,6 +512,16 @@ const deepClone = (obj, wm = new WeakMap()) => {
   }
   return res;
 };
+
+// 补充Object(Symbol)的情况：
+function cloneSymbol(targe) {
+  return Object(Symbol.prototype.valueOf.call(targe));
+}
+
+// 补充arguments、window、document的toString.call:
+Object.prototype.toString.call(arguments) = '[object Arguments]';
+Object.prototype.toString.call(window) = '[object Window]';
+Object.prototype.toString.call(document) = '[object HTMLDocument]';
 
 const arr = [1, 2, [3]];
 const darr = deepClone(arr);
@@ -540,17 +550,18 @@ console.log(s2); //Set(4) { 1, 2, 3, 4 }
 - 手写源码
 
 ```js
-Function.prototype.bind2 = function(context, ...args1) {
+Function.prototype.bind2 = function(ctx, ...args1) {
   if (typeof this !== 'function') throw new TypeError();
   const self = this;
   // 这里不用箭头函数是因为可能fn是构造函数 要实例化
   const fn = function(...args2) {
     // 记得要return 因为函数要有返回值
-    return self.apply(this instanceof self ? this : context, [...args1, ...args2]);
+    return self.apply(this instanceof self ? this : ctx, [...args1, ...args2]);
   };
   const newFn = function() {};
+  // 为了继承function原型, 能用instacneof判断是否new，并且新增属性或方法时不会污染原型(比起直接fn.prototype = self.prototype)
   newFn.prototype = self.prototype;
-  fn.prototype = new newFn(); // 为了继承function原型
+  fn.prototype = new newFn();
   return fn;
 };
 
