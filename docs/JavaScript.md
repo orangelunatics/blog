@@ -4,7 +4,7 @@
 
 ```javascript
 Array.prototype.map = function(fn, thisArg) {
-  if (typeof fn !== 'function' || !Array.isArray(this)) throw new Error('×');
+  if (typeof fn !== "function" || !Array.isArray(this)) throw new Error("×");
   const newArr = [];
   for (let i = 0; i < this.length; i++) {
     newArr[i] = fn.call(thisArg, arr[i], i, this);
@@ -17,7 +17,7 @@ Array.prototype.map = function(fn, thisArg) {
 
 ```javascript
 Array.prototype.find = function(fn, thisArg) {
-  if (typeof fn !== 'function' || !Array.isArray(this)) throw new Error('×');
+  if (typeof fn !== "function" || !Array.isArray(this)) throw new Error("×");
   for (let i = 0; i < this.length; i++) {
     if (fn.call(thisArg, this[i], i, this)) return this[i];
   }
@@ -31,7 +31,7 @@ Array.prototype.find = function(fn, thisArg) {
 
 ```javascript
 Array.prototype.some = function(fn, thisArg) {
-  if (typeof fn !== 'function' || !Array.isArray(this)) throw new Error('×');
+  if (typeof fn !== "function" || !Array.isArray(this)) throw new Error("×");
   for (let i = 0; i < this.length; i++) {
     if (fn.call(thisArg, this[i], i, this)) return true;
   }
@@ -48,7 +48,7 @@ Array.prototype.some = function(fn, thisArg) {
 
 ```javascript
 Array.prototype.filter = function(fn, thisArg) {
-  if (typeof fn !== 'function' || !Array.isArray(this)) throw new Error('×');
+  if (typeof fn !== "function" || !Array.isArray(this)) throw new Error("×");
   const newArr = [];
   for (let i = 0; i < this.length; i++) {
     if (fn.call(thisArg, arr[i], i, this)) newArr.push(arr[i]);
@@ -61,7 +61,7 @@ Array.prototype.filter = function(fn, thisArg) {
 
 ```javascript
 Array.prototype.reduce = function(fn, start) {
-  if (typeof fn !== 'function' || !Array.isArray(this)) throw new Error('');
+  if (typeof fn !== "function" || !Array.isArray(this)) throw new Error("");
   let result = start ? start : this.splice(0, 1)[0]; //没有初始值的时候缩短遍历次数
   for (let i = 0; i < this.length; i++) {
     result = fn(result, this[i], i, this);
@@ -86,7 +86,7 @@ Promise.resolve = (val) => {
     if (val instanceof Promise) {
       val.then(
         (res) => resolve(res),
-        (err) => reject(err),
+        (err) => reject(err)
       );
     } else resolve(val);
   });
@@ -99,7 +99,8 @@ Promise.reject = (val) => {
 };
 // 3、Promise.all
 Promise.all = (iterable) => {
-  if (typeof iterable[Symbol.iterator] !== 'function') throw new Error('not iterator');
+  if (typeof iterable[Symbol.iterator] !== "function")
+    throw new Error("not iterator");
   return new Promise((resolve, reject) => {
     if (iterable.length === 0) resolve([]);
     const arr = [];
@@ -111,14 +112,14 @@ Promise.all = (iterable) => {
           arr[i] = res;
           if (count === iterable.length) resolve(arr);
         },
-        (err) => reject(err),
+        (err) => reject(err)
       );
     }
   });
 };
 // 4、Promise.race
 Promise.race = function(iterable) {
-  if (typeof iterable[Symbol.iterator] !== 'function') throw new TypeError('');
+  if (typeof iterable[Symbol.iterator] !== "function") throw new TypeError("");
   return new Promise(function(resolve, reject) {
     for (let i = 0; i < iterable.length; i++) {
       Promise.resolve(iterable[i]).then(resolve, reject);
@@ -128,7 +129,7 @@ Promise.race = function(iterable) {
 
 // 5、Promise.allSettled
 Promise.allSettled = (iterable) => {
-  if (typeof iterable[Symbol.iterator] !== 'function') {
+  if (typeof iterable[Symbol.iterator] !== "function") {
     throw new TypeError();
   }
   return new Promise((resolve, reject) => {
@@ -141,7 +142,7 @@ Promise.allSettled = (iterable) => {
         (value) => {
           count++;
           res[index] = {
-            status: 'fulfilled',
+            status: "fulfilled",
             value,
           };
           if (count === iterable.length) resolve(res);
@@ -149,11 +150,11 @@ Promise.allSettled = (iterable) => {
         (reason) => {
           count++;
           res[index] = {
-            status: 'rejected',
+            status: "rejected",
             reason,
           };
           if (count === iterable.length) resolve(res);
-        },
+        }
       );
     });
   });
@@ -199,7 +200,7 @@ Promise.allSettled = (iterable) => {
 arguments 对应所有实参，args 是没有形参对应的实参，fn.length 是形参个数
 
 ```js
-Array.from('abc');
+Array.from("abc");
 // ["a", "b", "c"]
 ```
 
@@ -474,33 +475,33 @@ const iteratorObject = (obj, res, m) => {
  * @returns {object} res
  */
 const deepClone = (obj, wm = new WeakMap()) => {
-  if (typeof obj !== 'object' || obj === null) return obj;
+  if (typeof obj !== "object" || obj === null) return obj;
   if (wm.has(obj)) return wm.get(obj); // 解决循环引用
   let res;
   const type = getType(obj);
   switch (type) {
-    case 'Set': // 可以再补充weakmap ws之类的
+    case "Set": // 可以再补充weakmap ws之类的
       res = new Set();
       wm.set(obj, res);
       obj.forEach((value) => res.add(deepClone(value, wm)));
       break;
-    case 'Map':
+    case "Map":
       res = new Map();
       wm.set(obj, res);
       obj.forEach((value, key) => res.set(key, deepClone(value, wm)));
       break;
-    case 'Date':
+    case "Date":
       res = new Date(obj);
       break;
-    case 'RegExp':
+    case "RegExp":
       res = new RegExp(obj.source, obj.flags); // 正则这里需要改进
       break;
-    case 'Array':
+    case "Array":
       res = [];
       wm.set(obj, res);
       iteratorObject(obj, res, wm);
       break;
-    case 'Object':
+    case "Object":
       res = {};
       wm.set(obj, res);
       iteratorObject(obj, res, wm);
@@ -519,9 +520,9 @@ function cloneSymbol(targe) {
 }
 
 // 补充arguments、window、document的toString.call:
-Object.prototype.toString.call(arguments) = '[object Arguments]';
-Object.prototype.toString.call(window) = '[object Window]';
-Object.prototype.toString.call(document) = '[object HTMLDocument]';
+Object.prototype.toString.call(arguments) = "[object Arguments]";
+Object.prototype.toString.call(window) = "[object Window]";
+Object.prototype.toString.call(document) = "[object HTMLDocument]";
 
 const arr = [1, 2, [3]];
 const darr = deepClone(arr);
@@ -551,7 +552,7 @@ console.log(s2); //Set(4) { 1, 2, 3, 4 }
 
 ```js
 Function.prototype.bind2 = function(ctx, ...args1) {
-  if (typeof this !== 'function') throw new TypeError();
+  if (typeof this !== "function") throw new TypeError();
   const self = this;
   // 这里不用箭头函数是因为可能fn是构造函数 要实例化
   const fn = function(...args2) {
@@ -565,17 +566,17 @@ Function.prototype.bind2 = function(ctx, ...args1) {
   return fn;
 };
 
-var name = 'Jack';
+var name = "Jack";
 var Yve = {
-  name: 'Yvette',
+  name: "Yvette",
 };
 function person(age, job, gender) {
   console.log(this.name, age, job, gender);
 }
-person(22, 'engineer', 'female');
+person(22, "engineer", "female");
 // Jack 22 engineer female
-var bindYve = person.bind2(Yve, 22, 'engineer');
-bindYve('female');
+var bindYve = person.bind2(Yve, 22, "engineer");
+bindYve("female");
 // Yvette 22 engineer female
 ```
 
@@ -610,9 +611,10 @@ func(); // 1
 // apply只需要把...args改成args
 Function.prototype.call2 = function(context, ...args) {
   // 剩余参数不用和箭头函数一起;
-  if (typeof this !== 'function') throw new TypeError(); // 错误处理
+  if (typeof this !== "function") throw new TypeError(); // 错误处理
   context = context ?? window; // 非严格模式下 undefined或null 会包装为window
-  if (typeof context !== 'object' || context === null) context = Object(context); // 简单类型 包装为对象
+  if (typeof context !== "object" || context === null)
+    context = Object(context); // 简单类型 包装为对象
   const key = Symbol(); // 防止重名
   context[key] = this; // context是对象
   const result = context[key](...args); // 执行时隐式绑定为context
@@ -629,7 +631,7 @@ Function.prototype.call2 = function(context, ...args) {
 const myNew = function(fn, ...args) {
   const obj = Object.create(fn.prototype);
   const result = fn.apply(obj, args);
-  if (typeof result !== 'object' || result === null) {
+  if (typeof result !== "object" || result === null) {
     return obj;
   }
   return result;
@@ -647,7 +649,7 @@ const myNew = function(fn, ...args) {
 1. 事件监听
 
 ```js
-window.addEventListener('unhandledrejection', function(event) {
+window.addEventListener("unhandledrejection", function(event) {
   event.reason; //获取到catch的err的原因(内容) 与控制台报错一致
   event.promise; //获取到未处理的promise对象
 });
@@ -665,7 +667,9 @@ window.addEventListener('unhandledrejection', function(event) {
 
 ```js
 export const handler = (promise) => {
-  return promise.then((res) => [undefined, res]).catch((err) => [err, undefined]); // err是有值的情况
+  return promise
+    .then((res) => [undefined, res])
+    .catch((err) => [err, undefined]); // err是有值的情况
 };
 ```
 
@@ -694,8 +698,8 @@ export const handler = (promise) => {
 ```js
 const map1 = new Map();
 
-map1.set('0', 'foo');
-map1.set(1, 'bar');
+map1.set("0", "foo");
+map1.set(1, "bar");
 
 const iterator1 = map1.entries();
 
@@ -737,7 +741,8 @@ console.log(iterator1.next());
 
 ## 生成器 Generator
 
-异步的一种方案，yield 表达式可以暂停函数执行，next 方法用于恢复函数执行，异步任务同步化，后来 await 代替了 yield 进行等待，更加简洁和语义化
+- 异步的一种方案，yield 表达式可以暂停函数执行，next 方法用于恢复函数执行，异步任务同步化，后来 await 代替了 yield 进行等待，更加简洁和语义化
+- 本质上是一种状态机，经过 babel 转译后发现是 switch case 控制流
 
 ## 装饰器 Decorator
 
@@ -764,8 +769,8 @@ console.log(soldier.weapon);
 **1、空字符串的索引**
 
 ```javascript
-const str = '123';
-console.log(str.indexOf('')); //0
+const str = "123";
+console.log(str.indexOf("")); //0
 ```
 
 **2、[substr、substring、slice 的区别](https://www.cnblogs.com/echolun/p/7646025.html)**
@@ -952,9 +957,9 @@ console.log(arr);
 ```js
 const map1 = new Map();
 
-map1.set('b', 1);
-map1.set('a', 2);
-map1.set('b', 3);
+map1.set("b", 1);
+map1.set("a", 2);
+map1.set("b", 3);
 console.log(map1); // Map(2) {'b' => 3, 'a' => 2}
 ```
 
@@ -977,16 +982,16 @@ console.log(map1); // Map(2) {'b' => 3, 'a' => 2}
 // 严格模式抛出 类型错误
 var obj = {
   prop: function() {},
-  foo: 'bar',
+  foo: "bar",
 };
 
 Object.freeze(obj);
 
 function fail() {
   // 'use strict'
-  obj.foo = 'sparky'; // throws a TypeError
+  obj.foo = "sparky"; // throws a TypeError
   delete obj.quaxxor; // 返回true，因为quaxxor属性从来未被添加
-  obj.sparky = 'arf'; // throws a TypeError
+  obj.sparky = "arf"; // throws a TypeError
 }
 fail(); //严格模式报throw type类型错误
 
@@ -996,7 +1001,7 @@ const deepFreeze = function(obj) {
   const arr = Object.getOwnPropertyNames(obj); //自身所有属性包括可枚举和不可枚举 或者用Reflect.ownKeys(obj)包括symbol
   // 遍历每一项，如果value是复杂类型则继续冻结
   for (const k of arr) {
-    if (typeof obj[k] === 'object' && obj[k] !== null) deepFreeze(obj[k]);
+    if (typeof obj[k] === "object" && obj[k] !== null) deepFreeze(obj[k]);
   }
   return Object.freeze(obj);
 };
