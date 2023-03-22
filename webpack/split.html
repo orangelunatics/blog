@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>webpack 分包 | Nav1🪐</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;🎄&lt;/text&gt;&lt;/svg&gt;">
+    <meta name="description" content="navi的个人blog">
+    <meta name="author" content="navi">
+    <meta name="keywords" content="navi">
+    
+    <link rel="preload" href="/blog/assets/css/0.styles.73b6f229.css" as="style"><link rel="preload" href="/blog/assets/js/app.99c8d667.js" as="script"><link rel="preload" href="/blog/assets/js/2.503560b4.js" as="script"><link rel="preload" href="/blog/assets/js/37.d520b5d0.js" as="script"><link rel="prefetch" href="/blog/assets/js/10.ff493e67.js"><link rel="prefetch" href="/blog/assets/js/11.8af03509.js"><link rel="prefetch" href="/blog/assets/js/12.ab40ab5c.js"><link rel="prefetch" href="/blog/assets/js/13.c66af236.js"><link rel="prefetch" href="/blog/assets/js/14.6e1913fb.js"><link rel="prefetch" href="/blog/assets/js/15.e5335030.js"><link rel="prefetch" href="/blog/assets/js/16.e5e4dff6.js"><link rel="prefetch" href="/blog/assets/js/17.7828b76a.js"><link rel="prefetch" href="/blog/assets/js/18.c2107475.js"><link rel="prefetch" href="/blog/assets/js/19.c481a024.js"><link rel="prefetch" href="/blog/assets/js/20.bc72d36b.js"><link rel="prefetch" href="/blog/assets/js/21.fb38c257.js"><link rel="prefetch" href="/blog/assets/js/22.9ddbf54f.js"><link rel="prefetch" href="/blog/assets/js/23.2c593e6b.js"><link rel="prefetch" href="/blog/assets/js/24.86b7f628.js"><link rel="prefetch" href="/blog/assets/js/25.82ff0913.js"><link rel="prefetch" href="/blog/assets/js/26.f252f70a.js"><link rel="prefetch" href="/blog/assets/js/27.8be6d464.js"><link rel="prefetch" href="/blog/assets/js/28.5f6d1b09.js"><link rel="prefetch" href="/blog/assets/js/29.9bd082ce.js"><link rel="prefetch" href="/blog/assets/js/3.627099dc.js"><link rel="prefetch" href="/blog/assets/js/30.cd5ed503.js"><link rel="prefetch" href="/blog/assets/js/31.98240de1.js"><link rel="prefetch" href="/blog/assets/js/32.bfb506e0.js"><link rel="prefetch" href="/blog/assets/js/33.754e9987.js"><link rel="prefetch" href="/blog/assets/js/34.cac02bef.js"><link rel="prefetch" href="/blog/assets/js/35.582bc031.js"><link rel="prefetch" href="/blog/assets/js/36.b073d398.js"><link rel="prefetch" href="/blog/assets/js/4.cf05086d.js"><link rel="prefetch" href="/blog/assets/js/5.39612c53.js"><link rel="prefetch" href="/blog/assets/js/6.52ddd00a.js"><link rel="prefetch" href="/blog/assets/js/7.f71fbb16.js"><link rel="prefetch" href="/blog/assets/js/8.2f3f6f4d.js"><link rel="prefetch" href="/blog/assets/js/9.342a85f0.js">
+    <link rel="stylesheet" href="/blog/assets/css/0.styles.73b6f229.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/blog/" class="home-link router-link-active"><img src="/blog/assets/img/hero.png" alt="Nav1🪐" class="logo"> <span class="site-name can-hide">Nav1🪐</span></a> <div class="links"><!----> <div class="user-settings"><a href="#" class="settings-button"><svg aria-hidden="true" data-prefix="fas" data-icon="cog" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-cog fa-w-16 settings-icon"><path fill="currentColor" d="M444.788 291.1l42.616 24.599c4.867 2.809 7.126 8.618 5.459 13.985-11.07 35.642-29.97 67.842-54.689 94.586a12.016 12.016 0 0 1-14.832 2.254l-42.584-24.595a191.577 191.577 0 0 1-60.759 35.13v49.182a12.01 12.01 0 0 1-9.377 11.718c-34.956 7.85-72.499 8.256-109.219.007-5.49-1.233-9.403-6.096-9.403-11.723v-49.184a191.555 191.555 0 0 1-60.759-35.13l-42.584 24.595a12.016 12.016 0 0 1-14.832-2.254c-24.718-26.744-43.619-58.944-54.689-94.586-1.667-5.366.592-11.175 5.459-13.985L67.212 291.1a193.48 193.48 0 0 1 0-70.199l-42.616-24.599c-4.867-2.809-7.126-8.618-5.459-13.985 11.07-35.642 29.97-67.842 54.689-94.586a12.016 12.016 0 0 1 14.832-2.254l42.584 24.595a191.577 191.577 0 0 1 60.759-35.13V25.759a12.01 12.01 0 0 1 9.377-11.718c34.956-7.85 72.499-8.256 109.219-.007 5.49 1.233 9.403 6.096 9.403 11.723v49.184a191.555 191.555 0 0 1 60.759 35.13l42.584-24.595a12.016 12.016 0 0 1 14.832 2.254c24.718 26.744 43.619 58.944 54.689 94.586 1.667 5.366-.592 11.175-5.459 13.985L444.788 220.9a193.485 193.485 0 0 1 0 70.2zM336 256c0-44.112-35.888-80-80-80s-80 35.888-80 80 35.888 80 80 80 80-35.888 80-80z"></path></svg></a> <div class="user-settings-menu" style="display:none;"><div class="theme-options"><!----> <ul class="color-theme-options"><li><a href="#" class="default-theme"></a></li> <li><a href="#" class="blue-theme"></a></li><li><a href="#" class="red-theme"></a></li><li><a href="#" class="purple-theme"></a></li></ul> <div class="dark-theme-options toggle-option"><label for="dark-theme-toggle">Enable Dark Theme?</label> <input id="dark-theme-toggle" type="checkbox"></div> <div class="ignore-themes-options toggle-option"><label for="ignore-themes-toggle">Ignore Other Themes?</label> <input id="ignore-themes-toggle" type="checkbox"></div> <!----></div></div></div> <!----> <div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/blog/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/blog/introduction/" class="nav-link">
+  intro
+</a></div><div class="nav-item"><a href="/blog/project/" class="nav-link">
+  杂项
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><span class="title">前端</span> <span class="arrow down"></span></button> <button type="button" aria-label="前端" class="mobile-dropdown-title"><span class="title">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          基础
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/blog/H5/" class="nav-link">
+  HTML + CSS
+</a></li><li class="dropdown-subitem"><a href="/blog/JavaScript/" class="nav-link">
+  JS
+</a></li><li class="dropdown-subitem"><a href="/blog/extends/" class="nav-link">
+  JS继承
+</a></li><li class="dropdown-subitem"><a href="/blog/tsc/" class="nav-link">
+  TS类型体操
+</a></li></ul></li><li class="dropdown-item"><h4>
+          Vue
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/blog/Vue/Vue/" class="nav-link">
+  Vue
+</a></li><li class="dropdown-subitem"><a href="/blog/Vue/Vue-slot/" class="nav-link">
+  Vue插槽浅析
+</a></li><li class="dropdown-subitem"><a href="/blog/Vue/Vue-mixin/" class="nav-link">
+  在Vue中使用混入mixin
+</a></li><li class="dropdown-subitem"><a href="/blog/Vue/Vue-devtools/" class="nav-link">
+  如何在控制台中调用Vue开发者工具
+</a></li><li class="dropdown-subitem"><a href="/blog/Vue/Vue3/" class="nav-link">
+  Vue3基础
+</a></li><li class="dropdown-subitem"><a href="/blog/Vue/Vue-reactive/" class="nav-link">
+  Vue响应式原理
+</a></li><li class="dropdown-subitem"><a href="/blog/Vue/Vue-nextTick/" class="nav-link">
+  nectTick的原理
+</a></li><li class="dropdown-subitem"><a href="/blog/Vue/Vue-component/" class="nav-link">
+  Vue.component与Vue.extend
+</a></li><li class="dropdown-subitem"><a href="/blog/Vue/Vue-diff/" class="nav-link">
+  diff算法的不断优化
+</a></li></ul></li><li class="dropdown-item"><h4>
+          React
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/blog/React/React/" class="nav-link">
+  React
+</a></li><li class="dropdown-subitem"><a href="/blog/React/React-life/" class="nav-link">
+  React生命周期
+</a></li><li class="dropdown-subitem"><a href="/blog/React/mobx/" class="nav-link">
+  mobx
+</a></li></ul></li><li class="dropdown-item"><h4>
+          小程序
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/blog/miniprogram/" class="nav-link">
+  miniprogram
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工程化" class="dropdown-title"><span class="title">工程化</span> <span class="arrow down"></span></button> <button type="button" aria-label="工程化" class="mobile-dropdown-title"><span class="title">工程化</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          Node.js
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/blog/node/base/" class="nav-link">
+  基础
+</a></li></ul></li><li class="dropdown-item"><h4>
+          webpack
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/blog/webpack/base/" class="nav-link">
+  webpack基础
+</a></li><li class="dropdown-subitem"><a href="/blog/webpack/split/" class="nav-link">
+  webpack分包
+</a></li></ul></li></ul></div></div><div class="nav-item"><a href="/blog/network/" class="nav-link">
+  网络
+</a></div><div class="nav-item"><a href="/blog/algorithm/" class="nav-link">
+  算法
+</a></div><div class="nav-item"><a href="/blog/cs/" class="nav-link">
+  CS课程
+</a></div><div class="nav-item"><a href="/blog/others/" class="nav-link">
+  其他
+</a></div><div class="nav-item"><a href="https://google.com" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  External
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/blog/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/blog/introduction/" class="nav-link">
+  intro
+</a></div><div class="nav-item"><a href="/blog/project/" class="nav-link">
+  杂项
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><span class="title">前端</span> <span class="arrow down"></span></button> <button type="button" aria-label="前端" class="mobile-dropdown-title"><span class="title">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          基础
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/blog/H5/" class="nav-link">
+  HTML + CSS
+</a></li><li class="dropdown-subitem"><a href="/blog/JavaScript/" class="nav-link">
+  JS
+</a></li><li class="dropdown-subitem"><a href="/blog/extends/" class="nav-link">
+  JS继承
+</a></li><li class="dropdown-subitem"><a href="/blog/tsc/" class="nav-link">
+  TS类型体操
+</a></li></ul></li><li class="dropdown-item"><h4>
+          Vue
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/blog/Vue/Vue/" class="nav-link">
+  Vue
+</a></li><li class="dropdown-subitem"><a href="/blog/Vue/Vue-slot/" class="nav-link">
+  Vue插槽浅析
+</a></li><li class="dropdown-subitem"><a href="/blog/Vue/Vue-mixin/" class="nav-link">
+  在Vue中使用混入mixin
+</a></li><li class="dropdown-subitem"><a href="/blog/Vue/Vue-devtools/" class="nav-link">
+  如何在控制台中调用Vue开发者工具
+</a></li><li class="dropdown-subitem"><a href="/blog/Vue/Vue3/" class="nav-link">
+  Vue3基础
+</a></li><li class="dropdown-subitem"><a href="/blog/Vue/Vue-reactive/" class="nav-link">
+  Vue响应式原理
+</a></li><li class="dropdown-subitem"><a href="/blog/Vue/Vue-nextTick/" class="nav-link">
+  nectTick的原理
+</a></li><li class="dropdown-subitem"><a href="/blog/Vue/Vue-component/" class="nav-link">
+  Vue.component与Vue.extend
+</a></li><li class="dropdown-subitem"><a href="/blog/Vue/Vue-diff/" class="nav-link">
+  diff算法的不断优化
+</a></li></ul></li><li class="dropdown-item"><h4>
+          React
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/blog/React/React/" class="nav-link">
+  React
+</a></li><li class="dropdown-subitem"><a href="/blog/React/React-life/" class="nav-link">
+  React生命周期
+</a></li><li class="dropdown-subitem"><a href="/blog/React/mobx/" class="nav-link">
+  mobx
+</a></li></ul></li><li class="dropdown-item"><h4>
+          小程序
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/blog/miniprogram/" class="nav-link">
+  miniprogram
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工程化" class="dropdown-title"><span class="title">工程化</span> <span class="arrow down"></span></button> <button type="button" aria-label="工程化" class="mobile-dropdown-title"><span class="title">工程化</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          Node.js
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/blog/node/base/" class="nav-link">
+  基础
+</a></li></ul></li><li class="dropdown-item"><h4>
+          webpack
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/blog/webpack/base/" class="nav-link">
+  webpack基础
+</a></li><li class="dropdown-subitem"><a href="/blog/webpack/split/" class="nav-link">
+  webpack分包
+</a></li></ul></li></ul></div></div><div class="nav-item"><a href="/blog/network/" class="nav-link">
+  网络
+</a></div><div class="nav-item"><a href="/blog/algorithm/" class="nav-link">
+  算法
+</a></div><div class="nav-item"><a href="/blog/cs/" class="nav-link">
+  CS课程
+</a></div><div class="nav-item"><a href="/blog/others/" class="nav-link">
+  其他
+</a></div><div class="nav-item"><a href="https://google.com" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  External
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>webpack 分包</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/blog/webpack/split.html#webpack-分包" class="sidebar-link">webpack 分包</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog/webpack/split.html#什么是-webpack" class="sidebar-link">什么是 Webpack</a></li><li class="sidebar-sub-header"><a href="/blog/webpack/split.html#为什么要分包" class="sidebar-link">为什么要分包</a></li><li class="sidebar-sub-header"><a href="/blog/webpack/split.html#什么是-splitchunksplugin" class="sidebar-link">什么是 SplitChunksPlugin</a></li></ul></li><li><a href="/blog/webpack/split.html#splitchunksplugin-的分包优化" class="sidebar-link">SplitChunksPlugin 的分包优化</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog/webpack/split.html#配置项" class="sidebar-link">配置项</a></li><li class="sidebar-sub-header"><a href="/blog/webpack/split.html#源码解读" class="sidebar-link">源码解读</a></li><li class="sidebar-sub-header"><a href="/blog/webpack/split.html#源码总结" class="sidebar-link">源码总结</a></li></ul></li><li><a href="/blog/webpack/split.html#结束语" class="sidebar-link">结束语</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog/webpack/split.html#思考" class="sidebar-link">思考</a></li></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h2 id="webpack-分包"><a href="#webpack-分包" class="header-anchor">#</a> webpack 分包</h2> <h3 id="什么是-webpack"><a href="#什么是-webpack" class="header-anchor">#</a> 什么是 Webpack</h3> <p>为方便非前端人员看懂本文，先谈谈 Webpack 是什么。简单来说，Webpack 是一种打包工具，用于代码的压缩、混淆、编译等等。而在 Webpack 的配置文件中，有两个非常重要的选项：Loader 和 Plugin。由于 Webpack 只认识 .js 和 .json 两种文件，因此 Loader 担任翻译官这一角色，用于资源转译(如.less, .jsx)，而 Plugin 用于监听 Webpack 生命周期广播出事件，从而改变打包结果，也就是能够拓展 Webpack 的功能。这篇文章的主题则是配置文件的另一个选项 optimization 中的 splitChunks 字段。</p> <h3 id="为什么要分包"><a href="#为什么要分包" class="header-anchor">#</a> 为什么要分包</h3> <ol><li>代码分割的本质是？</li></ol> <ul><li>如果源代码直接上线：虽然过程可控，但是 http 请求多，性能开销大；如果分包过多，则也会造成 http 请求过多</li> <li>如果只生成一个 bundle，虽然服务器压力小，但是页面空白期长，用户体验不好</li></ul> <ol start="2"><li>由于 Webpack 会按照设置的入口文件 entry 来寻找模块间的依赖关系，如果只设置了单入口，理论上来说最终的打包结果是一个单独的包，但在大型项目中，这样做对前端性能和用户体验的影响是巨大的，主要有两个缺点：</li></ol> <ul><li><strong>等待时间漫长</strong>：客户端必须等到整个项目全部加载好之后才能运行，极其缓慢。</li> <li><strong>缓存难以命中</strong>：更改某处的代码后，需要重新获取所有资源，没有利用好浏览器的缓存机制。</li></ul> <ol start="3"><li>因此在打包过程中需要拆分代码，从而提升用户体验。Webpack 本身具有默认的分包规则，打包过程本质上就是由 module 到 chunk 的过程，这一过程的核心是 Webpack 的 seal 阶段，最终生成的 chunk 类型有三种：</li></ol> <ul><li>同一入口触达到的模块，称为 <strong>initial chunk</strong></li> <li>异步模块，如 ES6 的动态引入 import()，称为 <strong>async chunk</strong></li> <li>entry.runtime 组成的 chunk，称为 <strong>runtime chunk</strong></li></ul> <ol start="4"><li>在 Webpack3 之前就是采用这种默认策略，最大的问题就是不能解决<strong>重复依赖</strong>，也就是说多个入口中引入了同种依赖，会被重复打包，极其影响性能。因此在 Webpack3 中引入了 CommonChunkPlugin 来解决这一问题，而 CommonChunkPlugin 的缺陷在于无法判断公共依赖是父 chunk 还是子 chunk，从而会导致其他问题。</li></ol> <p>注：</p> <ul><li>一般一个 chunk 对应一个 bundle</li> <li>chunk 指的是 webpack 打包过程中的单位，bundle 指的是最重生成的文件</li></ul> <h3 id="什么是-splitchunksplugin"><a href="#什么是-splitchunksplugin" class="header-anchor">#</a> 什么是 SplitChunksPlugin</h3> <p>从 Webpack4 开始，引入了一个内置的 Plugin ：SplitChunksPlugin，实现了更加智能与全面的分包策略。在 Webpack 的配置文件中位置如下：</p> <div class="language-js extra-class"><pre class="language-js"><code>module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  entry<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'file1.js'</span><span class="token punctuation">,</span><span class="token string">'file2.js'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  output<span class="token operator">:</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  module<span class="token operator">:</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  plugins<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token operator">...</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  optimization<span class="token operator">:</span> <span class="token punctuation">{</span>
+    splitChunks<span class="token operator">:</span> <span class="token punctuation">{</span>
+      chunks<span class="token operator">:</span> <span class="token string">'all'</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre></div><p>上文提到 Plugin 是通过监听 Webpack 事件从而实现相应的功能，本文使用<a href="https://github.com/webpack/webpack/tree/webpack-4" target="_blank" rel="noopener noreferrer">Webpack4 源码<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>进行分析，从 webpack/lib/optimize/SplitChunksPlugin.js 文件中可以看到，该 Plugin 订阅了 optimizeChunksAdvanced 钩子（文件的第 352 行开始）：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// SplitChunksPlugin.js</span>
+<span class="token function">apply</span><span class="token punctuation">(</span><span class="token parameter">compiler</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  compiler<span class="token punctuation">.</span>hooks<span class="token punctuation">.</span>thisCompilation<span class="token punctuation">.</span><span class="token function">tap</span><span class="token punctuation">(</span><span class="token string">&quot;SplitChunksPlugin&quot;</span><span class="token punctuation">,</span> <span class="token parameter">compilation</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> alreadyOptimized <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    compilation<span class="token punctuation">.</span>hooks<span class="token punctuation">.</span>unseal<span class="token punctuation">.</span><span class="token function">tap</span><span class="token punctuation">(</span><span class="token string">&quot;SplitChunksPlugin&quot;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      alreadyOptimized <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    compilation<span class="token punctuation">.</span>hooks<span class="token punctuation">.</span>optimizeChunksAdvanced<span class="token punctuation">.</span><span class="token function">tap</span><span class="token punctuation">(</span>
+      <span class="token string">&quot;SplitChunksPlugin&quot;</span><span class="token punctuation">,</span>
+      <span class="token parameter">chunks</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+	    <span class="token comment">//  ...</span>
+	   <span class="token punctuation">}</span>
+    <span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>而在 lib/Compilation.js 文件中，compilation.seal 方法定义了一系列钩子（文件的 1283 行开始）：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// Compilation.js</span>
+<span class="token function">seal</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token comment">// ...</span>
+	<span class="token keyword">this</span><span class="token punctuation">.</span>hooks<span class="token punctuation">.</span><span class="token function">optimizeChunksAdvanced</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>chunks<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>chunkGroups<span class="token punctuation">)</span>
+	<span class="token comment">// ...</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>没错，就是采用了发布订阅模式，上述两个代码块将 Webpack 与 Plugin 进行连接，因此，在 Webpack 的 seal 阶段，SplitChunksPlugin 可以对默认分包规则所生成的 chunk 做进一步的优化。</p> <h2 id="splitchunksplugin-的分包优化"><a href="#splitchunksplugin-的分包优化" class="header-anchor">#</a> SplitChunksPlugin 的分包优化</h2> <h3 id="配置项"><a href="#配置项" class="header-anchor">#</a> 配置项</h3> <p>从官方文档中可以看到 optimization.splitChunks 的<a href="https://webpack.docschina.org/plugins/split-chunks-plugin/#splitchunkschunks" target="_blank" rel="noopener noreferrer">v5 默认配置<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>或<a href="https://v4.webpack.docschina.org/plugins/split-chunks-plugin/#splitchunkscachegroups" target="_blank" rel="noopener noreferrer">v4 默认配置<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>，这里以 v4 为例：</p> <div class="language-js extra-class"><pre class="language-js"><code>module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token comment">//...</span>
+  optimization<span class="token operator">:</span> <span class="token punctuation">{</span>
+    splitChunks<span class="token operator">:</span> <span class="token punctuation">{</span>
+      chunks<span class="token operator">:</span> <span class="token string">'async'</span><span class="token punctuation">,</span>
+      minSize<span class="token operator">:</span> <span class="token number">30000</span><span class="token punctuation">,</span>
+      maxSize<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+      minChunks<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+      maxAsyncRequests<span class="token operator">:</span> <span class="token number">5</span><span class="token punctuation">,</span>
+      maxInitialRequests<span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+      automaticNameDelimiter<span class="token operator">:</span> <span class="token string">'~'</span><span class="token punctuation">,</span>
+      name<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+      cacheGroups<span class="token operator">:</span> <span class="token punctuation">{</span>
+        vendors<span class="token operator">:</span> <span class="token punctuation">{</span>
+          test<span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">[\\/]node_modules[\\/]</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span>
+          priority<span class="token operator">:</span> <span class="token operator">-</span><span class="token number">10</span><span class="token punctuation">,</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token keyword">default</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          minChunks<span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+          priority<span class="token operator">:</span> <span class="token operator">-</span><span class="token number">20</span><span class="token punctuation">,</span>
+          reuseExistingChunk<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre></div><p>选择其中几个配置项进行说明：</p> <ul><li>enforceSizeThreshold：超过 enforceSizeThreshold 字节数的 chunk 会被<strong>强制分包</strong>，忽略配置中的其他尺寸限制。</li> <li>chunks：默认为 async ，即只对 async chunk 起作用。设置为 initial 则只对 initial chunk 生效。还可以设置为<strong>all</strong>，这是实际项目中最常用的，使 splitChunksPlugin 同时作用于 initial chunk 和 async chunk。</li> <li>minChunks：被不同的 chunk 所<strong>引用的次数</strong>，这里的 chunk 包括 initial chunk 和 async chunk。举个例子，如果 minChunks = 2，则当某个模块被至少两个 chunk 引用时，这个模块才会被单独打包。</li> <li>minSize：超过 minSize 字节的 chunk 才会被分包，否则该 module 合并回原来的 chunk 中。</li> <li>maxSize：超过 maxSize 字节的 chunk 会<strong>继续尝试</strong>分包</li> <li>maxInitialRequest/maxAsyncRequests：<strong>限制分包数量</strong>。设置 initial chunk/async chunk 的最大并行请求数，请求数指的是主 chunk（指自身，不包括 async chunk）加子同步 chunk（不包括 async chunk）。</li> <li>cacheGroups：缓存组，为 test 或 type 字段匹配到的文件制订专用的分包规则，并且优先级大于全局规则。这一项是配置的重点。</li></ul> <h3 id="源码解读"><a href="#源码解读" class="header-anchor">#</a> 源码解读</h3> <p>上文说过即使不设置 optimization.splitChunks ，也是有默认配置的，看源码可以发现文件位于 lib/WebpackOptionsDefaulter.js：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// WebpackOptionsDefaulter.js</span>
+<span class="token comment">// ...</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'optimization.splitChunks.chunks'</span><span class="token punctuation">,</span> <span class="token string">'async'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'optimization.splitChunks.minSize'</span><span class="token punctuation">,</span> <span class="token string">'make'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">options</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token function">isProductionLikeMode</span><span class="token punctuation">(</span>options<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token number">30000</span> <span class="token operator">:</span> <span class="token number">10000</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'optimization.splitChunks.minChunks'</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'optimization.splitChunks.maxAsyncRequests'</span><span class="token punctuation">,</span> <span class="token string">'make'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">options</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token function">isProductionLikeMode</span><span class="token punctuation">(</span>options<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token number">5</span> <span class="token operator">:</span> <span class="token number">Infinity</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'optimization.splitChunks.automaticNameDelimiter'</span><span class="token punctuation">,</span> <span class="token string">'~'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'optimization.splitChunks.automaticNameMaxLength'</span><span class="token punctuation">,</span> <span class="token number">109</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'optimization.splitChunks.maxInitialRequests'</span><span class="token punctuation">,</span> <span class="token string">'make'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">options</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token function">isProductionLikeMode</span><span class="token punctuation">(</span>options<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token number">3</span> <span class="token operator">:</span> <span class="token number">Infinity</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'optimization.splitChunks.name'</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'optimization.splitChunks.cacheGroups'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'optimization.splitChunks.cacheGroups.default'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  automaticNamePrefix<span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span>
+  reuseExistingChunk<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  minChunks<span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+  priority<span class="token operator">:</span> <span class="token operator">-</span><span class="token number">20</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'optimization.splitChunks.cacheGroups.vendors'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  automaticNamePrefix<span class="token operator">:</span> <span class="token string">'vendors'</span><span class="token punctuation">,</span>
+  test<span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">[\\/]node_modules[\\/]</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span>
+  priority<span class="token operator">:</span> <span class="token operator">-</span><span class="token number">10</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// ...</span>
+</code></pre></div><p>可以看出，与官方文档里的默认配置是完全吻合的。</p><div></div>
+接下来要从 splitChunksPlugin 源码中找到对应的各配置项及<strong>优先级</strong>，理解 <strong>splitChunksPlugin 的总体流程</strong>：<p></p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// lib/optimize/SplitChunksPlugin.js</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> module <span class="token keyword">of</span> compilation<span class="token punctuation">.</span>modules<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 这一步遍历module并获取对应的cacheGroups</span>
+  <span class="token keyword">let</span> cacheGroups <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>options<span class="token punctuation">.</span><span class="token function">getCacheGroups</span><span class="token punctuation">(</span>module<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>cacheGroups<span class="token punctuation">)</span> <span class="token operator">||</span> cacheGroups<span class="token punctuation">.</span>length <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">continue</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">//...</span>
+
+  <span class="token keyword">let</span> cacheGroupIndex <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> cacheGroupSource <span class="token keyword">of</span> cacheGroups<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">//遍历cacheGroups，优先选择cacheGroups中配置项，没有则取全局配置</span>
+    <span class="token keyword">const</span> minSize <span class="token operator">=</span>
+      cacheGroupSource<span class="token punctuation">.</span>minSize <span class="token operator">!==</span> <span class="token keyword">undefined</span>
+        <span class="token operator">?</span> cacheGroupSource<span class="token punctuation">.</span>minSize
+        <span class="token operator">:</span> cacheGroupSource<span class="token punctuation">.</span>enforce
+        <span class="token operator">?</span> <span class="token number">0</span>
+        <span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>options<span class="token punctuation">.</span>minSize<span class="token punctuation">;</span>
+    <span class="token keyword">const</span> enforceSizeThreshold <span class="token operator">=</span>
+      cacheGroupSource<span class="token punctuation">.</span>enforceSizeThreshold <span class="token operator">!==</span> <span class="token keyword">undefined</span>
+        <span class="token operator">?</span> cacheGroupSource<span class="token punctuation">.</span>enforceSizeThreshold
+        <span class="token operator">:</span> cacheGroupSource<span class="token punctuation">.</span>enforce
+        <span class="token operator">?</span> <span class="token number">0</span>
+        <span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>options<span class="token punctuation">.</span>enforceSizeThreshold<span class="token punctuation">;</span>
+    <span class="token keyword">const</span> cacheGroup <span class="token operator">=</span> <span class="token punctuation">{</span>
+      <span class="token comment">// ...</span>
+      minSize<span class="token punctuation">,</span>
+      minSizeForMaxSize<span class="token operator">:</span> cacheGroupSource<span class="token punctuation">.</span>minSize <span class="token operator">!==</span> <span class="token keyword">undefined</span> <span class="token operator">?</span> cacheGroupSource<span class="token punctuation">.</span>minSize <span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>options<span class="token punctuation">.</span>minSize<span class="token punctuation">,</span>
+      enforceSizeThreshold<span class="token punctuation">,</span>
+      maxSize<span class="token operator">:</span>
+        cacheGroupSource<span class="token punctuation">.</span>maxSize <span class="token operator">!==</span> <span class="token keyword">undefined</span>
+          <span class="token operator">?</span> cacheGroupSource<span class="token punctuation">.</span>maxSize
+          <span class="token operator">:</span> cacheGroupSource<span class="token punctuation">.</span>enforce
+          <span class="token operator">?</span> <span class="token number">0</span>
+          <span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>options<span class="token punctuation">.</span>maxSize<span class="token punctuation">,</span>
+      minChunks<span class="token operator">:</span>
+        cacheGroupSource<span class="token punctuation">.</span>minChunks <span class="token operator">!==</span> <span class="token keyword">undefined</span>
+          <span class="token operator">?</span> cacheGroupSource<span class="token punctuation">.</span>minChunks
+          <span class="token operator">:</span> cacheGroupSource<span class="token punctuation">.</span>enforce
+          <span class="token operator">?</span> <span class="token number">1</span>
+          <span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>options<span class="token punctuation">.</span>minChunks<span class="token punctuation">,</span>
+      <span class="token comment">// ...</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token comment">// 遍历包含同一module的chunk集合</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> chunkCombination <span class="token keyword">of</span> combs<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 判断是否命中minChunks规则</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>chunkCombination<span class="token punctuation">.</span>size <span class="token operator">&lt;</span> cacheGroup<span class="token punctuation">.</span>minChunks<span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>
+      <span class="token comment">// 命中minChunks规则的设置为selectedChunks</span>
+      <span class="token keyword">const</span> <span class="token punctuation">{</span> chunks<span class="token operator">:</span> selectedChunks<span class="token punctuation">,</span> key<span class="token operator">:</span> selectedChunksKey <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">getSelectedChunks</span><span class="token punctuation">(</span>
+        chunkCombination<span class="token punctuation">,</span>
+        cacheGroup<span class="token punctuation">.</span>chunksFilter<span class="token punctuation">,</span> <span class="token comment">// 判断chunks是all、initial或async</span>
+      <span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token comment">// 向chunksInfoMap中添加代码分割信息</span>
+      <span class="token function">addModuleToChunksInfoMap</span><span class="token punctuation">(</span>cacheGroup<span class="token punctuation">,</span> cacheGroupIndex<span class="token punctuation">,</span> selectedChunks<span class="token punctuation">,</span> selectedChunksKey<span class="token punctuation">,</span> module<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    cacheGroupIndex<span class="token operator">++</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>该部分代码总结：</p><div></div><p></p> <ol><li>外部 for 循环遍历 module，内部 for 循环遍历 cacheGroups，并且 cacheGroups 优先级大于全局配置，从而初始化 cacheGroups 的值。</li> <li>判断 chunk 的被引用次数是否命中 cacheGroup.minChunks。</li> <li>判断 chunks 类型是 all、initial 还是 async。</li> <li>得到 selectedChunks 并存入 chunksInfoMap。</li></ol> <p>接下来开始遍历 chunksInfoMap，将不符合 minSize 规则的 chunk 从 chunksInfoMap 中剔除：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> pair <span class="token keyword">of</span> chunksInfoMap<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> info <span class="token operator">=</span> pair<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>info<span class="token punctuation">.</span>cacheGroup<span class="token punctuation">.</span>_validateSize <span class="token operator">&amp;&amp;</span> info<span class="token punctuation">.</span>size <span class="token operator">&lt;</span> info<span class="token punctuation">.</span>cacheGroup<span class="token punctuation">.</span>minSize<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    chunksInfoMap<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span>pair<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>遍历 chunksInfoMap，根据 compareEntries 方法找到优先级最大的 chunk：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">let</span> bestEntryKey<span class="token punctuation">;</span>
+<span class="token keyword">let</span> bestEntry<span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> pair <span class="token keyword">of</span> chunksInfoMap<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> key <span class="token operator">=</span> pair<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> info <span class="token operator">=</span> pair<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>bestEntry <span class="token operator">===</span> <span class="token keyword">undefined</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    bestEntry <span class="token operator">=</span> info<span class="token punctuation">;</span>
+    bestEntryKey <span class="token operator">=</span> key<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">compareEntries</span><span class="token punctuation">(</span>bestEntry<span class="token punctuation">,</span> info<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// compareEntries 方法里包含很多规则</span>
+    <span class="token comment">// 如优先级cacheGroup.priority、关联的chunk数chunks.size等</span>
+    <span class="token comment">// 具体可以看源码中的compareEntries函数</span>
+    bestEntry <span class="token operator">=</span> info<span class="token punctuation">;</span>
+    bestEntryKey <span class="token operator">=</span> key<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>然后根据 maxInitialRequests 或 maxAsyncRequests 规则处理去重后的 selectedChunks( usedChunks )：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> usedChunks <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Set</span><span class="token punctuation">(</span>selectedChunks<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span>
+  <span class="token operator">!</span>enforced <span class="token operator">&amp;&amp;</span>
+  <span class="token punctuation">(</span>Number<span class="token punctuation">.</span><span class="token function">isFinite</span><span class="token punctuation">(</span>item<span class="token punctuation">.</span>cacheGroup<span class="token punctuation">.</span>maxInitialRequests<span class="token punctuation">)</span> <span class="token operator">||</span> Number<span class="token punctuation">.</span><span class="token function">isFinite</span><span class="token punctuation">(</span>item<span class="token punctuation">.</span>cacheGroup<span class="token punctuation">.</span>maxAsyncRequests<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> chunk <span class="token keyword">of</span> usedChunks<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 根据chunk类型选择maxInitialRequests或maxAsyncRequests</span>
+    <span class="token keyword">const</span> maxRequests <span class="token operator">=</span> chunk<span class="token punctuation">.</span><span class="token function">isOnlyInitial</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+      <span class="token operator">?</span> item<span class="token punctuation">.</span>cacheGroup<span class="token punctuation">.</span>maxInitialRequests
+      <span class="token operator">:</span> chunk<span class="token punctuation">.</span><span class="token function">canBeInitial</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+      <span class="token operator">?</span> Math<span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>item<span class="token punctuation">.</span>cacheGroup<span class="token punctuation">.</span>maxInitialRequests<span class="token punctuation">,</span> item<span class="token punctuation">.</span>cacheGroup<span class="token punctuation">.</span>maxAsyncRequests<span class="token punctuation">)</span>
+      <span class="token operator">:</span> item<span class="token punctuation">.</span>cacheGroup<span class="token punctuation">.</span>maxAsyncRequests<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isFinite</span><span class="token punctuation">(</span>maxRequests<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token function">getRequests</span><span class="token punctuation">(</span>chunk<span class="token punctuation">)</span> <span class="token operator">&gt;=</span> maxRequests<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      usedChunks<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span>chunk<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>最后不断更新 chunksInfoMap，直到 chunksInfoMap 为空时，退出循环，结束 SplitChunks。</p> <h3 id="源码总结"><a href="#源码总结" class="header-anchor">#</a> 源码总结</h3> <p>经过对 SplitChunksPlugin 的源码分析可知，其大概流程可以总结为：</p> <ol><li>遍历所有模块 module，内部再遍历所有 cacheGroup，当符合 cacheGroup 规则时，根据 cacheGroup 和 全局配置来初始化 cacheGroup。</li> <li>判断 chunk 是否满足 minChunks，满足则继续下一步骤。</li> <li>判断 chunks 规则是 all、initial 或 async，符合规则的 chunk 继续下一步骤。</li> <li>将得到的 split chunks ( selectedChunks )存入 chunksInfoMap。</li> <li>遍历 chunksInfoMap，判断 minSize 是否符合规则。</li> <li>遍历 chunksInfoMap，根据 compareEntries 策略优先生成 chunk。</li> <li>遍历 usedChunks，判断 chunk 是否满足 maxInitialRequests 和 maxAsyncRequests 规则。</li> <li>创建新的 chunk 或复用现有的 chunk，不断更新 chunksInfoMap。</li> <li>结束 SplitChunks。</li></ol> <h2 id="结束语"><a href="#结束语" class="header-anchor">#</a> 结束语</h2> <p>比较常用的 SplitChunksPlugin 分包策略有：</p> <ul><li>全局的 chunks 设置为 all，这样对 initial chunk 和 async chunk 都有效。</li> <li>第三方库单独分包，比如项目框架 Vue、React，状态管理工具 Vuex、Redux、MobX 等。</li></ul> <div class="language-js extra-class"><pre class="language-js"><code>splitChunks<span class="token operator">:</span> <span class="token punctuation">{</span>
+  chunks<span class="token operator">:</span> <span class="token string">'all'</span><span class="token punctuation">,</span>
+  cacheGroups<span class="token operator">:</span> <span class="token punctuation">{</span>
+    dll<span class="token operator">:</span> <span class="token punctuation">{</span>
+      test<span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">[\\/]node_modules[\\/](react|react-dom|react-dom-router|mobx|mobx-react|mobx-react-dom|antd)</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span>
+      minChunks<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+      priority<span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+      name<span class="token operator">:</span> <span class="token string">'dll'</span><span class="token punctuation">,</span> <span class="token comment">// 打包后的文件名为dll</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token comment">// ...</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><ul><li>路由懒加载（异步加载），如 ES6 的 import() 语法。</li></ul> <div class="language- extra-class"><pre class="language-text"><code>{
+  path: '/login', // 路由路径
+  name: '登录页', // 菜单名称
+  component: lazy(() =&gt; import('@/pages/Login')), // 懒加载路由组件
+},
+</code></pre></div><p>使用 WebpackBundleAnalyzer 进行打包可视化分析，图 1 是使用默认分包规则，图 2 设置了全局的 chunks = all，并且设置了一些第三方库单独分包。
+可以看出，第三方库被单独打包到了 dll 文件中，减小了主包体积的同时，也充分利用了浏览器的缓存策略，从而提升项目性能。
+<img src="https://km.woa.com/gkm/api/img/cos-file-url?url=https%3A%2F%2Fkm-pro-1258638997.cos.ap-guangzhou.myqcloud.com%2Ffiles%2Fphotos%2Fpictures%2F202209%2F1663035306-2628-631fe7aa402ea-75649.png&amp;is_redirect=1" alt="图1"></p> <div style="margin:0 auto;width:30px;">图 1</div> <p><img src="https://km.woa.com/gkm/api/img/cos-file-url?url=https%3A%2F%2Fkm-pro-1258638997.cos.ap-guangzhou.myqcloud.com%2Ffiles%2Fphotos%2Fpictures%2F202209%2F1663035506-3667-631fe8725989b-509520.png&amp;is_redirect=1" alt="图2"></p> <div style="margin:0 auto;width:30px;">图 2</div> <h3 id="思考"><a href="#思考" class="header-anchor">#</a> 思考</h3> <p>最后思考一个问题，分包是越多越好吗？
+首先要肯定的是，如果不拆分代码，打包成一个文件会导致响应速度很慢，也没有很好地利用浏览器缓存机制。而如果分包的颗粒度过于细化，虽然好处是缓存粒度也更细化，但也导致首次 HTTP 请求数过多，影响性能。因此需要结合自己的项目具体分析，比如如果使用了 HTTP2，那么其具有的多路复用和 headers 压缩能力也许可以忽略掉 HTTP 请求过多这一缺点。</p></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">1/5/2023, 3:54:16 PM</span></div></footer> <!----> </main></div><div class="global-ui"><div id="goTop" class="hide-cat" data-v-bf92849a></div></div></div>
+    <script src="/blog/assets/js/app.99c8d667.js" defer></script><script src="/blog/assets/js/2.503560b4.js" defer></script><script src="/blog/assets/js/37.d520b5d0.js" defer></script>
+  </body>
+</html>
