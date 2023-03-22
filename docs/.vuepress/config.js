@@ -46,8 +46,9 @@ module.exports = {
             text: '基础',
             items: [
               { text: 'HTML + CSS', link: '/H5/' },
-              { text: 'JS + TS', link: '/JavaScript/' },
+              { text: 'JS', link: '/JavaScript/' },
               { text: 'JS继承', link: '/extends/' },
+              { text: 'TS类型体操', link: '/tsc/' },
             ],
           },
           {
